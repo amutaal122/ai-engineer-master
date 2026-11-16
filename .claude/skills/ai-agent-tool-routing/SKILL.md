@@ -1,6 +1,7 @@
 ---
 name: ai-agent-tool-routing
 description: 'Use when designing or reviewing an AI agent tool registry or MCP router: document parameter schemas, caller authorization, execution limits, replay-safe retries and verification evidence.'
+triggers: [tool routing, tool registry, mcp router, function calling, tool selection, agent tools, parameter schema]
 category: engineering
 risk: safe
 source: self

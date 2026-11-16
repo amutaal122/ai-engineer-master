@@ -1,6 +1,7 @@
 ---
 name: ai-agent-evaluation-benchmarking
 description: 'Autonomous AI agent benchmark evaluation register: task completion rates, planning accuracy, tool invocation precision, and cost benchmarks.'
+triggers: [agent eval, agent benchmark, task completion rate, agent metrics, agent performance, eval harness agent]
 category: engineering
 risk: safe
 source: self

@@ -1,6 +1,7 @@
 ---
 name: webapp-testing
 description: Toolkit for interacting with and testing local web applications using Playwright. Supports verifying frontend functionality, debugging UI behavior, capturing browser screenshots, and viewing browser logs.
+triggers: [webapp testing, e2e testing, browser automation, playwright, selenium, cypress, end to end, integration test, ui test]
 license: Complete terms in LICENSE.txt
 ---
 

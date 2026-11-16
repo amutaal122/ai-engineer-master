@@ -1,6 +1,7 @@
 ---
 name: security-audit
 description: "Comprehensive security auditing workflow covering web application testing, API security, penetration testing, vulnerability scanning, and security hardening."
+triggers: [security audit, penetration testing, vulnerability, owasp, xss, sql injection, csrf, auth bypass, threat model]
 category: workflow-bundle
 risk: offensive
 source: personal

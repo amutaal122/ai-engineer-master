@@ -1,6 +1,7 @@
 ---
 name: git-workflow
 description: Implement Git branching strategies, PR workflows, and release management
+triggers: [git workflow, branching strategy, git flow, feature branch, pull request workflow, release branch, git strategy]
   patterns.
 category: devops
 risk: critical

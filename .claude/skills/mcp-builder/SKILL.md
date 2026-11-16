@@ -1,6 +1,7 @@
 ---
 name: mcp-builder
 description: Guide for creating high-quality MCP (Model Context Protocol) servers that enable LLMs to interact with external services through well-designed tools. Use when building MCP servers to integrate external APIs or services, whether in Python (FastMCP) or Node/TypeScript (MCP SDK).
+triggers: [mcp server, mcp tool, model context protocol, mcp builder, mcp integration, mcp resource, build mcp, mcp transport]
 license: Complete terms in LICENSE.txt
 ---
 
@@ -116,6 +117,7 @@ For each tool:
 - Helps clients understand and process tool outputs
 
 **Tool Description:**
+triggers: [mcp server, mcp tool, model context protocol, mcp builder, mcp integration, mcp resource, build mcp, mcp transport]
 - Concise summary of functionality
 - Parameter descriptions
 - Return type schema

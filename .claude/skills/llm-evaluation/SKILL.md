@@ -1,6 +1,7 @@
 ---
 name: llm-evaluation
 description: "Master comprehensive evaluation strategies for LLM applications, from automated metrics to human evaluation and A/B testing."
+triggers: [llm eval, model evaluation, golden set, eval metrics, llm benchmark, ragas, deepeval, judge model, eval strategy]
 risk: critical
 source: community
 date_added: "2026-02-27"

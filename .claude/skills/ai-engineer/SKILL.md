@@ -1,6 +1,7 @@
 ---
 name: ai-engineer
 description: Build production-ready LLM applications, advanced RAG systems, and intelligent agents. Implements vector search, multimodal AI, agent orchestration, and enterprise AI integrations.
+triggers: [ai engineer, production llm, rag application, llm product, llm ops, llm pipeline, ai product, language model app]
 risk: critical
 source: community
 date_added: '2026-02-27'

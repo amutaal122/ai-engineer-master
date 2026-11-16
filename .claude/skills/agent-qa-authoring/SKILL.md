@@ -1,6 +1,7 @@
 ---
 name: agent-qa-authoring
 description: "Create, edit, validate, and run Agent QA tests, suites, and hooks through MCP or CLI while preserving canonical IDs and schema contracts."
+triggers: [agent qa, agent testing, qa authoring, agent test suite, agent evaluation tests, qa hooks]
 category: testing
 risk: critical
 source: https://github.com/vostride/agent-qa/tree/main/skills/agent-qa-authoring

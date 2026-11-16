@@ -1,6 +1,7 @@
 ---
 name: ab-testing
 description: "When the user wants to plan, design, or implement an A/B test or experiment, or build a growth experimentation program."
+triggers: [ab testing, a/b test, experiment, statistical significance, hypothesis test, conversion rate, control group, treatment group]
 risk: critical
 source: https://github.com/coreyhaines31/marketingskills/tree/main/skills/ab-testing
 source_repo: coreyhaines31/marketingskills

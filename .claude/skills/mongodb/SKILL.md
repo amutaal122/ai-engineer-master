@@ -1,6 +1,7 @@
 ---
 name: mongodb
 description: Administer MongoDB databases. Configure replica sets, sharding, and backups.
+triggers: [mongodb, mongo, nosql, document store, bson, aggregation pipeline, mongodb atlas, pymongo, motor, mongoose]
   Use when managing MongoDB deployments.
 category: devops
 risk: critical

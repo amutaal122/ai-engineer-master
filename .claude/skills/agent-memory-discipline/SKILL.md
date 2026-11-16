@@ -1,6 +1,7 @@
 ---
 name: agent-memory-discipline
 description: "Rules for when an agent should recall from long-term memory before acting and when it should save decisions, corrections and failures afterwards. Works with any memory backend."
+triggers: [agent memory, long-term memory, recall, memory store, episodic memory, memory retrieval, vector memory, agent state]
 category: memory
 risk: critical
 source: community

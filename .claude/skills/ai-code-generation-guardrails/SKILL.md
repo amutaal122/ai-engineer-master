@@ -1,6 +1,7 @@
 ---
 name: ai-code-generation-guardrails
 description: 'Use when reviewing AI-generated code before merge or execution: plan AST/security checks, isolated behavior tests and evidence, with language-specific coverage limits.'
+triggers: [ai code review, code generation review, copilot review, llm code quality, generated code, ai generated code]
 category: engineering
 risk: safe
 source: self

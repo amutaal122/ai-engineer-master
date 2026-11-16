@@ -1,6 +1,7 @@
 ---
 name: ai-agent-security
 description: Secure AI agents against prompt injection, tool abuse, and data exfiltration
+triggers: [agent security, prompt injection, tool abuse, data exfiltration, jailbreak, agent guardrails, llm security]
   with defense-in-depth controls.
 category: security
 risk: safe
