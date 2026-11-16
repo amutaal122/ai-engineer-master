@@ -31,6 +31,10 @@ Copy the new `master-assistant-standalone.html` to `docs/engineer-master-assista
 
 ## Install (any project)
 
+Quickest: download [ai-engineer-master-skills.zip](https://github.com/amutaal122/ai-engineer-master/raw/main/dist/ai-engineer-master-skills.zip) and unzip it into your project root (it contains only the `.claude` folder).
+
+Or with git:
+
 ```bash
 git clone https://github.com/amutaal122/ai-engineer-master.git temp
 xcopy /E /I temp\.claude .claude
