@@ -1,7 +1,7 @@
 # AI Engineer Master System
 
 Professional skill system for AI / ML / Data Science / Data Analytics engineers.
-**59 skills · 12 agents · 12 commands · 4 workflows**
+**61 skills · 13 agents · 12 commands · 4 workflows**
 
 ---
 
@@ -83,6 +83,12 @@ Professional skill system for AI / ML / Data Science / Data Analytics engineers.
 | `/agent-qa-authoring` | Agent QA tests, suites, hooks |
 | `/webapp-testing` | E2E testing, browser automation |
 
+### UI / GPT Apps
+| Skill | Use when |
+|---|---|
+| `/ui-design` | Design tokens, layout, dark mode, components, accessibility |
+| `/gpt-chat-ui` | ChatGPT-style chat app with streaming, history, tool calls |
+
 ### Research (ML)
 | Skill | Topic |
 |---|---|
@@ -124,6 +130,7 @@ Professional skill system for AI / ML / Data Science / Data Analytics engineers.
 | `security-auditor` | Vulnerability detection, threat modeling |
 | `test-engineer` | Test strategy, coverage, QA |
 | `web-performance-auditor` | Core Web Vitals, loading, rendering |
+| `ui-designer` | UI design, tokens, dark mode, chat and dashboard layouts |
 
 ---
 

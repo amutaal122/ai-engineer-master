@@ -7,8 +7,8 @@
 
 | | Count |
 |---|---|
-| Skills | 59 |
-| Agents | 12 |
+| Skills | 61 |
+| Agents | 13 |
 | Commands | 9 |
 | Workflows | 4 |
 
@@ -80,6 +80,10 @@ Remove-Item temp -Recurse -Force
 - `git-advanced` — rebase, stash, bisect, hooks
 - `git-workflow` — branching, PRs, release strategy
 
+### UI / GPT Apps
+- `ui-design` — design tokens, typography, layout, dark mode, components, accessibility
+- `gpt-chat-ui` — ChatGPT-style chat app: SSE streaming, markdown, tool calls, history
+
 ### ML Research (20 skills)
 Deep reference skills covering model architecture, tokenization, fine-tuning, interpretability, data processing, post-training, safety, distributed training, inference serving, MLOps, RAG, and emerging techniques.
 
@@ -101,6 +105,7 @@ Deep reference skills covering model architecture, tokenization, fine-tuning, in
 | `security-auditor` | Vulnerability detection, threat modeling |
 | `test-engineer` | Test strategy and coverage |
 | `web-performance-auditor` | Core Web Vitals, rendering |
+| `ui-designer` | UI design, tokens, dark mode, chat and dashboard layouts |
 
 ---
 
