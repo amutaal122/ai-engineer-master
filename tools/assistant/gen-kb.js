@@ -34,7 +34,7 @@ function excerpt(body, n) {
 
 const DOMAIN = {};
 const put = (d, arr) => arr.forEach(n => DOMAIN[n] = d);
-put('LLM & AI', ['anthropic-sdk', 'openai-sdk', 'langchain', 'prompt-engineering', 'llm-evaluation', 'ai-engineer', 'claude-api', 'huggingface']);
+put('LLM & AI', ['anthropic-sdk', 'openai-sdk', 'langchain', 'prompt-engineering', 'llm-evaluation', 'ai-engineer', 'claude-api', 'huggingface', 'freellmapi']);
 put('Data & ML', ['pandas', 'scikit-learn', 'postgres', 'mongodb', 'ab-testing']);
 put('Agents', ['ai-agent-development', 'ai-agents-architect', 'ai-agent-tool-routing', 'ai-agent-security', 'ai-agent-evaluation-benchmarking', 'agent-memory-discipline', 'agent-qa-authoring', 'ai-code-generation-guardrails', 'ai-coding-agent-guardrails', 'mcp-builder']);
 put('Backend', ['fastapi', 'sqlalchemy', 'redis', 'celery', 'graphql', 'nextjs', 'typescript']);
