@@ -1,4 +1,4 @@
-﻿---
+---
 name: research-05-data-processing
 description: "Training data processing — curation, cleaning, quality filters with nemo-curator and ray-data."
 triggers: [data processing, data curation, data pipeline, nemo curator, ray data, dataset cleaning, training data, data quality]

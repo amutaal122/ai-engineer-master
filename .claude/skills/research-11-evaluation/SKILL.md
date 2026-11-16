@@ -1,4 +1,4 @@
-﻿---
+---
 name: research-11-evaluation
 description: "LLM evaluation — benchmarks, eval harness, bigcode-eval, nemo-evaluator, standardized assessment."
 triggers: [llm evaluation, eval harness, benchmark, lm-eval, bigcode eval, nemo evaluator, model assessment, evals]

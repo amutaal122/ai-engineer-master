@@ -1,4 +1,4 @@
-﻿---
+---
 name: research-18-multimodal
 description: "Multimodal models — vision-language, audio, image generation (audiocraft, blip-2, clip, llava, SAM, stable-diffusion, whisper)."
 triggers: [multimodal, vision language, audiocraft, blip2, clip, llava, segment anything, stable diffusion, whisper, speech, image generation]

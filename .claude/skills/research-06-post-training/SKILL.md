@@ -1,4 +1,4 @@
-﻿---
+---
 name: research-06-post-training
 description: "Post-training alignment — RLHF, DPO, GRPO, reward models with openrlhf, TRL, verl, simpo."
 triggers: [post training, rlhf, dpo, reward model, grpo, ppo, reinforcement learning llm, openrlhf, simpo, trl, verl]

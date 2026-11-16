@@ -1,4 +1,4 @@
-﻿---
+---
 name: ai-engineer-master
 description: "Master skill system for AI/ML/Data Science engineers — 59 skills, 12 agents, 7-phase pipeline covering research through production operations."
 triggers: [ai engineer, ml engineer, data scientist, llm product, ai project, machine learning project, ai system, full stack ai, production ai, ai pipeline, master pipeline]

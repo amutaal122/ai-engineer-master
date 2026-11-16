@@ -1,4 +1,4 @@
-﻿---
+---
 name: research-07-safety-alignment
 description: "Safety and alignment — constitutional AI, guardrails, llamaguard, red teaming, prompt-guard."
 triggers: [safety alignment, constitutional ai, guardrails, llamaguard, red teaming, harmlessness, ai safety, prompt guard]

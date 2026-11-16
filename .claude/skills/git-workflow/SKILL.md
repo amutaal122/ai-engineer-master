@@ -1,8 +1,8 @@
 ---
 name: git-workflow
 description: Implement Git branching strategies, PR workflows, and release management
-triggers: [git workflow, branching strategy, git flow, feature branch, pull request workflow, release branch, git strategy]
   patterns.
+triggers: [git workflow, branching strategy, git flow, feature branch, pull request workflow, release branch, git strategy]
 category: devops
 risk: critical
 source: https://github.com/BagelHole/DevOps-Security-Agent-Skills

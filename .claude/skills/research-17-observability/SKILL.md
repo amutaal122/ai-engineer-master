@@ -1,4 +1,4 @@
-﻿---
+---
 name: research-17-observability
 description: "LLM observability — tracing, monitoring with langsmith and phoenix."
 triggers: [llm observability, langsmith, phoenix, tracing llm, llm monitoring, prompt tracing, llm metrics]

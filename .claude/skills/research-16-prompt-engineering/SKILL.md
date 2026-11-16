@@ -1,4 +1,4 @@
-﻿---
+---
 name: research-16-prompt-engineering
 description: "Advanced prompt engineering — dspy, guidance, instructor, outlines for structured LLM output."
 triggers: [advanced prompting, dspy, guidance, instructor, outlines, structured output, prompt optimization, prompt programming]

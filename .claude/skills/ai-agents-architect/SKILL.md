@@ -1,8 +1,8 @@
 ---
 name: ai-agents-architect
 description: Expert in designing and building autonomous AI agents. Masters tool
-triggers: [agent architecture, multi-agent design, agent planning, memory design, tool use patterns, agent system design]
   use, memory systems, planning strategies, and multi-agent orchestration.
+triggers: [agent architecture, multi-agent design, agent planning, memory design, tool use patterns, agent system design]
 risk: none
 source: vibeship-spawner-skills (Apache 2.0)
 date_added: 2026-02-27

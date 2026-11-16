@@ -14,6 +14,21 @@
 
 ---
 
+## Engineer Master Assistant
+
+`docs/engineer-master-assistant.html` is a single-file assistant for this skill system. Open it in a browser:
+recommends skills and agents for your project, plans it across the 7 phases (`/plan <idea>`), and browses
+the full catalog. It works offline from the skill files, or with an OpenAI / Anthropic key in Settings.
+
+Rebuild it after you change skills:
+```bash
+cd tools/assistant
+node gen-kb.js ../.. kb.json && node build-assistant.js
+```
+Copy the new `master-assistant-standalone.html` to `docs/engineer-master-assistant.html`.
+
+---
+
 ## Install (any project)
 
 ```bash

@@ -1,4 +1,4 @@
-﻿---
+---
 name: research-03-fine-tuning
 description: "Fine-tuning techniques — SFT, LoRA, PEFT, instruction tuning with axolotl, llama-factory, and unsloth."
 triggers: [fine-tuning, sft, supervised fine-tuning, lora fine-tune, peft training, axolotl, llama-factory, unsloth, instruction tuning]

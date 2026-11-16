@@ -1,4 +1,4 @@
-﻿---
+---
 name: research-01-model-architecture
 description: "Model architecture deep-dive — transformers, attention, LLM internals, and implementations (litgpt, nanogpt, mamba, rwkv, torchtitan)."
 triggers: [model architecture, transformer architecture, attention mechanism, llm internals, neural network architecture, litgpt, nanogpt, mamba, rwkv]

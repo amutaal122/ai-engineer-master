@@ -1,4 +1,4 @@
-﻿---
+---
 name: research-10-optimization
 description: "Model optimization — quantization (AWQ, GGUF, GPTQ, BitsAndBytes, HQQ), pruning, compression."
 triggers: [quantization, model compression, awq, bitsandbytes, gguf, gptq, hqq, int4, int8, model optimization, pruning]

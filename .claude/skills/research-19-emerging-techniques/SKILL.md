@@ -1,4 +1,4 @@
-﻿---
+---
 name: research-19-emerging-techniques
 description: "Emerging techniques — speculative decoding, knowledge distillation, model merging, MoE, long context."
 triggers: [speculative decoding, knowledge distillation, model merging, pruning, moe, mixture of experts, long context, emerging techniques]

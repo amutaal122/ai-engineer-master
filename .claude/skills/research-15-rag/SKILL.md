@@ -1,4 +1,4 @@
-﻿---
+---
 name: research-15-rag
 description: "RAG pipelines — retrieval, vector databases (chroma, faiss, pinecone, qdrant), sentence-transformers."
 triggers: [rag, retrieval augmented generation, vector database, chroma, faiss, pinecone, qdrant, sentence transformers, embeddings retrieval]

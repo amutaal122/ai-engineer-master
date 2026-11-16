@@ -1,4 +1,4 @@
-﻿---
+---
 name: research-02-tokenization
 description: "Tokenization strategies — BPE, sentencepiece, wordpiece, vocabulary building, and tokenizer training."
 triggers: [tokenization, bpe, byte pair encoding, tokenizer, sentencepiece, wordpiece, vocabulary, subword, tokenizer training]

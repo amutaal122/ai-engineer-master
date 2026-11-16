@@ -1,4 +1,4 @@
-﻿---
+---
 name: research-09-infrastructure
 description: "ML infrastructure — GPU clusters, cloud GPU rental with lambda-labs, modal, and skypilot."
 triggers: [gpu cluster, cloud gpu, lambda labs, modal, skypilot, training infrastructure, gpu rental, multi-cloud training]

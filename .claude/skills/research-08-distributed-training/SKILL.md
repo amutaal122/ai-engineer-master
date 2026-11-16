@@ -1,4 +1,4 @@
-﻿---
+---
 name: research-08-distributed-training
 description: "Distributed training — FSDP, DeepSpeed, Megatron, multi-GPU, model parallelism with accelerate and ray-train."
 triggers: [distributed training, fsdp, deepspeed, megatron, pytorch lightning, multi-gpu, model parallelism, data parallelism, ray train]

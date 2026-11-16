@@ -1,4 +1,4 @@
-﻿---
+---
 name: research-21-extras
 description: "Research workflow extras - autoresearch, idea generation, ML training recipes, paper writing and talks, plotting, robotics policies (openpi, openvla-oft, cosmos-policy)."
 triggers: [autoresearch, research ideas, brainstorming research, training recipes, paper writing, conference talk, academic plotting, experiment tracking, swanlab, openvla, openpi, cosmos policy, agent evolution]

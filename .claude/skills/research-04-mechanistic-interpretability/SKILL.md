@@ -1,4 +1,4 @@
-﻿---
+---
 name: research-04-mechanistic-interpretability
 description: "Mechanistic interpretability — SAE, circuits, activation patching, probing with nnsight, pyvene, saelens, transformer-lens."
 triggers: [mechanistic interpretability, circuits, sae, sparse autoencoder, activation patching, probing, feature visualization, nnsight]

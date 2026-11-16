@@ -1,0 +1,766 @@
+<title>Engineer Master Assistant</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&family=Space+Grotesk:wght@500;600;700&display=swap">
+<style>
+/* Concept: ink-dark workspace, hairline borders, one mint accent. The seven phase colors form the brand ring and tag every domain. */
+:root{--bg:#f5f6f9;--panel:#ffffff;--side:#eceff4;--soft:#e8edf4;--line:#dde2ea;--fg:#0e1522;--mute:#5a667b;--accent:#07876f;--ink:#ffffff;--code:#0b101b;--codefg:#dde5f2;--glow:#07876f14;--err:#c8372b;--shadow:0 1px 2px #0b12200d,0 8px 24px #0b12200f;--font:"Inter",system-ui,sans-serif;--head:"Space Grotesk","Inter",system-ui,sans-serif;--mono:"JetBrains Mono",ui-monospace,Consolas,monospace;color-scheme:light}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#070a10;--panel:#0d121b;--side:#090d14;--soft:#141b27;--line:#1e2837;--fg:#e8edf6;--mute:#8896ac;--accent:#43e0bf;--ink:#03180f;--code:#060910;--codefg:#dde5f2;--glow:#43e0bf12;--err:#ff7b6e;--shadow:0 1px 2px #0006,0 10px 30px #0005;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#070a10;--panel:#0d121b;--side:#090d14;--soft:#141b27;--line:#1e2837;--fg:#e8edf6;--mute:#8896ac;--accent:#43e0bf;--ink:#03180f;--code:#060910;--codefg:#dde5f2;--glow:#43e0bf12;--err:#ff7b6e;--shadow:0 1px 2px #0006,0 10px 30px #0005;color-scheme:dark}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{margin:0;background:radial-gradient(900px 500px at 12% -10%,var(--glow),transparent 60%),var(--bg);color:var(--fg);font:14px/1.55 var(--font);-webkit-font-smoothing:antialiased}
+button,input,select,textarea{font:inherit;color:inherit}
+button{cursor:pointer}
+.btn{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:8px 12px;transition:border-color .15s,background .15s}
+.btn:hover{border-color:var(--accent)}
+.btn.primary{background:var(--accent);color:var(--ink);border-color:var(--accent);font-weight:600}
+.btn.ghost{background:none;border-color:transparent;color:var(--mute)}
+.btn.ghost:hover{color:var(--fg);border-color:var(--line)}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+kbd{font:500 11px var(--mono);border:1px solid var(--line);border-bottom-width:2px;border-radius:5px;padding:1px 5px;color:var(--mute)}
+.mono{font-family:var(--mono)}
+#app{display:grid;grid-template-columns:264px minmax(0,1fr);height:100%}
+/* sidebar */
+#side{background:var(--side);border-right:1px solid var(--line);display:flex;flex-direction:column;min-height:0;padding:14px 12px;gap:14px}
+.brand{display:flex;align-items:center;gap:11px;padding:2px 6px}
+.logo{position:relative;width:38px;height:38px;border-radius:50%;flex:none;display:grid;place-items:center;font:700 12px var(--head);background:conic-gradient(var(--p1) 0 14.28%,var(--p2) 0 28.56%,var(--p3) 0 42.84%,var(--p4) 0 57.12%,var(--p5) 0 71.4%,var(--p6) 0 85.68%,var(--p7) 0 100%)}
+.logo::before{content:"";position:absolute;inset:3px;border-radius:50%;background:var(--side)}
+.logo span{position:relative}
+.brand b{display:block;font:700 15px var(--head);letter-spacing:-.01em}
+.brand small{color:var(--mute);font-size:12px}
+:root{--p1:#5ac8fa;--p2:#7c9cff;--p3:#4de0c3;--p4:#a3e635;--p5:#ffb454;--p6:#ff8a65;--p7:#f472b6}
+#nav{display:flex;flex-direction:column;gap:2px}
+#nav button{display:flex;align-items:center;gap:10px;background:none;border:0;border-radius:9px;padding:9px 10px;text-align:left;color:var(--mute)}
+#nav button:hover{background:var(--soft);color:var(--fg)}
+#nav button[aria-current=page]{background:var(--panel);color:var(--fg);box-shadow:inset 2px 0 0 var(--accent),var(--shadow)}
+#nav svg{width:17px;height:17px;flex:none}
+#nav .n{margin-left:auto;font:500 11px var(--mono);color:var(--mute)}
+.sec{font:600 11px var(--font);letter-spacing:.08em;text-transform:uppercase;color:var(--mute);padding:0 8px}
+#recent{flex:1;min-height:0;overflow:auto;display:flex;flex-direction:column;gap:1px}
+#recent .r{display:flex;align-items:center;border-radius:8px}
+#recent .r:hover,#recent .r.on{background:var(--panel)}
+#recent .t{flex:1;min-width:0;background:none;border:0;text-align:left;padding:7px 8px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--mute)}
+#recent .on .t,#recent .r:hover .t{color:var(--fg)}
+#recent .x{opacity:0;background:none;border:0;color:var(--mute);padding:4px 8px}
+#recent .r:hover .x,#recent .x:focus-visible{opacity:1}
+.side-foot{display:flex;gap:8px}.side-foot .btn{flex:1}
+/* main */
+#main{display:flex;flex-direction:column;min-width:0;min-height:0}
+.top{display:flex;align-items:center;gap:12px;padding:12px 20px;border-bottom:1px solid var(--line)}
+.top h2{margin:0;font:600 17px var(--head);letter-spacing:-.01em;white-space:nowrap}
+#burger{display:none}
+.pal{flex:1;max-width:460px;margin-left:auto;display:flex;align-items:center;gap:10px;background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:8px 12px;color:var(--mute);text-align:left}
+.pal:hover{border-color:var(--accent)}
+.pal span{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.view{display:none;flex:1;min-height:0}
+.view.on{display:flex}
+.scroll{flex:1;min-height:0;overflow:auto}
+.page{max-width:1120px;margin:0 auto;padding:22px 20px 40px}
+.page h1{font:700 26px var(--head);letter-spacing:-.02em;margin:0 0 4px}
+.page .lead{color:var(--mute);margin:0 0 18px}
+/* chat */
+.chatcol{flex:1;min-width:0;display:flex;flex-direction:column;min-height:0}
+#thread{flex:1;min-height:0;overflow:auto}
+#msgs{max-width:780px;margin:0 auto;padding:24px 20px 10px;display:flex;flex-direction:column;gap:26px}
+.msg{display:flex;gap:13px;min-width:0}
+.msg.user{justify-content:flex-end}
+.av{flex:none;width:30px;height:30px;border-radius:50%;display:grid;place-items:center;font:700 10px var(--head);position:relative;background:conic-gradient(var(--p1),var(--p2),var(--p3),var(--p4),var(--p5),var(--p6),var(--p7),var(--p1));margin-top:1px}
+.av::before{content:"";position:absolute;inset:2.5px;border-radius:50%;background:var(--bg)}
+.av span{position:relative}
+.body{min-width:0;max-width:100%;flex:1}
+.msg.user .body{flex:none;background:var(--soft);border:1px solid var(--line);border-radius:16px 16px 4px 16px;padding:9px 15px;max-width:86%;white-space:pre-wrap;overflow-wrap:anywhere}
+.md>*:first-child{margin-top:0}.md>*:last-child{margin-bottom:0}
+.md p{margin:.6em 0;overflow-wrap:anywhere}
+.md h3,.md h4,.md h5,.md h6{margin:1.1em 0 .4em;line-height:1.3;font-family:var(--head);letter-spacing:-.01em}
+.md h3{font-size:19px}.md h4{font-size:16px}.md h5{font-size:14.5px}
+.md ul,.md ol{margin:.5em 0;padding-left:1.4em}.md li{margin:.25em 0}
+.md code{font:12.5px var(--mono);background:var(--soft);border:1px solid var(--line);border-radius:6px;padding:1px 6px}
+.md code.sk{color:var(--accent);cursor:pointer}
+.md code.sk:hover{border-color:var(--accent)}
+.md a{color:var(--accent)}
+.code{margin:.8em 0;border-radius:12px;background:var(--code);color:var(--codefg);overflow:hidden;border:1px solid var(--line)}
+.codebar{display:flex;justify-content:space-between;align-items:center;padding:5px 6px 5px 14px;font:12px var(--mono);color:#8896ac;border-bottom:1px solid #1e2837}
+.codebar button{background:none;border:0;color:#8896ac;padding:3px 8px}
+.code pre{margin:0;padding:13px 14px;overflow-x:auto}
+.code pre code{background:none;border:0;padding:0;color:inherit;font:13px/1.55 var(--mono)}
+.cursor{display:inline-block;width:7px;height:1.05em;background:var(--accent);vertical-align:-3px;margin-left:2px;animation:blink 1s steps(2) infinite}
+@keyframes blink{50%{opacity:0}}
+.err{color:var(--err)}
+.src{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px;align-items:center}
+.src>small{color:var(--mute);font-size:12px;margin-right:2px}
+.chip{display:inline-flex;align-items:center;gap:6px;font:500 12px var(--mono);border:1px solid var(--line);background:var(--panel);border-radius:99px;padding:3px 10px 3px 8px;color:var(--fg)}
+button.chip:hover{border-color:var(--accent)}
+.dot{width:7px;height:7px;border-radius:50%;background:var(--c,var(--mute));flex:none}
+.acts{display:flex;gap:2px;margin-top:8px}
+.acts button{background:none;border:0;color:var(--mute);font-size:12px;padding:4px 8px;border-radius:6px}
+.acts button:hover{color:var(--fg);background:var(--soft)}
+.acts button[aria-pressed=true]{color:var(--accent);font-weight:600}
+.hero{max-width:780px;margin:0 auto;padding:7vh 20px 0;text-align:center}
+.ring{width:92px;height:92px;margin:0 auto 18px;border-radius:50%;position:relative;display:grid;place-items:center;font:700 26px var(--head);background:conic-gradient(var(--p1) 0 14.28%,var(--p2) 0 28.56%,var(--p3) 0 42.84%,var(--p4) 0 57.12%,var(--p5) 0 71.4%,var(--p6) 0 85.68%,var(--p7) 0 100%);animation:spin 24s linear infinite}
+.ring::before{content:"";position:absolute;inset:6px;border-radius:50%;background:var(--bg)}
+.ring b{position:relative;animation:spin 24s linear infinite reverse}
+@keyframes spin{to{transform:rotate(360deg)}}
+.hero h1{font:700 34px/1.12 var(--head);letter-spacing:-.03em;margin:0 0 8px;text-wrap:balance}
+.hero p{color:var(--mute);margin:0 auto 24px;max-width:56ch}
+.stats{display:flex;justify-content:center;gap:22px;margin-bottom:26px;flex-wrap:wrap}
+.stats div{font:500 12px var(--mono);color:var(--mute)}
+.stats b{display:block;font:700 22px var(--head);color:var(--fg)}
+.cards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;text-align:left}
+.pc{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:14px 16px;text-align:left;box-shadow:var(--shadow);transition:transform .15s,border-color .15s}
+.pc:hover{transform:translateY(-2px);border-color:var(--accent)}
+.pc b{display:block;font:600 14px var(--head);margin-bottom:2px}
+.pc small{color:var(--mute)}
+footer.comp{padding:6px 20px 14px;position:relative}
+#hints{position:absolute;left:50%;transform:translateX(-50%);bottom:100%;width:min(740px,calc(100% - 40px));background:var(--panel);border:1px solid var(--line);border-radius:12px;box-shadow:var(--shadow);padding:6px;display:none;margin-bottom:-2px}
+#hints.on{display:block}
+#hints button{display:flex;gap:12px;width:100%;background:none;border:0;border-radius:8px;padding:8px 10px;text-align:left}
+#hints button:hover{background:var(--soft)}
+#hints code{font:500 13px var(--mono);color:var(--accent);min-width:74px}
+#hints span{color:var(--mute)}
+#composer{max-width:780px;margin:0 auto;display:flex;gap:8px;align-items:flex-end;background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:9px 9px 9px 16px;box-shadow:var(--shadow)}
+#composer:focus-within{border-color:var(--accent)}
+#input{flex:1;min-width:0;border:0;outline:0;resize:none;background:none;max-height:190px;padding:6px 0;line-height:1.5}
+#send{width:38px;height:38px;border-radius:12px;padding:0;display:grid;place-items:center;background:var(--accent);color:var(--ink);border:0}
+#send:disabled{opacity:.35;cursor:not-allowed}
+#note{max-width:780px;margin:7px auto 0;text-align:center;font-size:12px;color:var(--mute)}
+#ctx{width:310px;flex:none;border-left:1px solid var(--line);padding:18px 16px;overflow:auto;display:none}
+@media (min-width:1180px){#ctx{display:block}}
+#ctx h3{margin:0 0 4px;font:600 13px var(--head);letter-spacing:.02em}
+#ctx p.s{margin:0 0 14px;color:var(--mute);font-size:12.5px}
+.sc{display:block;width:100%;text-align:left;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:11px 12px;margin-bottom:8px;transition:border-color .15s}
+.sc:hover{border-color:var(--accent)}
+.sc b{display:flex;align-items:center;gap:7px;font:500 13px var(--mono)}
+.sc span{display:block;color:var(--mute);font-size:12.5px;margin-top:4px;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+/* grids */
+.bar{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-bottom:14px}
+.bar input[type=search]{flex:1;min-width:200px;max-width:380px;padding:9px 12px;border:1px solid var(--line);border-radius:10px;background:var(--panel)}
+.fchips{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:16px}
+.fchips button{border:1px solid var(--line);background:var(--panel);border-radius:99px;padding:4px 12px;font-size:12.5px;display:inline-flex;align-items:center;gap:7px;color:var(--mute)}
+.fchips button:hover{color:var(--fg);border-color:var(--accent)}
+.fchips button[aria-pressed=true]{background:var(--fg);color:var(--bg);border-color:var(--fg)}
+.fchips em{font:normal 11px var(--mono);opacity:.7}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px}
+.card{text-align:left;background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:14px 15px;display:flex;flex-direction:column;gap:8px;box-shadow:var(--shadow);transition:transform .15s,border-color .15s;min-width:0}
+.card:hover{transform:translateY(-2px);border-color:var(--accent)}
+.card.role{border-style:dashed;box-shadow:none;cursor:default}
+.card.role:hover{transform:none;border-color:var(--line)}
+.card h4{margin:0;display:flex;align-items:center;gap:8px;font:500 13.5px var(--mono);overflow-wrap:anywhere}
+.card p{margin:0;color:var(--mute);font-size:13px;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.card .tg{display:flex;flex-wrap:wrap;gap:5px;margin-top:auto}
+.tg span{font-size:11px;border:1px solid var(--line);border-radius:6px;padding:1px 6px;color:var(--mute)}
+.gh{font:600 12px var(--font);letter-spacing:.08em;text-transform:uppercase;color:var(--mute);margin:22px 0 10px}
+/* pipeline */
+.flow{display:flex;gap:0;overflow-x:auto;padding:6px 2px 14px}
+.node{flex:1 0 128px;display:flex;flex-direction:column;align-items:center;gap:8px;background:none;border:0;position:relative;padding:0 4px;color:var(--mute)}
+.node::before{content:"";position:absolute;top:21px;left:-50%;width:100%;height:2px;background:repeating-linear-gradient(90deg,var(--line) 0 6px,transparent 6px 12px);z-index:0}
+.node:first-child::before{display:none}
+.node.done::before{background:var(--c);opacity:.7}
+.node i{position:relative;z-index:1;width:44px;height:44px;border-radius:50%;display:grid;place-items:center;font:700 15px var(--head);font-style:normal;background:var(--panel);border:2px solid var(--c);color:var(--c);transition:transform .2s,background .2s}
+.node:hover i{transform:scale(1.08)}
+.node[aria-pressed=true] i{background:var(--c);color:#0a0e14;box-shadow:0 0 0 6px color-mix(in srgb,var(--c) 22%,transparent)}
+.node[aria-pressed=true]{color:var(--fg)}
+.node b{font:600 13px var(--head)}
+.pd{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:20px;box-shadow:var(--shadow);display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:20px}
+.pd h3{margin:0 0 4px;font:700 22px var(--head);letter-spacing:-.02em}
+.pd .l{font:600 11px var(--font);letter-spacing:.08em;text-transform:uppercase;color:var(--mute);margin:14px 0 6px}
+.pd .row{display:flex;flex-wrap:wrap;gap:6px}
+.role-chip{font:500 12px var(--mono);border:1px dashed var(--line);border-radius:99px;padding:3px 10px;color:var(--mute)}
+.role-chip.has{border-style:solid;color:var(--fg);cursor:pointer;background:var(--panel)}
+.role-chip.has:hover{border-color:var(--accent)}
+/* drawer, palette, dialog */
+#scrim{display:none}
+#drawer{position:fixed;top:0;right:0;bottom:0;width:min(460px,100%);background:var(--panel);border-left:1px solid var(--line);box-shadow:-20px 0 50px #0006;transform:translateX(104%);transition:transform .22s;z-index:40;display:flex;flex-direction:column}
+#drawer.on{transform:none}
+#dh{display:flex;align-items:center;gap:8px;padding:14px 16px;border-bottom:1px solid var(--line)}
+#dh h3{margin:0;flex:1;min-width:0;font:600 15px var(--mono);overflow-wrap:anywhere}
+#db{flex:1;overflow:auto;padding:16px}
+#db .l{font:600 11px var(--font);letter-spacing:.08em;text-transform:uppercase;color:var(--mute);margin:18px 0 7px}
+#db p{margin:0 0 6px}
+#db ul{margin:0;padding-left:1.2em}#db li{margin:4px 0}
+.tags{display:flex;flex-wrap:wrap;gap:6px}
+.tags>span{font-size:12px;border:1px solid var(--line);border-radius:6px;padding:2px 8px;background:var(--soft)}
+#df{display:flex;gap:8px;padding:12px 16px;border-top:1px solid var(--line)}#df .btn{flex:1}
+#back{display:none;position:fixed;inset:0;background:#0007;z-index:39}
+#back.on{display:block}
+dialog{border:1px solid var(--line);border-radius:16px;background:var(--panel);color:var(--fg);padding:0;box-shadow:0 30px 80px #000a}
+dialog::backdrop{background:#0009}
+#pal{width:min(620px,calc(100% - 28px));margin-top:12vh}
+#pq{width:100%;border:0;border-bottom:1px solid var(--line);background:none;padding:16px 18px;font-size:16px;outline:0}
+#pr{max-height:50vh;overflow:auto;padding:6px}
+#pr button{display:flex;align-items:center;gap:10px;width:100%;border:0;background:none;border-radius:9px;padding:9px 12px;text-align:left}
+#pr button[aria-selected=true]{background:var(--soft)}
+#pr .ty{font:500 11px var(--mono);color:var(--mute);width:56px;flex:none;text-transform:uppercase}
+#pr .lb{font:500 13px var(--mono)}#pr .sb{color:var(--mute);font-size:12.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
+#sform{padding:20px;display:flex;flex-direction:column;gap:12px;width:min(470px,calc(100vw - 28px))}
+#sform h2{margin:0;font:700 19px var(--head)}
+#sform label{display:flex;flex-direction:column;gap:4px;font-weight:500}
+#sform input[type=text],#sform input[type=password],#sform select,#sform textarea{padding:9px 11px;border:1px solid var(--line);border-radius:9px;background:var(--bg)}
+#sform small{color:var(--mute);font-weight:400}
+#sform .check{flex-direction:row;align-items:center;gap:8px;font-weight:400}
+#sform .row{display:flex;gap:8px;justify-content:flex-end}
+@media (max-width:860px){
+  #app{grid-template-columns:minmax(0,1fr)}
+  #side{position:fixed;inset:0 auto 0 0;width:min(290px,88%);z-index:30;transform:translateX(-103%);transition:transform .2s}
+  body.nav #side{transform:none}
+  body.nav #scrim{display:block;position:fixed;inset:0;background:#0007;z-index:29}
+  #burger{display:inline-grid}
+  .pal b,.pal kbd{display:none}
+  .cards{grid-template-columns:1fr}
+  .pd{grid-template-columns:1fr}
+  .hero h1{font-size:27px}
+  .top{padding:10px 14px}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+
+<div id="app">
+  <aside id="side" aria-label="Navigation">
+    <div class="brand"><div class="logo"><span>AEM</span></div><div><b>Engineer Master</b><small>Skill assistant</small></div></div>
+    <nav id="nav"></nav>
+    <div class="sec">Recent chats</div>
+    <div id="recent"></div>
+    <div class="side-foot"><button class="btn" id="gear">Settings</button><button class="btn" id="theme">Theme</button></div>
+  </aside>
+  <div id="scrim"></div>
+  <div id="main">
+    <header class="top">
+      <button class="btn ghost" id="burger" aria-label="Open menu">&#9776;</button>
+      <h2 id="vt">Assistant</h2>
+      <button class="pal" id="palBtn"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg><span>Search skills, agents, commands</span><kbd>Ctrl K</kbd></button>
+    </header>
+
+    <section class="view" id="v-chat">
+      <div class="chatcol">
+        <div id="thread" tabindex="0" aria-label="Conversation"><div id="msgs" aria-live="polite"></div></div>
+        <footer class="comp">
+          <div id="hints" role="listbox"></div>
+          <form id="composer">
+            <textarea id="input" rows="1" placeholder="Describe what you are building, or type / for commands" aria-label="Message"></textarea>
+            <button id="send" type="submit" aria-label="Send"></button>
+          </form>
+          <p id="note"></p>
+        </footer>
+      </div>
+      <aside id="ctx" aria-label="Sources"></aside>
+    </section>
+
+    <section class="view" id="v-skills"><div class="scroll"><div class="page" id="p-skills"></div></div></section>
+    <section class="view" id="v-agents"><div class="scroll"><div class="page" id="p-agents"></div></div></section>
+    <section class="view" id="v-pipeline"><div class="scroll"><div class="page" id="p-pipeline"></div></div></section>
+    <section class="view" id="v-commands"><div class="scroll"><div class="page" id="p-commands"></div></div></section>
+  </div>
+</div>
+
+<div id="back"></div>
+<aside id="drawer" aria-label="Details" aria-hidden="true">
+  <div id="dh"><h3 id="dt"></h3><button class="btn ghost" id="dc" aria-label="Close">&#10005;</button></div>
+  <div id="db"></div>
+  <div id="df"></div>
+</aside>
+
+<dialog id="pal"><input id="pq" type="text" placeholder="Search skills, agents, phases, commands, or ask a question" aria-label="Search" autocomplete="off"><div id="pr" role="listbox"></div></dialog>
+
+<dialog id="dlg">
+  <form id="sform" method="dialog">
+    <h2>Settings</h2>
+    <label>Answer engine
+      <select id="sProv"><option value="offline">Offline expert (built-in, no key)</option><option value="openai">OpenAI (live model)</option><option value="anthropic">Anthropic (live model)</option></select>
+      <small>Offline answers come only from your skill files. Live models receive the best-matching skill text as context.</small></label>
+    <label>API key <input id="sKey" type="password" autocomplete="off" placeholder="sk-..."></label>
+    <label class="check"><input id="sRem" type="checkbox"> Remember key in this browser</label>
+    <label>Model <input id="sModel" type="text"></label>
+    <label>Skills sent as context: <span id="sKv"></span><input id="sK" type="range" min="3" max="10" step="1"></label>
+    <div class="row"><button type="button" class="btn" id="sCancel">Cancel</button><button type="submit" class="btn primary">Save</button></div>
+  </form>
+</dialog>
+
+<script>
+const KB=/*__KB__*/null;
+const $=s=>document.querySelector(s);
+const FENCE='```';
+const DCOL={'LLM & AI':'#7c9cff','Data & ML':'#4de0c3','Agents':'#f472b6','Backend':'#a3e635','Infra & DevOps':'#ff8a65','Quality & Security':'#ffb454','UI & Apps':'#5ac8fa','Research':'#c084fc','Meta':'#9aa7bd','Other':'#9aa7bd'};
+const PH=[
+ {n:'Research',c:'#5ac8fa',goal:'Learn the problem, users and stack before any design or code.',out:'Research brief',roles:['researcher','ux-researcher'],skills:['ai-engineer','llm-evaluation','research-15-rag','huggingface','research-21-extras']},
+ {n:'Design',c:'#7c9cff',goal:'Turn the brief into architecture, schemas, prompts and interface.',out:'Spec, schema and prompt set',roles:['architect','schema-designer','prompt-engineer','ui-designer'],skills:['ai-agents-architect','prompt-engineering','postgres','graphql','ui-design','sqlalchemy']},
+ {n:'Build',c:'#4de0c3',goal:'Implement features behind flags with validated API boundaries.',out:'Working, flagged feature',roles:['developer','api-integrator','feature-flag-engineer'],skills:['fastapi','pandas','scikit-learn','anthropic-sdk','openai-sdk','langchain','huggingface','gpt-chat-ui','mcp-builder','ai-agent-development']},
+ {n:'Quality',c:'#a3e635',goal:'Prove it works: contracts, tests, model evals and latency.',out:'Green eval and test report',roles:['contract-tester','qa-engineer','ml-evaluator','performance-engineer','test-engineer','code-reviewer'],skills:['pytest','llm-evaluation','ab-testing','webapp-testing','ai-agent-evaluation-benchmarking','agent-qa-authoring']},
+ {n:'Security',c:'#ffb454',goal:'Find vulnerabilities, risky dependencies and compliance gaps.',out:'Security sign-off',roles:['security-reviewer','security-auditor','dependency-auditor','compliance-reviewer'],skills:['security-audit','ai-agent-security','ai-code-generation-guardrails','ai-coding-agent-guardrails']},
+ {n:'Ship',c:'#ff8a65',goal:'Document, package and deploy through CI/CD.',out:'Released version',roles:['tech-writer','devops-engineer','web-performance-auditor'],skills:['docker','kubernetes','github-actions','git-workflow','git-advanced']},
+ {n:'Operate',c:'#f472b6',goal:'Watch it in production and learn from every incident.',out:'SLOs and insights',roles:['observability-engineer','sre-engineer','data-analyst','incident-commander'],skills:['redis','celery','research-17-observability','research-13-mlops','ab-testing']}
+];
+const byId=Object.fromEntries(KB.skills.map(s=>[s.id,s]));
+const agentById=Object.fromEntries(KB.agents.map(a=>[a.id,a]));
+const core=KB.skills.filter(s=>s.core);
+PH.forEach(p=>p.skills=p.skills.filter(id=>byId[id]));
+const col=d=>DCOL[d]||DCOL.Other;
+const esc=s=>String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+const sleep=ms=>new Promise(r=>setTimeout(r,ms));
+const uid=()=>Math.random().toString(36).slice(2,10);
+function lsGet(k){try{return JSON.parse(localStorage.getItem(k))}catch(e){return null}}
+function lsSet(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}
+
+/* ---------- retrieval ---------- */
+const STOP=new Set('a an the and or of to for in on with is are be how do does i we you my me what which should can use using need want build make create project app that this it as at by from some any get give tell about into your our would like please help'.split(' '));
+const stem=w=>w.length>3&&w.endsWith('s')&&!w.endsWith('ss')?w.slice(0,-1):w;
+const tok=s=>(String(s).toLowerCase().match(/[a-z0-9]+/g)||[]).filter(w=>!STOP.has(w)).map(stem);
+const counts=a=>{const m={};a.forEach(w=>m[w]=(m[w]||0)+1);return m};
+const IDX=KB.skills.map(s=>({s,f:{name:counts(tok(s.id.replace(/^research-\d+-/,'')+' '+s.id)),trig:counts(tok(s.triggers.join(' '))),desc:counts(tok(s.desc)),dom:counts(tok(s.domain)),body:counts(tok((s.rules||[]).join(' ')+' '+s.body))}}));
+const W={name:5,trig:3,desc:1.5,dom:1,body:.4};
+const DF={};IDX.forEach(d=>{const seen=new Set();Object.values(d.f).forEach(f=>Object.keys(f).forEach(k=>seen.add(k)));seen.forEach(k=>DF[k]=(DF[k]||0)+1)});
+const idf=w=>Math.log(1+IDX.length/((DF[w]||0)+.5));
+const metaStrip=q=>q.replace(/\b(which|what)\s+(skills?|agents?)(\s+and\s+(skills?|agents?))?/gi,' ').replace(/\b(skills?|agents?)\s+(and\s+(skills?|agents?)\s+)?(should|do|to use|can)\b/gi,' ');
+const keepTop=r=>r.length?r.filter(x=>x.score>=r[0].score*.35):r;
+function search(q,k=8,coreOnly=true){
+  q=metaStrip(q);
+  const qt=[...new Set(tok(q))],ql=' '+q.toLowerCase()+' ';
+  if(!qt.length)return[];
+  const out=[];
+  for(const d of IDX){
+    if(coreOnly&&!d.s.core)continue;
+    if(d.s.domain==='Meta'&&!ql.includes('ai-engineer-master'))continue;
+    let sc=0;
+    for(const w of qt){let t=0;for(const f in W){const c=d.f[f][w];if(c)t+=W[f]*(1+Math.log(c))}sc+=idf(w)*t}
+    if(ql.includes(' '+d.s.id+' ')||ql.includes('/'+d.s.id))sc+=14;
+    for(const tr of d.s.triggers){if(tr.length>3&&ql.includes(' '+tr.toLowerCase()+' '))sc+=3}
+    if(!d.s.core)sc*=.75;
+    if(sc>0)out.push({s:d.s,score:sc})
+  }
+  return out.sort((a,b)=>b.score-a.score).slice(0,k);
+}
+function matchedWhy(s,q){
+  const qt=new Set(tok(q)),hit=[];
+  for(const t of s.triggers){const tt=tok(t);if(tt.length&&tt.every(w=>qt.has(w))||tt.some(w=>qt.has(w)&&w.length>3)){hit.push(t)}}
+  return hit.slice(0,3);
+}
+const phasesOf=id=>PH.map((p,i)=>p.skills.includes(id)?i:-1).filter(i=>i>=0);
+const short=(t,n=150)=>{t=String(t).replace(/\s+/g,' ').trim();return t.length>n?t.slice(0,n-1).replace(/\s+\S*$/,'')+'...':t};
+const sk=id=>'`/'+id+'`';
+const roleMd=r=>agentById[r]?'`'+r+'`':'*'+r+'*';
+
+/* ---------- offline expert ---------- */
+function recommend(q){
+  const res=keepTop(search(q,6));
+  if(!res.length||res[0].score<3)return{md:'I could not find a strong match for that in the skill system. Try naming a technology (`fastapi`, `pandas`, `rag`, `docker`) or describe the project, for example `/plan a churn prediction model`.\n\nType `/help` to see what I can do.',src:[]};
+  const top=res.slice(0,5);
+  let md='For **'+short(q,90)+'**, these skills fit best:\n\n';
+  top.forEach((r,i)=>{const why=matchedWhy(r.s,q);md+=(i+1)+'. '+sk(r.s.id)+' - '+short(r.s.desc,130)+(why.length?' *(matched: '+why.join(', ')+')*':'')+'\n'});
+  const ph=[...new Set(top.flatMap(r=>phasesOf(r.s.id)))].sort((a,b)=>a-b);
+  if(ph.length){
+    md+='\n**Where they fit in the pipeline**\n\n';
+    ph.forEach(i=>{const p=PH[i];md+='- **'+(i+1)+'. '+p.n+'** - agents: '+p.roles.slice(0,4).map(roleMd).join(', ')+'\n'});
+  }
+  const rl=top[0].s.rules||[];
+  if(rl.length){md+='\n**Key rules from '+sk(top[0].s.id)+'**\n\n'+rl.slice(0,4).map(r=>'- '+r).join('\n')+'\n'}
+  md+='\nWant the full path? Ask `/plan '+short(q,60)+'`.';
+  return{md,src:top.map(r=>r.s.id)};
+}
+function plan(idea){
+  idea=idea.trim();
+  if(!idea)return{md:'Describe the project and I will lay it out across the 7 phases, for example:\n\n- `/plan a RAG support bot for our docs`\n- `/plan a fraud detection model with a FastAPI service`\n- `/plan a ChatGPT-style assistant with a premium UI`',src:[]};
+  const res=keepTop(search(idea,14)),rank=Object.fromEntries(res.map((r,i)=>[r.s.id,i]));
+  const hit=res.slice(0,4).map(r=>r.s.id);
+  let md='## Plan: '+short(idea,100)+'\n\n'+(hit.length?'Strongest matches: '+hit.map(sk).join(', ')+'.\n':'No close skill matches, so each phase shows its defaults.\n');
+  const src=new Set(hit);
+  PH.forEach((p,i)=>{
+    const matched=p.skills.filter(id=>id in rank).sort((a,b)=>rank[a]-rank[b]);
+    const defaults=p.skills.filter(id=>!(id in rank)).slice(0,matched.length?1:3);
+    const list=[...matched.slice(0,4),...defaults];
+    list.forEach(id=>src.add(id));
+    md+='\n### '+(i+1)+'. '+p.n+'\n';
+    md+='**Agents:** '+p.roles.slice(0,4).map(roleMd).join(', ')+'\n\n';
+    md+='**Skills:** '+(list.length?list.map(sk).join(', '):'none specific')+(matched.length?'':' *(defaults)*')+'\n\n';
+    md+='**Done when:** '+p.out+'.\n';
+  });
+  md+='\nStart with `/research-first`, then run `/master-pipeline` to drive these phases. Roles in *italics* are pipeline roles without a dedicated agent file.';
+  return{md,src:[...src].slice(0,10)};
+}
+function findSkill(name){
+  name=name.trim().toLowerCase().replace(/^\//,'');
+  if(byId[name])return byId[name];
+  const alias={sklearn:'scikit-learn',hf:'huggingface',gpt:'gpt-chat-ui',claude:'claude-api'};
+  if(alias[name]&&byId[alias[name]])return byId[alias[name]];
+  const r=search(name,1,false);return r[0]&&r[0].score>4?r[0].s:null;
+}
+function skillAnswer(name){
+  const s=findSkill(name);
+  if(!s)return recommend(name);
+  let md='### '+sk(s.id)+'\n*'+s.domain+(s.parent?' - part of `/'+s.parent+'`':'')+'*\n\n'+s.desc+'\n';
+  if(s.triggers.length)md+='\n**Activates on:** '+s.triggers.slice(0,10).join(', ')+'\n';
+  if(s.rules&&s.rules.length)md+='\n**Key rules**\n\n'+s.rules.map(r=>'- '+r).join('\n')+'\n';
+  const ph=phasesOf(s.id);
+  if(ph.length)md+='\n**Pipeline phase:** '+ph.map(i=>(i+1)+'. '+PH[i].n).join(', ')+'\n';
+  const rel=keepTop(search(s.id.replace(/-/g,' ')+' '+s.triggers.join(' '),6,true).filter(r=>r.s.id!==s.id)).slice(0,3);
+  if(rel.length)md+='\n**Related:** '+rel.map(r=>sk(r.s.id)).join(', ')+'\n';
+  return{md,src:[s.id,...rel.map(r=>r.s.id)]};
+}
+function agentAnswer(name){
+  name=name.trim().toLowerCase().replace(/^\//,'');
+  const a=agentById[name]||KB.agents.find(x=>x.id.includes(name));
+  if(!a)return{md:'No agent file called `'+name+'`. Available agents: '+KB.agents.map(x=>'`'+x.id+'`').join(', ')+'.',src:[]};
+  const ph=PH.map((p,i)=>p.roles.includes(a.id)?i:-1).filter(i=>i>=0);
+  let md='### `'+a.id+'` agent\n\n'+a.desc+'\n';
+  if(ph.length){md+='\n**Runs in:** '+ph.map(i=>(i+1)+'. '+PH[i].n).join(', ')+'\n';const ss=[...new Set(ph.flatMap(i=>PH[i].skills))].slice(0,6);md+='\n**Pairs with skills:** '+ss.map(sk).join(', ')+'\n'}
+  return{md,src:[]};
+}
+function phaseAnswer(n){
+  n=parseInt(n);
+  if(n>=1&&n<=7){
+    const p=PH[n-1];
+    return{md:'### Phase '+n+': '+p.n+'\n\n'+p.goal+'\n\n**Agents:** '+p.roles.map(roleMd).join(', ')+'\n\n**Skills:** '+p.skills.map(sk).join(', ')+'\n\n**Done when:** '+p.out+'.',src:p.skills.slice(0,6)};
+  }
+  let md='The master pipeline runs **seven phases**, from idea to production:\n\n';
+  PH.forEach((p,i)=>{md+=(i+1)+'. **'+p.n+'** - '+p.goal+' Output: '+p.out+'.\n'});
+  md+='\nAsk about one phase with `/phase 5`, or plan a project with `/plan <idea>`. Roles in *italics* are pipeline roles without a dedicated agent file.';
+  return{md,src:[]};
+}
+function installAnswer(){
+  return{md:'Install it into any project, then Claude Code loads the skills automatically:\n\n'+FENCE+'bash\ngit clone https://github.com/amutaal122/ai-engineer-master.git temp\ncp -r temp/.claude .claude\nrm -rf temp\n'+FENCE+'\n\nOn Windows PowerShell:\n\n'+FENCE+'powershell\ngit clone https://github.com/amutaal122/ai-engineer-master.git temp\nCopy-Item temp\\.claude .claude -Recurse\nRemove-Item temp -Recurse -Force\n'+FENCE+'\n\nThen start with `/research-first` before you design or code.',src:[]};
+}
+function listAnswer(){
+  const by={};core.forEach(s=>(by[s.domain]=by[s.domain]||[]).push(s.id));
+  let md='The system has **'+core.length+' skills** ('+KB.skills.length+' counting research sub-skills), **'+KB.agents.length+' agents**, **'+KB.commands.length+' commands** and **'+KB.workflows.length+' workflows**.\n\n';
+  Object.keys(by).forEach(d=>{md+='**'+d+'** ('+by[d].length+'): '+(by[d].length>9?by[d].slice(0,9).map(sk).join(', ')+' and more':by[d].map(sk).join(', '))+'\n\n'});
+  return{md,src:[]};
+}
+function helpAnswer(){
+  return{md:'I am grounded in your AI Engineer Master files, so I only recommend what is actually in them.\n\n- Describe a project or a problem and I pick the skills and agents\n- `/plan <idea>` lays it out across the 7 phases\n- `/skill <name>` explains one skill, `/agent <name>` one agent\n- `/phase <1-7>` details a phase, `/install` shows setup\n- Press `Ctrl K` to search everything\n\nIn Settings you can switch to a live model that gets the matching skill text as context.',src:[]};
+}
+function answer(q){
+  const t=q.trim(),l=t.toLowerCase();let m;
+  if((m=t.match(/^\/plan\b\s*([\s\S]*)/i)))return plan(m[1]);
+  if((m=t.match(/^\/skill\s+(.+)/i)))return skillAnswer(m[1]);
+  if((m=t.match(/^\/agent\s+(.+)/i)))return agentAnswer(m[1]);
+  if((m=t.match(/^\/phase\s*(\d)?/i)))return phaseAnswer(m[1]);
+  if(/^\/install/i.test(t)||/\b(install|set ?up|get started|getting started)\b/.test(l))return installAnswer();
+  if(/^\/help/i.test(t)||/what can you (do|help)/.test(l))return helpAnswer();
+  if(/\b(plan|roadmap|end to end|from scratch|step by step|how (do|should|would) i (build|ship|launch))\b/.test(l))return plan(t.replace(/^(plan|make a plan for)\s*/i,''));
+  const n=l.match(/\bphase\s*(\d)\b/);if(n)return phaseAnswer(n[1]);
+  const pn=PH.findIndex(p=>new RegExp('\\b'+p.n.toLowerCase()+' phase\\b|\\bthe '+p.n.toLowerCase()+' (phase|stage)\\b').test(l));if(pn>=0)return phaseAnswer(pn+1);
+  if(/\b(pipeline|phases|workflow)\b/.test(l)&&!/\bbuild\b/.test(l))return phaseAnswer();
+  if(/\b(list|how many)\b.*\b(skills|agents|commands)\b|\ball (the |your )?(skills|agents|commands)\b|\bwhat (skills|agents|commands) (do|are|exist)\b/.test(l))return listAnswer();
+  const ag=KB.agents.find(a=>new RegExp('(^|[^a-z-])'+a.id+'([^a-z-]|$)').test(l));
+  if(ag&&l.split(/\s+/).length<9)return agentAnswer(ag.id);
+  const named=core.filter(s=>new RegExp('(^|[^a-z0-9-])'+s.id.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')+'([^a-z0-9-]|$)').test(l));
+  if(named.length===1&&l.split(/\s+/).length<9)return skillAnswer(named[0].id);
+  return recommend(t);
+}
+
+/* ---------- live models ---------- */
+function systemPrompt(q,k){
+  const res=search(q,k,false);
+  let c='You are the AI Engineer Master assistant. You help engineers choose and use the skills, agents, commands and 7-phase pipeline in the AI Engineer Master system.\nRules: answer from the CONTEXT below; recommend skills as `/skill-name`; name the pipeline phase; if the context does not cover the question, say so plainly instead of guessing. Be concise and use markdown.\n\nPIPELINE: '+PH.map((p,i)=>(i+1)+'.'+p.n+' ['+p.roles.join(', ')+']').join(' | ')+'\nAGENTS: '+KB.agents.map(a=>a.id).join(', ')+'\nCOMMANDS: '+KB.commands.map(x=>'/'+x.id).join(', ')+', '+KB.workflows.map(x=>'/'+x.id).join(', ')+'\nSKILLS BY DOMAIN:\n';
+  const by={};core.forEach(s=>(by[s.domain]=by[s.domain]||[]).push(s.id));
+  Object.keys(by).forEach(d=>c+='- '+d+': '+by[d].join(', ')+'\n');
+  c+='\nCONTEXT (best matches for the latest question):\n';
+  res.forEach(r=>{c+='\n[/'+r.s.id+' | '+r.s.domain+']\n'+r.s.desc+'\n'+(r.s.triggers.length?'Triggers: '+r.s.triggers.join(', ')+'\n':'')+(r.s.rules&&r.s.rules.length?'Rules: '+r.s.rules.join('; ')+'\n':'')+r.s.body.slice(0,700)+'\n'});
+  return{text:c,src:res.map(r=>r.s.id)};
+}
+async function readSSE(res,fn){const rd=res.body.getReader(),dc=new TextDecoder();let b='';for(;;){const{value,done}=await rd.read();if(done)break;b+=dc.decode(value,{stream:true});const ls=b.split('\n');b=ls.pop();for(const l of ls)if(l.startsWith('data:'))fn(l.slice(5).trim())}}
+async function errText(r){try{const j=await r.json();return(j.error&&j.error.message)||JSON.stringify(j)}catch(e){return r.status+' '+r.statusText}}
+async function liveOpenAI(sys,msgs,tok_,sig){
+  const st=S.settings;
+  const r=await fetch('https://api.openai.com/v1/chat/completions',{method:'POST',signal:sig,headers:{'Content-Type':'application/json',Authorization:'Bearer '+st.key},body:JSON.stringify({model:st.model,temperature:.3,stream:true,messages:[{role:'system',content:sys},...msgs]})});
+  if(!r.ok)throw new Error(await errText(r));
+  await readSSE(r,d=>{if(d==='[DONE]')return;try{const t=JSON.parse(d).choices?.[0]?.delta?.content;if(t)tok_(t)}catch(e){}});
+}
+async function liveAnthropic(sys,msgs,tok_,sig){
+  const st=S.settings;
+  const r=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',signal:sig,headers:{'Content-Type':'application/json','x-api-key':st.key,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},body:JSON.stringify({model:st.model,max_tokens:2048,temperature:.3,stream:true,system:sys,messages:msgs})});
+  if(!r.ok)throw new Error(await errText(r));
+  await readSSE(r,d=>{try{const j=JSON.parse(d);if(j.type==='content_block_delta'&&j.delta&&j.delta.text)tok_(j.delta.text)}catch(e){}});
+}
+
+/* ---------- markdown ---------- */
+function codeBlock(b){return '<div class="code"><div class="codebar"><span>'+esc(b.l||'text')+'</span><button type="button" data-copy>Copy</button></div><pre><code>'+esc(b.c.replace(/\n$/,''))+'</code></pre></div>'}
+function md(src){
+  const blocks=[];
+  let s=src.replace(/(^|\n)```(\w*)\n?([\s\S]*?)(```|$)/g,(m,pre,l,c)=>{blocks.push({l,c});return pre+'\u0000'+(blocks.length-1)+'\u0000'});
+  s=esc(s);
+  const inl=t=>t.replace(/`([^`]+)`/g,'<code>$1</code>').replace(/\*\*([^*]+)\*\*/g,'<strong>$1</strong>').replace(/(^|[^*])\*([^*\n]+)\*/g,'$1<em>$2</em>').replace(/\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)/g,'<a href="$2" target="_blank" rel="noopener noreferrer">$1</a>');
+  let out='',list=null;const close=()=>{if(list){out+='</'+list+'>';list=null}};
+  for(const ln of s.split('\n')){
+    let m;
+    if((m=ln.match(/^\u0000(\d+)\u0000$/))){close();out+=codeBlock(blocks[+m[1]]);continue}
+    if((m=ln.match(/^(#{1,4})\s+(.*)/))){close();const n=m[1].length+2;out+='<h'+n+'>'+inl(m[2])+'</h'+n+'>';continue}
+    if((m=ln.match(/^\s*[-*]\s+(.*)/))){if(list!=='ul'){close();out+='<ul>';list='ul'}out+='<li>'+inl(m[1])+'</li>';continue}
+    if((m=ln.match(/^\s*\d+\.\s+(.*)/))){if(list!=='ol'){close();out+='<ol>';list='ol'}out+='<li>'+inl(m[1])+'</li>';continue}
+    close();if(ln.trim()==='')continue;out+='<p>'+inl(ln)+'</p>';
+  }
+  close();return out;
+}
+function linkify(el){el.querySelectorAll('code').forEach(c=>{if(c.closest('pre'))return;const m=c.textContent.match(/^\/([a-z0-9-]+)$/);if(m&&byId[m[1]]){c.classList.add('sk');c.dataset.sk=m[1];c.title='Open '+m[1]}})}
+
+/* ---------- state ---------- */
+let S={chats:[],cur:null,settings:{provider:'offline',key:'',remember:false,model:'gpt-4o-mini',k:6}};
+let busy=false,ctrl=null,pinned=true;
+const MODELS={openai:'gpt-4o-mini',anthropic:'claude-sonnet-5-5',offline:''};
+function persist(){
+  lsSet('aem.chats',S.chats.map(c=>({...c,messages:c.messages.map(({streaming,...m})=>m)})));lsSet('aem.cur',S.cur);
+  const st={...S.settings};if(!st.remember)st.key='';lsSet('aem.settings',st);
+}
+function load(){
+  const c=lsGet('aem.chats'),st=lsGet('aem.settings');
+  if(Array.isArray(c))S.chats=c;if(st)S.settings={...S.settings,...st};
+  const cur=lsGet('aem.cur');S.cur=S.chats.some(x=>x.id===cur)?cur:null;
+  const th=lsGet('aem.theme');if(th)document.documentElement.dataset.theme=th;
+}
+const chat=()=>S.chats.find(c=>c.id===S.cur);
+
+/* ---------- views ---------- */
+const VIEWS=[['chat','Assistant','<path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z"/>'],['skills','Skills','<path d="M12 3l9 5-9 5-9-5 9-5zM3 13l9 5 9-5M3 18l9 5 9-5" transform="scale(.95) translate(.6 -1)"/>'],['agents','Agents','<circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7"/>'],['pipeline','Pipeline','<circle cx="5" cy="12" r="2.2"/><circle cx="12" cy="12" r="2.2"/><circle cx="19" cy="12" r="2.2"/><path d="M7.2 12h2.6M14.2 12h2.6"/>'],['commands','Commands','<path d="M4 17l6-5-6-5M12 19h8"/>']];
+const COUNTS={skills:core.length,agents:KB.agents.length,pipeline:7,commands:KB.commands.length+KB.workflows.length};
+let view='chat';
+function renderNav(){
+  $('#nav').innerHTML=VIEWS.map(([id,l,ic])=>'<button data-v="'+id+'"'+(id===view?' aria-current="page"':'')+'><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">'+ic+'</svg>'+l+(COUNTS[id]?'<span class="n">'+COUNTS[id]+'</span>':'')+'</button>').join('');
+}
+function go(v){
+  if(!VIEWS.some(x=>x[0]===v))v='chat';
+  view=v;document.body.classList.remove('nav');
+  document.querySelectorAll('.view').forEach(e=>e.classList.toggle('on',e.id==='v-'+v));
+  $('#vt').textContent=VIEWS.find(x=>x[0]===v)[1];renderNav();
+  if(v==='skills')renderSkills();if(v==='agents')renderAgents();if(v==='pipeline')renderPipeline();if(v==='commands')renderCommands();
+  if(v==='chat')setTimeout(()=>$('#input').focus({preventScroll:true}),0);
+  if(location.hash!=='#'+v)history.replaceState(null,'','#'+v);
+}
+$('#nav').addEventListener('click',e=>{const b=e.target.closest('[data-v]');if(b)go(b.dataset.v)});
+addEventListener('hashchange',()=>go(location.hash.slice(1)));
+
+/* skills */
+let fDom='All',fQ='',fSub=false;
+function renderSkills(){
+  const host=$('#p-skills');
+  const pool=KB.skills.filter(s=>fSub||s.core);
+  const doms=['All',...Object.keys(DCOL).filter(d=>pool.some(s=>s.domain===d))];
+  let list=pool.filter(s=>fDom==='All'||s.domain===fDom);
+  if(fQ){const ids=new Set(search(fQ,60,!fSub).map(r=>r.s.id));const ql=fQ.toLowerCase();list=list.filter(s=>ids.has(s.id)||s.id.includes(ql))}
+  host.innerHTML='<h1>Skills</h1><p class="lead">Every skill Claude Code can load, searchable by what you want to build.</p>'+
+   '<div class="bar"><input id="sq" type="search" placeholder="Search by technology or goal, e.g. rag, docker, prompt" value="'+esc(fQ)+'" aria-label="Search skills"><label class="chip" style="cursor:pointer"><input type="checkbox" id="ssub"'+(fSub?' checked':'')+'> Include '+(KB.skills.length-core.length)+' research sub-skills</label><span class="chip">'+list.length+' shown</span></div>'+
+   '<div class="fchips">'+doms.map(d=>'<button data-d="'+esc(d)+'" aria-pressed="'+(d===fDom)+'">'+(d==='All'?'':'<span class="dot" style="--c:'+col(d)+'"></span>')+d+'<em>'+(d==='All'?pool.length:pool.filter(s=>s.domain===d).length)+'</em></button>').join('')+'</div>'+
+   '<div class="grid">'+list.map(s=>'<button class="card" data-sk="'+esc(s.id)+'"><h4><span class="dot" style="--c:'+col(s.domain)+'"></span>/'+esc(s.id)+'</h4><p>'+esc(short(s.desc,170))+'</p><div class="tg">'+s.triggers.slice(0,3).map(t=>'<span>'+esc(t)+'</span>').join('')+'</div></button>').join('')+'</div>'+(list.length?'':'<p class="lead">No skills match. Try a broader word.</p>');
+  const q=$('#sq');q.oninput=()=>{fQ=q.value;const pos=q.selectionStart;renderSkills();const n=$('#sq');n.focus();n.setSelectionRange(pos,pos)};
+  $('#ssub').onchange=e=>{fSub=e.target.checked;renderSkills()};
+}
+$('#p-skills').addEventListener('click',e=>{const d=e.target.closest('[data-d]');if(d){fDom=d.dataset.d;renderSkills();return}const c=e.target.closest('[data-sk]');if(c)openSkill(c.dataset.sk)});
+
+/* agents */
+function renderAgents(){
+  const roles=[...new Set(PH.flatMap(p=>p.roles))].filter(r=>!agentById[r]);
+  $('#p-agents').innerHTML='<h1>Agents</h1><p class="lead">'+KB.agents.length+' agents ship as files you can call. Dashed cards are pipeline roles that the master pipeline names but that do not have an agent file yet.</p>'+
+   '<div class="grid">'+KB.agents.map(a=>{const ph=PH.map((p,i)=>p.roles.includes(a.id)?i:-1).filter(i=>i>=0);return '<button class="card" data-ag="'+esc(a.id)+'"><h4><span class="dot" style="--c:'+(ph.length?PH[ph[0]].c:'#9aa7bd')+'"></span>'+esc(a.id)+'</h4><p>'+esc(short(a.desc,170))+'</p><div class="tg">'+ph.map(i=>'<span>'+(i+1)+'. '+PH[i].n+'</span>').join('')+'</div></button>'}).join('')+'</div>'+
+   '<div class="gh">Pipeline roles without an agent file ('+roles.length+')</div><div class="grid">'+roles.map(r=>{const i=PH.findIndex(p=>p.roles.includes(r));return '<div class="card role"><h4><span class="dot" style="--c:'+PH[i].c+'"></span>'+esc(r)+'</h4><p>Role in phase '+(i+1)+': '+PH[i].n+'. Create <code class="mono">.claude/agents/'+esc(r)+'.md</code> to make it callable.</p></div>'}).join('')+'</div>';
+}
+$('#p-agents').addEventListener('click',e=>{const c=e.target.closest('[data-ag]');if(c)openAgent(c.dataset.ag)});
+
+/* pipeline */
+let selPh=0,running=false,runTimer=null;
+function renderPipeline(){
+  const p=PH[selPh];
+  $('#p-pipeline').innerHTML='<h1>Master pipeline</h1><p class="lead">Seven phases from idea to production. Select a phase, or run the walkthrough.</p>'+
+   '<div class="bar"><button class="btn primary" id="prun">'+(running?'Stop walkthrough':'Run walkthrough')+'</button><button class="btn" id="pplan">Plan a project with this</button></div>'+
+   '<div class="flow">'+PH.map((q,i)=>'<button class="node'+(i<selPh?' done':'')+'" style="--c:'+q.c+'" data-ph="'+i+'" aria-pressed="'+(i===selPh)+'"><i>'+(i+1)+'</i><b>'+q.n+'</b></button>').join('')+'</div>'+
+   '<div class="pd" style="border-top:3px solid '+p.c+'"><div><h3 style="color:'+p.c+'">'+(selPh+1)+'. '+p.n+'</h3><p style="color:var(--mute);margin:0">'+esc(p.goal)+'</p><div class="l">Done when</div><p style="margin:0">'+esc(p.out)+'</p><div class="l">Agents and roles</div><div class="row">'+p.roles.map(r=>agentById[r]?'<button class="role-chip has" data-ag="'+r+'">'+r+'</button>':'<span class="role-chip" title="Pipeline role without an agent file">'+r+'</span>').join('')+'</div></div>'+
+   '<div><div class="l" style="margin-top:0">Skills for this phase</div><div class="row">'+p.skills.map(id=>'<button class="chip" data-sk="'+id+'"><span class="dot" style="--c:'+col(byId[id].domain)+'"></span>/'+id+'</button>').join('')+'</div><div class="l">Ask the assistant</div><div class="row"><button class="btn" data-ask="/phase '+(selPh+1)+'">Explain this phase</button></div></div></div>';
+}
+function stopRun(){running=false;clearInterval(runTimer)}
+$('#p-pipeline').addEventListener('click',e=>{
+  const n=e.target.closest('[data-ph]');if(n){stopRun();selPh=+n.dataset.ph;renderPipeline();return}
+  if(e.target.closest('#prun')){if(running){stopRun()}else{running=true;selPh=0;runTimer=setInterval(()=>{if(selPh>=6){stopRun()}else selPh++;if(view==='pipeline')renderPipeline()},1500)}renderPipeline();return}
+  if(e.target.closest('#pplan')){go('chat');$('#input').value='/plan ';autosize();$('#input').focus();return}
+  const a=e.target.closest('[data-ask]');if(a){go('chat');send(a.dataset.ask);return}
+  const s=e.target.closest('[data-sk]');if(s){openSkill(s.dataset.sk);return}
+  const g=e.target.closest('[data-ag]');if(g)openAgent(g.dataset.ag);
+});
+
+/* commands */
+function renderCommands(){
+  const row=(id,d)=>'<div class="card" style="flex-direction:row;align-items:center;gap:12px"><div style="flex:1;min-width:0"><h4>/'+esc(id)+'</h4><p style="-webkit-line-clamp:2">'+esc(short(d,200))+'</p></div><button class="btn" data-cp="/'+esc(id)+'">Copy</button></div>';
+  $('#p-commands').innerHTML='<h1>Commands and workflows</h1><p class="lead">Type these in Claude Code once the skills are installed.</p><div class="gh">Workflows</div><div class="grid" style="grid-template-columns:repeat(auto-fill,minmax(340px,1fr))">'+KB.workflows.map(w=>row(w.id,w.desc||'Workflow')).join('')+'</div><div class="gh">Commands</div><div class="grid" style="grid-template-columns:repeat(auto-fill,minmax(340px,1fr))">'+KB.commands.map(c=>row(c.id,c.desc||'Command')).join('')+'</div>';
+}
+$('#p-commands').addEventListener('click',e=>{const b=e.target.closest('[data-cp]');if(b)copyTxt(b.dataset.cp,b)});
+
+/* ---------- drawer ---------- */
+let lastFocus=null;
+function openDrawer(title,html,foot){
+  lastFocus=document.activeElement;
+  $('#dt').textContent=title;$('#db').innerHTML=html;$('#df').innerHTML=foot||'';
+  $('#drawer').classList.add('on');$('#drawer').setAttribute('aria-hidden','false');$('#back').classList.add('on');
+  setTimeout(()=>$('#dc').focus(),30);
+}
+function closeDrawer(){$('#drawer').classList.remove('on');$('#drawer').setAttribute('aria-hidden','true');$('#back').classList.remove('on');if(lastFocus&&lastFocus.focus)lastFocus.focus()}
+$('#dc').onclick=$('#back').onclick=closeDrawer;
+function openSkill(id){
+  const s=byId[id];if(!s)return;
+  const ph=phasesOf(id);
+  openDrawer('/'+s.id,
+   '<div class="tags"><span><span class="dot" style="--c:'+col(s.domain)+';display:inline-block;margin-right:6px"></span>'+esc(s.domain)+'</span>'+(s.parent?'<span>in /'+esc(s.parent)+'</span>':'')+ph.map(i=>'<span style="border-color:'+PH[i].c+'">'+(i+1)+'. '+PH[i].n+'</span>').join('')+'</div>'+
+   '<div class="l">What it does</div><p>'+esc(s.desc)+'</p>'+
+   (s.triggers.length?'<div class="l">Activates on</div><div class="tags">'+s.triggers.map(t=>'<span>'+esc(t)+'</span>').join('')+'</div>':'')+
+   (s.rules&&s.rules.length?'<div class="l">Key rules</div><ul>'+s.rules.map(r=>'<li>'+esc(r)+'</li>').join('')+'</ul>':'')+
+   '<div class="l">Install path</div><p><code class="mono" style="font-size:12.5px">.claude/skills/'+esc((s.parent&&s.core===false?s.parent+'/':'')+s.id)+'/SKILL.md</code></p>',
+   '<button class="btn" data-cp="/'+esc(s.id)+'">Copy command</button><button class="btn primary" data-askd="/skill '+esc(s.id)+'">Ask about this</button>');
+}
+function openAgent(id){
+  const a=agentById[id];if(!a)return;
+  const ph=PH.map((p,i)=>p.roles.includes(id)?i:-1).filter(i=>i>=0);
+  openDrawer(id,'<div class="tags">'+ph.map(i=>'<span style="border-color:'+PH[i].c+'">'+(i+1)+'. '+PH[i].n+'</span>').join('')+'</div><div class="l">Role</div><p>'+esc(a.desc)+'</p><div class="l">Install path</div><p><code class="mono" style="font-size:12.5px">.claude/agents/'+esc(id)+'.md</code></p>','<button class="btn primary" data-askd="/agent '+esc(id)+'">Ask about this</button>');
+}
+$('#drawer').addEventListener('click',e=>{
+  const c=e.target.closest('[data-cp]');if(c){copyTxt(c.dataset.cp,c);return}
+  const a=e.target.closest('[data-askd]');if(a){closeDrawer();go('chat');send(a.dataset.askd)}
+});
+
+/* ---------- palette ---------- */
+const pal=$('#pal');let palItems=[],palSel=0;
+function palBuild(q){
+  const ql=q.trim().toLowerCase(),out=[];
+  if(ql)out.push({ty:'ask',lb:'Ask: '+short(q,60),sb:'Send to the assistant',run:()=>{go('chat');send(q)}});
+  const m=(t)=>!ql||t.toLowerCase().includes(ql);
+  VIEWS.forEach(([id,l])=>{if(m(l))out.push({ty:'go',lb:l,sb:'Open view',run:()=>go(id)})});
+  PH.forEach((p,i)=>{if(m(p.n+' phase'))out.push({ty:'phase',lb:(i+1)+'. '+p.n,sb:p.goal,run:()=>{selPh=i;go('pipeline')}})});
+  const sr=ql?search(ql,10,false).map(r=>r.s):core.slice(0,6);
+  sr.forEach(s=>out.push({ty:'skill',lb:'/'+s.id,sb:short(s.desc,80),run:()=>openSkill(s.id)}));
+  KB.agents.forEach(a=>{if(m(a.id))out.push({ty:'agent',lb:a.id,sb:short(a.desc,80),run:()=>openAgent(a.id)})});
+  [...KB.commands,...KB.workflows].forEach(c=>{if(m(c.id))out.push({ty:'cmd',lb:'/'+c.id,sb:short(c.desc||'',80),run:()=>{go('commands')}})});
+  return out.slice(0,14);
+}
+function palRender(){
+  $('#pr').innerHTML=palItems.map((it,i)=>'<button role="option" data-i="'+i+'" aria-selected="'+(i===palSel)+'"><span class="ty">'+it.ty+'</span><span class="lb">'+esc(it.lb)+'</span><span class="sb">'+esc(it.sb)+'</span></button>').join('')||'<p style="padding:14px;color:var(--mute);margin:0">Nothing found.</p>';
+  const s=$('#pr [aria-selected=true]');if(s)s.scrollIntoView({block:'nearest'});
+}
+function palOpen(){pal.showModal?pal.showModal():pal.setAttribute('open','');$('#pq').value='';palItems=palBuild('');palSel=0;palRender();$('#pq').focus()}
+function palRun(i){const it=palItems[i];if(!it)return;pal.close();it.run()}
+$('#pq').oninput=e=>{palItems=palBuild(e.target.value);palSel=0;palRender()};
+$('#pq').onkeydown=e=>{
+  if(e.key==='ArrowDown'){e.preventDefault();palSel=Math.min(palItems.length-1,palSel+1);palRender()}
+  if(e.key==='ArrowUp'){e.preventDefault();palSel=Math.max(0,palSel-1);palRender()}
+  if(e.key==='Enter'){e.preventDefault();palRun(palSel)}
+};
+$('#pr').onclick=e=>{const b=e.target.closest('[data-i]');if(b)palRun(+b.dataset.i)};
+pal.addEventListener('click',e=>{if(e.target===pal)pal.close()});
+$('#palBtn').onclick=palOpen;
+
+/* ---------- chat ---------- */
+const SEND='<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg>';
+const STOPI='<svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><rect x="5" y="5" width="14" height="14" rx="2.5"/></svg>';
+function setBusy(b){busy=b;$('#send').innerHTML=b?STOPI:SEND;$('#send').setAttribute('aria-label',b?'Stop':'Send');$('#send').disabled=!b&&!$('#input').value.trim()}
+function autosize(){const i=$('#input');i.style.height='auto';i.style.height=Math.min(i.scrollHeight,190)+'px';if(!busy)$('#send').disabled=!i.value.trim();hints()}
+const SLASH=[['/plan','Lay out a project across the 7 phases'],['/skill','Explain one skill, e.g. /skill fastapi'],['/agent','Explain one agent'],['/phase','Detail a phase, e.g. /phase 4'],['/install','Install the system in a project'],['/help','What I can do']];
+function hints(){
+  const v=$('#input').value,h=$('#hints');
+  if(!/^\/[a-z]*$/.test(v)){h.classList.remove('on');return}
+  const items=SLASH.filter(s=>s[0].startsWith(v));
+  if(!items.length){h.classList.remove('on');return}
+  h.innerHTML=items.map(s=>'<button type="button" data-h="'+s[0]+'"><code>'+s[0]+'</code><span>'+s[1]+'</span></button>').join('');h.classList.add('on');
+}
+$('#hints').addEventListener('click',e=>{const b=e.target.closest('[data-h]');if(b){$('#input').value=b.dataset.h+' ';autosize();$('#input').focus()}});
+function renderNote(){const st=S.settings;$('#note').textContent=st.provider==='offline'?'Offline expert: answers come only from your skill files. Switch to a live model in Settings for open-ended help.':'Live model '+st.model+' with your top '+st.k+' matching skills as context. Check important details.'}
+const PROMPTS=[['I am building a RAG support bot','Which skills and agents should I use?','I am building a RAG support bot. Which skills and agents should I use?'],['/plan a fraud detection model with a FastAPI service','Phase-by-phase plan','/plan a fraud detection model with a FastAPI service'],['Walk me through the security phase','Agents, skills and exit criteria','/phase 5'],['How do I install this in my project?','Two commands, any OS','/install']];
+function srcChips(ids,label){
+  const u=[...new Set(ids||[])].filter(i=>byId[i]);if(!u.length)return'';
+  return '<div class="src"><small>'+(label||'Grounded in')+'</small>'+u.slice(0,8).map(i=>'<button type="button" class="chip" data-sk="'+i+'"><span class="dot" style="--c:'+col(byId[i].domain)+'"></span>/'+i+'</button>').join('')+'</div>';
+}
+function msgEl(m,i,last){
+  const el=document.createElement('div');el.className='msg '+m.role;
+  if(m.role==='assistant'){el.innerHTML='<div class="av"><span>AEM</span></div>'}
+  const body=document.createElement('div');body.className='body';
+  if(m.role==='user')body.textContent=m.content;
+  else{
+    const d=document.createElement('div');d.className='md'+(m.error?' err':'');d.innerHTML=md(m.content)+(m.streaming?'<span class="cursor"></span>':'');linkify(d);body.appendChild(d);
+    if(!m.streaming){
+      if(m.src&&m.src.length)body.insertAdjacentHTML('beforeend',srcChips(m.src));
+      const a=document.createElement('div');a.className='acts';
+      const mk=(l,fn,p)=>{const b=document.createElement('button');b.type='button';b.textContent=l;b.onclick=fn;if(p!==undefined)b.setAttribute('aria-pressed',p);a.appendChild(b)};
+      mk('Copy',e=>copyTxt(m.content,e.currentTarget));if(last)mk('Regenerate',regenerate);
+      mk('Helpful',()=>{m.fb=m.fb==='up'?null:'up';persist();renderThread(true)},m.fb==='up');mk('Not helpful',()=>{m.fb=m.fb==='down'?null:'down';persist();renderThread(true)},m.fb==='down');
+      body.appendChild(a);
+    }
+  }
+  el.appendChild(body);return el;
+}
+function renderThread(keep){
+  const c=chat(),box=$('#msgs');box.innerHTML='';
+  if(!c||!c.messages.length){
+    box.innerHTML='<div class="hero"><div class="ring"><b>7</b></div><h1>Build any AI project at job level.</h1><p>Ask which skills, agents and pipeline phases fit your project. Answers come from your own AI Engineer Master files.</p><div class="stats"><div><b>'+core.length+'</b>skills</div><div><b>'+KB.agents.length+'</b>agents</div><div><b>7</b>phases</div><div><b>'+(KB.commands.length+KB.workflows.length)+'</b>commands</div></div><div class="cards">'+PROMPTS.map((p,i)=>'<button class="pc" data-p="'+i+'"><b>'+esc(p[0])+'</b><small>'+esc(p[1])+'</small></button>').join('')+'</div></div>';
+    renderCtx([]);return;
+  }
+  c.messages.forEach((m,i)=>box.appendChild(msgEl(m,i,i===c.messages.length-1&&m.role==='assistant')));
+  const last=[...c.messages].reverse().find(m=>m.role==='assistant'&&m.src);renderCtx(last?last.src:[]);
+  if(!keep&&pinned)$('#thread').scrollTop=$('#thread').scrollHeight;
+}
+function renderCtx(ids){
+  const u=[...new Set(ids)].filter(i=>byId[i]).slice(0,8);
+  $('#ctx').innerHTML='<h3>Grounded in</h3><p class="s">'+(u.length?'The skills behind the latest answer.':'Skills used to answer will appear here.')+'</p>'+u.map(i=>{const s=byId[i];return '<button class="sc" data-sk="'+i+'"><b><span class="dot" style="--c:'+col(s.domain)+'"></span>/'+i+'</b><span>'+esc(short(s.desc,130))+'</span></button>'}).join('');
+}
+function renderRecent(){
+  $('#recent').innerHTML=[...S.chats].sort((a,b)=>b.updated-a.updated).slice(0,30).map(c=>'<div class="r'+(c.id===S.cur?' on':'')+'"><button class="t" data-c="'+c.id+'">'+esc(c.title)+'</button><button class="x" data-x="'+c.id+'" aria-label="Delete chat">&#10005;</button></div>').join('')||'<p style="color:var(--mute);padding:4px 8px;margin:0;font-size:12.5px">No chats yet.</p>';
+}
+$('#recent').addEventListener('click',e=>{
+  const c=e.target.closest('[data-c]');if(c&&!busy){S.cur=c.dataset.c;persist();go('chat');renderAll();return}
+  const x=e.target.closest('[data-x]');if(x&&!busy){S.chats=S.chats.filter(k=>k.id!==x.dataset.x);if(S.cur===x.dataset.x)S.cur=null;persist();renderAll()}
+});
+function renderAll(){renderRecent();renderThread();renderNote();setBusy(busy)}
+$('#msgs').addEventListener('click',e=>{
+  const p=e.target.closest('[data-p]');if(p){send(PROMPTS[+p.dataset.p][2]);return}
+  const c=e.target.closest('[data-copy]');if(c){copyTxt(c.closest('.code').querySelector('code').textContent,c);return}
+  const s=e.target.closest('[data-sk]');if(s)openSkill(s.dataset.sk);
+});
+$('#ctx').addEventListener('click',e=>{const s=e.target.closest('[data-sk]');if(s)openSkill(s.dataset.sk)});
+$('#thread').addEventListener('scroll',()=>{const t=$('#thread');pinned=t.scrollHeight-t.scrollTop-t.clientHeight<90},{passive:true});
+async function copyTxt(t,btn){const o=btn.textContent;try{await navigator.clipboard.writeText(t);btn.textContent='Copied'}catch(e){btn.textContent='Press Ctrl+C'}setTimeout(()=>btn.textContent=o,1300)}
+
+async function run(){
+  const c=chat(),st=S.settings;
+  const hist=c.messages.filter(m=>!m.error).map(m=>({role:m.role,content:m.content}));
+  const a={role:'assistant',content:'',ts:Date.now(),streaming:true,src:[]};c.messages.push(a);
+  ctrl=new AbortController();setBusy(true);pinned=true;renderThread();
+  let raf=0;const upd=()=>{raf=0;const el=$('#msgs').lastElementChild?.querySelector('.md');if(el){el.innerHTML=md(a.content)+'<span class="cursor"></span>';linkify(el);if(pinned)$('#thread').scrollTop=$('#thread').scrollHeight}};
+  const onTok=t=>{a.content+=t;if(!raf)raf=requestAnimationFrame(upd)};
+  try{
+    const q=hist[hist.length-1].content;
+    if(st.provider==='offline'){
+      const r=answer(q);a.src=r.src;
+      const parts=r.md.match(/\S+\s*|\n+/g)||[];
+      for(const p of parts){if(ctrl.signal.aborted)throw new DOMException('Aborted','AbortError');onTok(p);await sleep(8+Math.random()*14)}
+    }else{
+      if(!st.key)throw new Error('Add your API key in Settings, or switch to the offline expert.');
+      const ctx=systemPrompt(q,st.k);a.src=ctx.src;
+      await (st.provider==='openai'?liveOpenAI:liveAnthropic)(ctx.text,hist,onTok,ctrl.signal);
+    }
+  }catch(e){
+    if(e.name!=='AbortError'){a.error=true;let m=e.message||String(e);if(/Failed to fetch|NetworkError|Load failed/i.test(m))m='Could not reach the provider. If this page is inside a sandboxed viewer, outside API calls are blocked: save the file and open it locally. Otherwise check your connection and key.';a.content=(a.content?a.content+'\n\n':'')+'Error: '+m;a.src=[]}
+  }finally{a.streaming=false;if(!a.content)a.content='(stopped)';c.updated=Date.now();ctrl=null;persist();setBusy(false);renderAll()}
+}
+function send(text){
+  text=text.trim();if(!text||busy)return;
+  if(view!=='chat')go('chat');
+  let c=chat();if(!c){c={id:uid(),title:'New chat',messages:[],updated:Date.now()};S.chats.push(c);S.cur=c.id}
+  c.messages.push({role:'user',content:text,ts:Date.now()});
+  if(c.title==='New chat')c.title=short(text.replace(/^\/\w+\s*/,'')||text,38);
+  c.updated=Date.now();$('#input').value='';autosize();renderAll();run();
+}
+function regenerate(){const c=chat();if(!c||busy)return;while(c.messages.length&&c.messages[c.messages.length-1].role==='assistant')c.messages.pop();if(c.messages.length){persist();run()}}
+function newChat(){if(busy)return;const e=S.chats.find(c=>!c.messages.length);if(e)S.cur=e.id;else{const c={id:uid(),title:'New chat',messages:[],updated:Date.now()};S.chats.push(c);S.cur=c.id}persist();go('chat');renderAll();$('#input').focus()}
+
+/* ---------- wiring ---------- */
+$('#input').addEventListener('input',autosize);
+$('#input').addEventListener('keydown',e=>{if(e.key==='Enter'&&!e.shiftKey&&!e.isComposing){e.preventDefault();send($('#input').value)}if(e.key==='Escape')$('#hints').classList.remove('on')});
+$('#composer').addEventListener('submit',e=>{e.preventDefault();if(busy)ctrl&&ctrl.abort();else send($('#input').value)});
+$('#burger').onclick=()=>document.body.classList.add('nav');
+$('#scrim').onclick=()=>document.body.classList.remove('nav');
+$('#theme').onclick=()=>{const r=document.documentElement,dark=r.dataset.theme?r.dataset.theme==='dark':matchMedia('(prefers-color-scheme: dark)').matches;r.dataset.theme=dark?'light':'dark';lsSet('aem.theme',r.dataset.theme)};
+addEventListener('keydown',e=>{
+  if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==='k'){e.preventDefault();pal.open?pal.close():palOpen()}
+  if(e.key==='Escape'){if($('#drawer').classList.contains('on'))closeDrawer();else if(busy&&ctrl)ctrl.abort()}
+});
+const dlg=$('#dlg');
+function toggleKey(){const o=$('#sProv').value==='offline';$('#sKey').disabled=o;$('#sModel').disabled=o;$('#sRem').disabled=o;$('#sK').disabled=o}
+$('#gear').onclick=()=>{const st=S.settings;$('#sProv').value=st.provider;$('#sKey').value=st.key;$('#sRem').checked=st.remember;$('#sModel').value=st.model;$('#sK').value=st.k;$('#sKv').textContent=st.k;toggleKey();dlg.showModal?dlg.showModal():dlg.setAttribute('open','')};
+$('#sProv').onchange=()=>{const p=$('#sProv').value;if(MODELS[p])$('#sModel').value=MODELS[p];toggleKey()};
+$('#sK').oninput=()=>$('#sKv').textContent=$('#sK').value;
+$('#sCancel').onclick=()=>dlg.close();
+$('#sform').addEventListener('submit',()=>{const p=$('#sProv').value;S.settings={provider:p,key:$('#sKey').value.trim(),remember:$('#sRem').checked,model:$('#sModel').value.trim()||MODELS[p]||'',k:+$('#sK').value};persist();renderNote()});
+
+load();
+$('#send').innerHTML=SEND;$('#send').disabled=true;
+renderAll();renderNav();
+go(location.hash.slice(1)||'chat');
+</script>

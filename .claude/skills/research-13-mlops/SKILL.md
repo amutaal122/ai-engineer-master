@@ -1,4 +1,4 @@
-﻿---
+---
 name: research-13-mlops
 description: "MLOps — experiment tracking with mlflow, tensorboard, weights-and-biases, model registry."
 triggers: [mlops, experiment tracking, mlflow, tensorboard, weights and biases, wandb, model registry, ml pipeline]

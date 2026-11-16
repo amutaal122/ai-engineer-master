@@ -1,9 +1,9 @@
 ---
 name: ai-coding-agent-guardrails
 description: Secure AI coding agents (Claude Code, Cursor, Codex, Copilot) with permission
-triggers: [claude code security, coding agent safety, copilot security, cursor security, ai coding guardrails, agent permissions]
   boundaries, secret protection, code review gates, and safe sandbox configurations
   for team environments.
+triggers: [claude code security, coding agent safety, copilot security, cursor security, ai coding guardrails, agent permissions]
 category: security
 risk: critical
 source: https://github.com/BagelHole/DevOps-Security-Agent-Skills

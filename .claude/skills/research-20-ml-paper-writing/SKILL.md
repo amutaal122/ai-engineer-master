@@ -1,4 +1,4 @@
-﻿---
+---
 name: research-20-ml-paper-writing
 description: "ML paper writing — structure, related work, ablation, academic conventions for arxiv/NeurIPS/ICML."
 triggers: [ml paper, research paper, paper writing, arxiv, paper structure, related work, ablation study, academic writing]

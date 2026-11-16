@@ -1,4 +1,4 @@
-﻿---
+---
 name: research-14-agents
 description: "Agent frameworks — crewai, langchain, llamaindex, autogpt for multi-agent orchestration."
 triggers: [agent frameworks, crewai, langchain, llamaindex, autogpt, agentic workflows, multi-agent framework]

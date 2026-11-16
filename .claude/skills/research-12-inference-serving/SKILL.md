@@ -1,4 +1,4 @@
-﻿---
+---
 name: research-12-inference-serving
 description: "Inference serving — vLLM, sglang, tensorrt-llm, llama.cpp for high-throughput production deployment."
 triggers: [inference serving, vllm, sglang, tensorrt-llm, llama.cpp, model serving, llm deployment, inference optimization, tgi]
