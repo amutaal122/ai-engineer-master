@@ -1,0 +1,226 @@
+﻿<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Pipeline Orbit</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<style>
+/* Layout: full-height 3D stage, floating inspector panel, phase timeline docked at the bottom */
+:root{--bg:#0a0e19;--fg:#e8edf7;--muted:#8d99b3;--panel:#111a2cdd;--line:#26334f;--accent:#4de0c3;--warm:#ffb454;color-scheme:dark}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{margin:0;background:var(--bg);color:var(--fg);font-family:"Inter",system-ui,sans-serif;font-size:14px;overflow:hidden;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+h1,h2,.num{font-family:"Space Grotesk","Inter",system-ui,sans-serif}
+#app{position:relative;height:100%;display:flex;flex-direction:column;gap:10px;padding-block:10px}
+header{display:flex;flex-wrap:wrap;align-items:center;gap:10px 16px;justify-content:space-between;z-index:3}
+h1{font-size:20px;margin:0;letter-spacing:-.01em}
+h1 span{color:var(--accent)}
+.tools{display:flex;flex-wrap:wrap;gap:8px;align-items:center;min-width:0}
+input[type=search]{background:#0d1526;border:1px solid var(--line);color:var(--fg);padding:8px 12px;border-radius:8px;font:inherit;width:200px;max-width:100%}
+button{font:inherit;color:var(--fg);background:#0d1526;border:1px solid var(--line);padding:8px 12px;border-radius:8px;cursor:pointer}
+button:hover{border-color:var(--accent)}
+button[aria-pressed=true]{background:var(--accent);color:#04201a;border-color:var(--accent);font-weight:600}
+:focus-visible{outline:2px solid var(--warm);outline-offset:2px}
+#stage{position:relative;flex:1;min-height:0;border:1px solid var(--line);border-radius:14px;overflow:hidden;background:radial-gradient(120% 90% at 50% 0%,#14203a 0%,#0a0e19 70%);touch-action:none}
+#stage canvas{display:block;width:100%;height:100%}
+.label{position:absolute;left:0;top:0;pointer-events:none;white-space:nowrap;font-size:12px;transform:translate(-50%,-50%);transition:opacity .2s}
+.label.phase{font-family:"Space Grotesk",sans-serif;font-weight:600;font-size:13px;padding:3px 9px;border-radius:99px;background:#0a0e19cc;border:1px solid var(--line);margin-top:-34px}
+.label.agent{font-size:11px;color:var(--fg);background:#0a0e19b3;padding:2px 6px;border-radius:6px;border:1px solid var(--line)}
+.label.dim{opacity:.2}
+#panel{position:absolute;right:12px;top:12px;width:min(320px,calc(100% - 24px));max-height:calc(100% - 24px);overflow:auto;background:var(--panel);backdrop-filter:blur(8px);border:1px solid var(--line);border-radius:12px;padding:14px;display:flex;flex-direction:column;gap:10px}
+#panel h2{margin:0;font-size:18px}
+#panel .eyebrow{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+#panel p{margin:0;color:var(--muted);line-height:1.5}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{font-size:12px;padding:3px 8px;border-radius:6px;border:1px solid var(--line);background:#0d1526}
+.chip.skill{color:var(--accent)}
+.row{display:flex;gap:8px}
+.stats{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
+.stat{border:1px solid var(--line);border-radius:8px;padding:8px 10px;background:#0d1526}
+.stat b{display:block;font-size:22px;font-family:"Space Grotesk",sans-serif;font-variant-numeric:tabular-nums}
+.stat span{font-size:11px;color:var(--muted)}
+#timeline{display:flex;gap:6px;overflow-x:auto;padding-bottom:2px;z-index:3}
+#timeline button{flex:1 0 auto;display:flex;gap:6px;align-items:center;white-space:nowrap}
+#timeline i{width:8px;height:8px;border-radius:50%;display:inline-block}
+#hint{position:absolute;left:12px;bottom:10px;font-size:11px;color:var(--muted);pointer-events:none}
+#nogl{position:absolute;inset:0;display:none;align-items:center;justify-content:center;text-align:center;padding:24px;color:var(--muted)}
+@media (max-width:640px){
+  #panel{top:auto;bottom:10px;right:10px;left:10px;width:auto;max-height:46%}
+  #hint{display:none}
+  input[type=search]{width:100%}
+}
+</style>
+
+<div id="app">
+  <header>
+    <h1>AI Engineer <span>Master</span> pipeline</h1>
+    <div class="tools">
+      <input id="q" type="search" placeholder="Find an agent or skill" aria-label="Find an agent or skill">
+      <button id="run" aria-pressed="false">Run pipeline</button>
+      <button id="spin" aria-pressed="true">Auto-rotate</button>
+      <button id="reset">Reset view</button>
+    </div>
+  </header>
+  <div id="stage">
+    <div id="nogl">3D view needs WebGL, which this browser has turned off. The phase list in the panel still works.</div>
+    <div id="hint">Drag to orbit · scroll to zoom · click a phase · arrow keys step through</div>
+    <aside id="panel" aria-live="polite"></aside>
+  </div>
+  <nav id="timeline" aria-label="Pipeline phases"></nav>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Space+Grotesk:wght@500;700&display=swap">
+<script>
+const PHASES=[
+ {n:'Research',c:'#5ac8fa',goal:'Learn the problem, users and stack before any design or code.',out:'Research brief',
+  agents:['researcher','ux-researcher'],skills:['deep research','huggingface','llm-evaluation','research-15-rag']},
+ {n:'Design',c:'#7c9cff',goal:'Turn the brief into architecture, schemas and prompts.',out:'Spec + schema + prompt set',
+  agents:['architect','schema-designer','prompt-engineer'],skills:['ai-agents-architect','prompt-engineering','postgres','graphql']},
+ {n:'Build',c:'#4de0c3',goal:'Implement features behind flags with validated API boundaries.',out:'Working, flagged feature',
+  agents:['developer','api-integrator','feature-flag-engineer'],skills:['fastapi','pandas','scikit-learn','anthropic-sdk','langchain']},
+ {n:'Quality',c:'#a3e635',goal:'Prove it works: contracts, tests, model evals and latency.',out:'Green eval + test report',
+  agents:['contract-tester','qa-engineer','ml-evaluator','performance-engineer'],skills:['pytest','llm-evaluation','ab-testing','webapp-testing']},
+ {n:'Security',c:'#ffb454',goal:'Find vulnerabilities, risky dependencies and compliance gaps.',out:'Security sign-off',
+  agents:['security-reviewer','dependency-auditor','compliance-reviewer'],skills:['security-audit','ai-agent-security','ai-code-generation-guardrails']},
+ {n:'Ship',c:'#ff8a65',goal:'Document, package and deploy through CI/CD.',out:'Released version',
+  agents:['tech-writer','devops-engineer'],skills:['docker','kubernetes','github-actions','git-workflow']},
+ {n:'Operate',c:'#f472b6',goal:'Watch it in production and learn from every incident.',out:'SLOs + insights',
+  agents:['observability-engineer','sre-engineer','data-analyst','incident-commander'],skills:['redis','celery','research-17-observability','research-13-mlops']}
+];
+const $=s=>document.querySelector(s);
+const panel=$('#panel'),stage=$('#stage');
+const totalAgents=PHASES.reduce((a,p)=>a+p.agents.length,0);
+let sel=-1,running=false,autoRot=!matchMedia('(prefers-reduced-motion: reduce)').matches;
+$('#spin').setAttribute('aria-pressed',autoRot);
+
+const tl=$('#timeline');
+PHASES.forEach((p,i)=>{const b=document.createElement('button');b.innerHTML=`<i style="background:${p.c}"></i>${i+1}. ${p.n}`;b.onclick=()=>select(sel===i?-1:i);tl.appendChild(b)});
+
+function esc(s){return s.replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]))}
+function renderPanel(){
+  if(sel<0){
+    panel.innerHTML=`<div class="eyebrow">Overview</div><h2>Idea to production</h2>
+    <p>Seven phases, each with its own agents and skills. Select a phase to fly to it.</p>
+    <div class="stats"><div class="stat"><b>${PHASES.length}</b><span>phases</span></div><div class="stat"><b>${totalAgents}</b><span>pipeline agents</span></div><div class="stat"><b>59</b><span>skills</span></div><div class="stat"><b>10</b><span>commands</span></div></div>
+    <div class="row"><button id="go0">Start at Research</button></div>`;
+    $('#go0').onclick=()=>select(0);return;
+  }
+  const p=PHASES[sel];
+  panel.innerHTML=`<div class="eyebrow">Phase ${sel+1} of ${PHASES.length}</div><h2 style="color:${p.c}">${p.n}</h2><p>${esc(p.goal)}</p>
+  <div class="eyebrow">Agents</div><div class="chips">${p.agents.map(a=>`<span class="chip">${esc(a)}</span>`).join('')}</div>
+  <div class="eyebrow">Skills</div><div class="chips">${p.skills.map(a=>`<span class="chip skill">${esc(a)}</span>`).join('')}</div>
+  <div class="eyebrow">Deliverable</div><p style="color:var(--fg)">${esc(p.out)}</p>
+  <div class="row"><button id="prev">Previous</button><button id="next">Next</button><button id="all">Overview</button></div>`;
+  $('#prev').onclick=()=>select((sel+PHASES.length-1)%PHASES.length);
+  $('#next').onclick=()=>select((sel+1)%PHASES.length);
+  $('#all').onclick=()=>select(-1);
+}
+
+let three=null;
+function init3D(){
+  let renderer;
+  try{renderer=new THREE.WebGLRenderer({antialias:true});}catch(e){$('#nogl').style.display='flex';return null}
+  renderer.setPixelRatio(Math.min(devicePixelRatio,2));
+  renderer.setClearColor(0x000000,0);
+  stage.insertBefore(renderer.domElement,stage.firstChild);
+  const scene=new THREE.Scene(),camera=new THREE.PerspectiveCamera(50,1,.1,200);
+  scene.add(new THREE.AmbientLight(0xffffff,.55));
+  const pl=new THREE.PointLight(0xffffff,1.2,80);pl.position.set(0,6,10);scene.add(pl);
+
+  const pts=PHASES.map((_,i)=>{const a=i*.95;return new THREE.Vector3(Math.cos(a)*6.5,(i-3)*1.7,Math.sin(a)*6.5)});
+  const curve=new THREE.CatmullRomCurve3(pts);
+  scene.add(new THREE.Mesh(new THREE.TubeGeometry(curve,240,.03,6,false),new THREE.MeshBasicMaterial({color:0x2c3d63})));
+
+  const cores=[],groups=[],agentMeshes=[],labels=[],agentLabels=[];
+  PHASES.forEach((p,i)=>{
+    const col=new THREE.Color(p.c),g=new THREE.Group();g.position.copy(pts[i]);
+    const core=new THREE.Mesh(new THREE.IcosahedronGeometry(.75,1),new THREE.MeshStandardMaterial({color:col,emissive:col,emissiveIntensity:.5,roughness:.35,metalness:.2,transparent:true}));
+    core.userData.i=i;g.add(core);
+    const wire=new THREE.Mesh(new THREE.IcosahedronGeometry(1.0,1),new THREE.MeshBasicMaterial({color:col,wireframe:true,transparent:true,opacity:.35}));g.add(wire);
+    const ring=new THREE.Mesh(new THREE.TorusGeometry(1.5,.012,8,80),new THREE.MeshBasicMaterial({color:col,transparent:true,opacity:.5}));ring.rotation.x=Math.PI/2.4;g.add(ring);
+    const orbit=[];
+    p.agents.forEach((a,k)=>{
+      const m=new THREE.Mesh(new THREE.SphereGeometry(.17,16,16),new THREE.MeshStandardMaterial({color:0xffffff,emissive:col,emissiveIntensity:.8}));
+      m.userData={ph:k/p.agents.length*Math.PI*2,sp:.35+k*.09};g.add(m);orbit.push(m);
+      const l=document.createElement('div');l.className='label agent';l.textContent=a;l.style.opacity=0;stage.appendChild(l);agentLabels.push({el:l,m,i});
+    });
+    scene.add(g);cores.push(core);groups.push({g,wire,ring,orbit,glow:0});
+    const el=document.createElement('div');el.className='label phase';el.textContent=`${i+1} ${p.n}`;el.style.color=p.c;stage.appendChild(el);labels.push(el);
+  });
+
+  const N=160,pg=new THREE.BufferGeometry(),pp=new Float32Array(N*3),pt=Array.from({length:N},()=>Math.random());
+  pg.setAttribute('position',new THREE.BufferAttribute(pp,3));
+  scene.add(new THREE.Points(pg,new THREE.PointsMaterial({color:0x4de0c3,size:.14,transparent:true,opacity:.9,blending:THREE.AdditiveBlending,depthWrite:false})));
+  const sg=new THREE.BufferGeometry(),sp=new Float32Array(900);for(let i=0;i<900;i++)sp[i]=(Math.random()-.5)*90;
+  sg.setAttribute('position',new THREE.BufferAttribute(sp,3));
+  scene.add(new THREE.Points(sg,new THREE.PointsMaterial({color:0x6f82b3,size:.12,transparent:true,opacity:.6})));
+
+  const view={th:.6,ph:1.15,d:20,tth:.6,tph:1.15,td:20,tg:new THREE.Vector3(),cg:new THREE.Vector3()};
+  const ray=new THREE.Raycaster(),mouse=new THREE.Vector2();
+  let drag=null;
+  const el=renderer.domElement;
+  el.addEventListener('pointerdown',e=>{drag={x:e.clientX,y:e.clientY,m:0};el.setPointerCapture(e.pointerId)});
+  el.addEventListener('pointermove',e=>{if(!drag)return;const dx=e.clientX-drag.x,dy=e.clientY-drag.y;drag.m+=Math.abs(dx)+Math.abs(dy);drag.x=e.clientX;drag.y=e.clientY;view.tth-=dx*.006;view.tph=Math.min(2.8,Math.max(.3,view.tph-dy*.006))});
+  el.addEventListener('pointerup',e=>{
+    if(drag&&drag.m<5){const r=el.getBoundingClientRect();mouse.set((e.clientX-r.left)/r.width*2-1,-(e.clientY-r.top)/r.height*2+1);ray.setFromCamera(mouse,camera);
+      const h=ray.intersectObjects(cores)[0];if(h)select(h.object.userData.i);}
+    drag=null});
+  el.addEventListener('wheel',e=>{e.preventDefault();view.td=Math.min(32,Math.max(6,view.td+e.deltaY*.012))},{passive:false});
+
+  function resize(){const w=stage.clientWidth,h=stage.clientHeight;renderer.setSize(w,h,false);camera.aspect=w/h;camera.updateProjectionMatrix()}
+  new ResizeObserver(resize).observe(stage);resize();
+
+  const clock=new THREE.Clock(),v=new THREE.Vector3();
+  let pulseT=0,pulseI=0;
+  function project(obj,labelEl,show){
+    obj.getWorldPosition(v);v.project(camera);
+    if(v.z>1||!show){labelEl.style.visibility='hidden';return}
+    labelEl.style.visibility='visible';
+    labelEl.style.left=((v.x+1)/2*stage.clientWidth)+'px';labelEl.style.top=((1-v.y)/2*stage.clientHeight)+'px';
+  }
+  function frame(){
+    const dt=Math.min(clock.getDelta(),.05),t=clock.elapsedTime;
+    if(autoRot&&sel<0&&!drag)view.tth+=dt*.12;
+    if(running){pulseT+=dt;if(pulseT>1.4){pulseT=0;pulseI=(pulseI+1)%PHASES.length;select(pulseI)}}
+    const k=1-Math.pow(.0015,dt);
+    view.th+=(view.tth-view.th)*k;view.ph+=(view.tph-view.ph)*k;view.d+=(view.td-view.d)*k;view.cg.lerp(view.tg,k);
+    camera.position.set(view.cg.x+view.d*Math.sin(view.ph)*Math.cos(view.th),view.cg.y+view.d*Math.cos(view.ph),view.cg.z+view.d*Math.sin(view.ph)*Math.sin(view.th));
+    camera.lookAt(view.cg);
+    const q=$('#q').value.trim().toLowerCase();
+    groups.forEach((o,i)=>{
+      const P=PHASES[i],hit=!q||P.n.toLowerCase().includes(q)||P.agents.some(a=>a.includes(q))||P.skills.some(s=>s.includes(q));
+      const target=(i===sel?1:0)+(running&&i===pulseI?.6:0);o.glow+=(target-o.glow)*Math.min(1,dt*6);
+      const c=cores[i];c.rotation.y+=dt*.5;c.rotation.x+=dt*.2;o.wire.rotation.y-=dt*.3;o.ring.rotation.z+=dt*.4;
+      c.scale.setScalar(1+o.glow*.3+Math.sin(t*2+i)*.03);c.material.emissiveIntensity=.45+o.glow*.9;
+      c.material.opacity=hit?1:.2;o.wire.material.opacity=hit?.35:.08;
+      o.orbit.forEach(m=>{const a=m.userData.ph+t*m.userData.sp;m.position.set(Math.cos(a)*1.5,Math.sin(a)*Math.sin(Math.PI/2.4)*1.5,Math.sin(a)*Math.cos(Math.PI/2.4)*1.5)});
+      labels[i].classList.toggle('dim',!hit);project(c,labels[i],true);
+    });
+    agentLabels.forEach(a=>{const on=sel===a.i;a.el.style.opacity=on?1:0;project(a.m,a.el,on)});
+    for(let i=0;i<N;i++){pt[i]=(pt[i]+dt*.045)%1;const p=curve.getPoint(pt[i]);pp[i*3]=p.x;pp[i*3+1]=p.y;pp[i*3+2]=p.z}
+    pg.attributes.position.needsUpdate=true;
+    renderer.render(scene,camera);requestAnimationFrame(frame);
+  }
+  frame();
+  return {view,pts};
+}
+
+function select(i){
+  sel=i;renderPanel();
+  [...tl.children].forEach((b,k)=>b.setAttribute('aria-pressed',k===i));
+  if(three){
+    if(i<0){three.view.tg.set(0,0,0);three.view.td=20}
+    else{three.view.tg.copy(three.pts[i]);three.view.td=9}
+  }
+}
+$('#run').onclick=e=>{running=!running;e.currentTarget.setAttribute('aria-pressed',running);e.currentTarget.textContent=running?'Stop pipeline':'Run pipeline';if(running)select(0)};
+$('#spin').onclick=e=>{autoRot=!autoRot;e.currentTarget.setAttribute('aria-pressed',autoRot)};
+$('#reset').onclick=()=>{running=false;$('#run').setAttribute('aria-pressed','false');$('#run').textContent='Run pipeline';select(-1);if(three){three.view.tth=.6;three.view.tph=1.15}};
+addEventListener('keydown',e=>{
+  if(e.target.tagName==='INPUT')return;
+  if(e.key==='ArrowRight')select(sel<0?0:(sel+1)%PHASES.length);
+  if(e.key==='ArrowLeft')select(sel<0?PHASES.length-1:(sel+PHASES.length-1)%PHASES.length);
+  if(e.key==='Escape')select(-1);
+});
+renderPanel();
+three=init3D();
+</script>
+</head><body></body></html>
