@@ -20,6 +20,11 @@
 recommends skills and agents for your project, plans it across the 7 phases (`/plan <idea>`), and browses
 the full catalog. It works offline from the skill files, or with an OpenAI / Anthropic key in Settings.
 
+Also in `docs/`: `pipeline-orbit.html` (interactive 3D view of the 7-phase pipeline) and `chat-studio.html`
+(a general ChatGPT-style chat UI with streaming for OpenAI or Anthropic).
+
+Everything in one download: [ai-engineer-master-complete.zip](https://github.com/amutaal122/ai-engineer-master/raw/main/dist/ai-engineer-master-complete.zip).
+
 Rebuild it after you change skills:
 ```bash
 cd tools/assistant

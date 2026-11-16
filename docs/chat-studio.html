@@ -1,0 +1,412 @@
+﻿<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Chat Studio</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: history sidebar + single centered thread column + docked composer. Graphite neutrals, one teal accent. */
+:root{--bg:#f7f8fa;--surface:#ffffff;--side:#eef0f4;--border:#e0e4ea;--fg:#141a26;--muted:#667085;--accent:#0b8f78;--accent-fg:#ffffff;--user:#e6ecf5;--code:#101521;--code-fg:#e6ebf5;--err:#c9372c;--font:"Inter",system-ui,sans-serif;--mono:"JetBrains Mono",ui-monospace,Consolas,monospace}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0d1118;--surface:#141a24;--side:#0a0e14;--border:#243042;--fg:#eaeef6;--muted:#93a0b6;--accent:#3dd9b5;--accent-fg:#04201a;--user:#1c2636;--code:#080b11;--code-fg:#dfe6f2;--err:#ff7b6e;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0d1118;--surface:#141a24;--side:#0a0e14;--border:#243042;--fg:#eaeef6;--muted:#93a0b6;--accent:#3dd9b5;--accent-fg:#04201a;--user:#1c2636;--code:#080b11;--code-fg:#dfe6f2;--err:#ff7b6e;color-scheme:dark}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{margin:0;background:var(--bg);color:var(--fg);font:14px/1.55 var(--font)}
+button,input,select,textarea{font:inherit;color:inherit}
+button{cursor:pointer;background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:7px 11px}
+button:hover{border-color:var(--accent)}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.icon{width:36px;height:36px;padding:0;display:inline-grid;place-items:center}
+#app{display:grid;grid-template-columns:280px minmax(0,1fr);height:100%}
+#side{background:var(--side);border-right:1px solid var(--border);display:flex;flex-direction:column;gap:10px;padding:12px;min-height:0}
+.side-top{display:flex;gap:8px}
+#newChat{flex:1;background:var(--accent);color:var(--accent-fg);border-color:var(--accent);font-weight:600}
+#closeSide{display:none}
+#search{width:100%;padding:8px 10px;border:1px solid var(--border);border-radius:8px;background:var(--surface)}
+#list{flex:1;min-height:0;overflow:auto;display:flex;flex-direction:column;gap:2px}
+.grp{font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);padding:10px 8px 4px}
+.item{display:flex;align-items:center;gap:4px;border-radius:8px;padding:2px 2px 2px 8px}
+.item:hover,.item.on{background:var(--surface)}
+.item.on{box-shadow:inset 2px 0 0 var(--accent)}
+.item .t{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;background:none;border:0;text-align:left;padding:7px 0}
+.item .x{opacity:0;border:0;background:none;color:var(--muted);padding:5px 7px}
+.item:hover .x,.item .x:focus-visible{opacity:1}
+.item input{flex:1;min-width:0;padding:5px 6px;border:1px solid var(--accent);border-radius:6px;background:var(--surface)}
+.side-foot{display:flex;gap:8px}
+.side-foot button{flex:1}
+main{display:flex;flex-direction:column;min-width:0;min-height:0}
+header{display:flex;align-items:center;gap:10px;padding:10px 16px;border-bottom:1px solid var(--border);background:var(--bg)}
+#openSide{display:none}
+#title{flex:1;min-width:0;font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.badge{font:500 12px var(--mono);color:var(--muted);border:1px solid var(--border);border-radius:99px;padding:3px 9px;white-space:nowrap}
+#thread{flex:1;min-height:0;overflow:auto;scroll-behavior:smooth}
+#msgs{max-width:760px;margin:0 auto;padding:20px 16px 8px;display:flex;flex-direction:column;gap:22px}
+.msg{display:flex;gap:12px;min-width:0}
+.msg.user{justify-content:flex-end}
+.av{flex:none;width:28px;height:28px;border-radius:8px;background:var(--accent);color:var(--accent-fg);display:grid;place-items:center;font:600 12px var(--mono);margin-top:2px}
+.body{min-width:0;max-width:100%}
+.msg.user .body{background:var(--user);border-radius:14px 14px 4px 14px;padding:9px 14px;max-width:85%;white-space:pre-wrap;overflow-wrap:anywhere}
+.msg.assistant .body{flex:1}
+.md>*:first-child{margin-top:0}.md>*:last-child{margin-bottom:0}
+.md p{margin:.6em 0;overflow-wrap:anywhere}
+.md h3,.md h4,.md h5,.md h6{margin:1em 0 .4em;line-height:1.3}
+.md ul,.md ol{margin:.5em 0;padding-left:1.4em}
+.md li{margin:.2em 0}
+.md code{font:13px var(--mono);background:var(--user);border-radius:5px;padding:1px 5px}
+.md a{color:var(--accent)}
+.code{margin:.8em 0;border-radius:10px;background:var(--code);color:var(--code-fg);overflow:hidden;border:1px solid var(--border)}
+.codebar{display:flex;justify-content:space-between;align-items:center;padding:5px 6px 5px 12px;font:12px var(--mono);color:#93a0b6;border-bottom:1px solid #243042}
+.codebar button{background:none;border:0;color:#93a0b6;padding:3px 8px}
+.code pre{margin:0;padding:12px;overflow-x:auto}
+.code pre code{background:none;padding:0;color:inherit;font:13px/1.5 var(--mono)}
+.cursor{display:inline-block;width:8px;height:1em;background:var(--accent);vertical-align:-2px;margin-left:2px;animation:blink 1s steps(2) infinite}
+@keyframes blink{50%{opacity:0}}
+.err{color:var(--err)}
+.acts{display:flex;gap:4px;margin-top:6px}
+.acts button{border:0;background:none;color:var(--muted);padding:4px 8px;font-size:12px}
+.acts button:hover{color:var(--fg)}
+.acts button[aria-pressed=true]{color:var(--accent);font-weight:600}
+.empty{max-width:760px;margin:0 auto;padding:12vh 16px 0;text-align:center}
+.empty h1{font-size:28px;margin:0 0 6px;letter-spacing:-.02em}
+.empty p{color:var(--muted);margin:0 0 22px}
+.chips{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;text-align:left}
+.chips button{padding:12px 14px;border-radius:12px;line-height:1.4}
+.chips small{display:block;color:var(--muted)}
+footer{padding:8px 16px 12px}
+#composer{max-width:760px;margin:0 auto;display:flex;gap:8px;align-items:flex-end;background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:8px 8px 8px 14px}
+#composer:focus-within{border-color:var(--accent)}
+#input{flex:1;min-width:0;border:0;outline:0;resize:none;background:none;max-height:200px;padding:6px 0;line-height:1.5}
+#send{width:38px;height:38px;border-radius:10px;background:var(--accent);color:var(--accent-fg);border-color:var(--accent);padding:0;display:grid;place-items:center}
+#send:disabled{opacity:.4;cursor:not-allowed}
+#note{max-width:760px;margin:6px auto 0;text-align:center;font-size:12px;color:var(--muted)}
+dialog{border:1px solid var(--border);border-radius:14px;background:var(--surface);color:var(--fg);padding:0;width:min(460px,calc(100% - 32px))}
+dialog::backdrop{background:#000a}
+#sform{padding:18px;display:flex;flex-direction:column;gap:12px}
+#sform h2{margin:0;font-size:18px}
+#sform label{display:flex;flex-direction:column;gap:4px;font-weight:500}
+#sform input[type=text],#sform input[type=password],#sform select,#sform textarea{padding:8px 10px;border:1px solid var(--border);border-radius:8px;background:var(--bg)}
+#sform .row{display:flex;gap:8px;justify-content:flex-end}
+#sform small{color:var(--muted);font-weight:400}
+#sform .check{flex-direction:row;align-items:center;gap:8px;font-weight:400}
+#backdrop{display:none}
+@media (max-width:760px){
+  #app{grid-template-columns:minmax(0,1fr)}
+  #side{position:fixed;inset:0 auto 0 0;width:min(300px,86%);z-index:20;transform:translateX(-102%);transition:transform .2s}
+  body.nav #side{transform:none}
+  body.nav #backdrop{display:block;position:fixed;inset:0;background:#0008;z-index:10}
+  #openSide,#closeSide{display:inline-grid}
+  .chips{grid-template-columns:1fr}
+  .badge{display:none}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+</style>
+
+<div id="app">
+  <aside id="side" aria-label="Conversations">
+    <div class="side-top">
+      <button id="newChat" title="New chat (Ctrl+K)">+ New chat</button>
+      <button id="closeSide" class="icon" aria-label="Close sidebar">&#10005;</button>
+    </div>
+    <input id="search" type="search" placeholder="Search chats" aria-label="Search chats">
+    <nav id="list"></nav>
+    <div class="side-foot"><button id="openSettings">Settings</button><button id="theme">Theme</button></div>
+  </aside>
+  <div id="backdrop"></div>
+  <main>
+    <header>
+      <button id="openSide" class="icon" aria-label="Open sidebar">&#9776;</button>
+      <div id="title">New chat</div>
+      <span class="badge" id="tokens">~0 tokens</span>
+      <span class="badge" id="modelBadge"></span>
+      <button id="exportBtn">Copy as Markdown</button>
+    </header>
+    <div id="thread" tabindex="0" aria-label="Conversation"><div id="msgs" aria-live="polite"></div></div>
+    <footer>
+      <form id="composer">
+        <textarea id="input" rows="1" placeholder="Message Chat Studio" aria-label="Message"></textarea>
+        <button id="send" type="submit" aria-label="Send"></button>
+      </form>
+      <p id="note"></p>
+    </footer>
+  </main>
+</div>
+
+<dialog id="dlg">
+  <form id="sform" method="dialog">
+    <h2>Settings</h2>
+    <label>Provider
+      <select id="sProv"><option value="demo">Demo (scripted, no key)</option><option value="openai">OpenAI</option><option value="anthropic">Anthropic</option></select>
+    </label>
+    <label>API key <input id="sKey" type="password" autocomplete="off" placeholder="sk-...">
+      <small>Sent only to the provider you pick. Not stored unless you tick the box.</small></label>
+    <label class="check"><input id="sRem" type="checkbox"> Remember key in this browser</label>
+    <label>Model <input id="sModel" type="text"></label>
+    <label>Temperature: <span id="sTv"></span><input id="sTemp" type="range" min="0" max="1" step="0.1"></label>
+    <label>System prompt <textarea id="sSys" rows="3"></textarea></label>
+    <div class="row"><button type="button" id="sCancel">Cancel</button><button type="submit" id="sSave" style="background:var(--accent);color:var(--accent-fg);border-color:var(--accent)">Save</button></div>
+  </form>
+</dialog>
+
+<script>
+const $=s=>document.querySelector(s);
+const FENCE='```';
+const SEND_ICON='<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg>';
+const STOP_ICON='<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><rect x="5" y="5" width="14" height="14" rx="2"/></svg>';
+const DEFAULTS={provider:'demo',key:'',remember:false,model:'gpt-4o-mini',temp:0.7,system:'You are a concise, accurate assistant for AI and ML engineers.'};
+const MODELS={openai:'gpt-4o-mini',anthropic:'claude-sonnet-5-5',demo:'demo-script'};
+
+let S={chats:[],cur:null,settings:{...DEFAULTS}};
+let busy=false,ctrl=null,pinned=true,confirmId=null,renameId=null;
+
+function lsGet(k){try{return JSON.parse(localStorage.getItem(k))}catch(e){return null}}
+function lsSet(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}
+function persist(){
+  lsSet('cs.chats',S.chats.map(c=>({...c,messages:c.messages.map(({streaming,...m})=>m)})));
+  lsSet('cs.cur',S.cur);
+  const st={...S.settings};if(!st.remember)st.key='';lsSet('cs.settings',st);
+}
+function load(){
+  const c=lsGet('cs.chats'),st=lsGet('cs.settings');
+  if(Array.isArray(c))S.chats=c;
+  if(st)S.settings={...DEFAULTS,...st};
+  const cur=lsGet('cs.cur');
+  S.cur=S.chats.some(x=>x.id===cur)?cur:null;
+  const th=lsGet('cs.theme');if(th)document.documentElement.dataset.theme=th;
+}
+const uid=()=>Math.random().toString(36).slice(2,10);
+const chat=()=>S.chats.find(c=>c.id===S.cur);
+const sleep=ms=>new Promise(r=>setTimeout(r,ms));
+const esc=s=>s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+
+function codeBlock(b){
+  return '<div class="code"><div class="codebar"><span>'+esc(b.l||'text')+'</span><button type="button" data-copy>Copy</button></div><pre><code>'+esc(b.c.replace(/\n$/,''))+'</code></pre></div>';
+}
+function md(src){
+  const blocks=[];
+  let s=src.replace(/(^|\n)```(\w*)\n?([\s\S]*?)(```|$)/g,(m,pre,l,c)=>{blocks.push({l,c});return pre+'\u0000'+(blocks.length-1)+'\u0000'});
+  s=esc(s);
+  const inline=t=>t.replace(/`([^`]+)`/g,'<code>$1</code>').replace(/\*\*([^*]+)\*\*/g,'<strong>$1</strong>').replace(/(^|[^*])\*([^*\n]+)\*/g,'$1<em>$2</em>').replace(/\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)/g,'<a href="$2" target="_blank" rel="noopener noreferrer">$1</a>');
+  let out='',list=null;const close=()=>{if(list){out+='</'+list+'>';list=null}};
+  for(const ln of s.split('\n')){
+    let m;
+    if((m=ln.match(/^\u0000(\d+)\u0000$/))){close();out+=codeBlock(blocks[+m[1]]);continue}
+    if((m=ln.match(/^(#{1,4})\s+(.*)/))){close();const n=m[1].length+2;out+='<h'+n+'>'+inline(m[2])+'</h'+n+'>';continue}
+    if((m=ln.match(/^\s*[-*]\s+(.*)/))){if(list!=='ul'){close();out+='<ul>';list='ul'}out+='<li>'+inline(m[1])+'</li>';continue}
+    if((m=ln.match(/^\s*\d+\.\s+(.*)/))){if(list!=='ol'){close();out+='<ol>';list='ol'}out+='<li>'+inline(m[1])+'</li>';continue}
+    close();if(ln.trim()==='')continue;out+='<p>'+inline(ln)+'</p>';
+  }
+  close();return out;
+}
+
+/* ---------- demo replies ---------- */
+function demoReply(q){
+  const t=q.toLowerCase();
+  if(/pipeline|phase|workflow/.test(t))return 'The master pipeline has **seven phases**:\n\n1. **Research** - researcher, ux-researcher\n2. **Design** - architect, schema-designer, prompt-engineer\n3. **Build** - developer, api-integrator, feature-flag-engineer\n4. **Quality** - contract-tester, qa-engineer, ml-evaluator, performance-engineer\n5. **Security** - security-reviewer, dependency-auditor, compliance-reviewer\n6. **Ship** - tech-writer, devops-engineer\n7. **Operate** - observability-engineer, sre-engineer, data-analyst, incident-commander\n\nStart with `/research-first`, then run `/master-pipeline`.';
+  if(/fastapi|stream|sse|endpoint|api/.test(t))return 'Here is a minimal streaming endpoint with FastAPI and server-sent events:\n\n'+FENCE+'python\nfrom fastapi import FastAPI\nfrom fastapi.responses import StreamingResponse\n\napp = FastAPI()\n\n@app.post("/chat")\nasync def chat(prompt: str):\n    async def gen():\n        for token in await run_model(prompt):\n            yield f"data: {token}\\n\\n"\n        yield "data: [DONE]\\n\\n"\n    return StreamingResponse(gen(), media_type="text/event-stream")\n'+FENCE+'\n\nKeep the API key on the server and validate the request with **Pydantic**.';
+  if(/pandas|csv|clean|dataframe|data/.test(t))return 'A safe cleaning pass in pandas:\n\n'+FENCE+'python\nimport pandas as pd\n\ndf = pd.read_csv("data.csv")\ndf = (df.drop_duplicates()\n        .assign(date=lambda d: pd.to_datetime(d["date"], errors="coerce"))\n        .dropna(subset=["date"]))\ndf["amount"] = df["amount"].fillna(df["amount"].median())\nprint(df.describe())\n'+FENCE+'\n\nCheck missing values with `df.isna().mean()` before you decide how to fill them.';
+  if(/sklearn|scikit|train|classif|model/.test(t))return 'Always wrap preprocessing and the model in one `Pipeline` so nothing leaks from the test set:\n\n'+FENCE+'python\nfrom sklearn.pipeline import Pipeline\nfrom sklearn.preprocessing import StandardScaler\nfrom sklearn.ensemble import RandomForestClassifier\n\npipe = Pipeline([\n    ("scale", StandardScaler()),\n    ("model", RandomForestClassifier(n_estimators=200, random_state=42)),\n])\npipe.fit(X_train, y_train)\n'+FENCE+'\n\nThen evaluate with cross-validation, not a single split.';
+  if(/prompt/.test(t))return 'Good prompts share a few traits:\n\n- State the **role** and the **output format** first\n- Give 2-3 short examples\n- Put the task last, after the context\n- Ask for reasoning only when it helps\n- Test on a small **golden set** before shipping';
+  return 'I am running in **demo mode**, so my replies are scripted. Try asking about the *pipeline*, *FastAPI streaming*, *pandas cleaning*, *scikit-learn* or *prompts*.\n\nOpen **Settings** and add an OpenAI or Anthropic key to get live answers from a real model.';
+}
+async function streamDemo(msgs,onTok,signal){
+  const last=[...msgs].reverse().find(m=>m.role==='user');
+  const parts=demoReply(last?last.content:'').match(/\S+\s*|\n+/g)||[];
+  for(const p of parts){if(signal.aborted)throw new DOMException('Aborted','AbortError');onTok(p);await sleep(14+Math.random()*22)}
+}
+
+/* ---------- providers ---------- */
+async function readSSE(res,onData){
+  const reader=res.body.getReader(),dec=new TextDecoder();let buf='';
+  for(;;){
+    const {value,done}=await reader.read();if(done)break;
+    buf+=dec.decode(value,{stream:true});
+    const lines=buf.split('\n');buf=lines.pop();
+    for(const ln of lines){if(ln.startsWith('data:'))onData(ln.slice(5).trim())}
+  }
+}
+async function errText(r){try{const j=await r.json();return (j.error&&j.error.message)||JSON.stringify(j)}catch(e){return r.status+' '+r.statusText}}
+async function streamOpenAI(msgs,onTok,signal){
+  const st=S.settings;
+  const r=await fetch('https://api.openai.com/v1/chat/completions',{method:'POST',signal,
+    headers:{'Content-Type':'application/json',Authorization:'Bearer '+st.key},
+    body:JSON.stringify({model:st.model,temperature:st.temp,stream:true,
+      messages:[{role:'system',content:st.system},...msgs.map(m=>({role:m.role,content:m.content}))]})});
+  if(!r.ok)throw new Error(await errText(r));
+  await readSSE(r,d=>{if(d==='[DONE]')return;try{const t=JSON.parse(d).choices?.[0]?.delta?.content;if(t)onTok(t)}catch(e){}});
+}
+async function streamAnthropic(msgs,onTok,signal){
+  const st=S.settings;
+  const r=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',signal,
+    headers:{'Content-Type':'application/json','x-api-key':st.key,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},
+    body:JSON.stringify({model:st.model,max_tokens:2048,temperature:Math.min(1,st.temp),stream:true,system:st.system,
+      messages:msgs.map(m=>({role:m.role,content:m.content}))})});
+  if(!r.ok)throw new Error(await errText(r));
+  await readSSE(r,d=>{try{const j=JSON.parse(d);if(j.type==='content_block_delta'&&j.delta&&j.delta.text)onTok(j.delta.text)}catch(e){}});
+}
+
+/* ---------- rendering ---------- */
+function setBusy(b){busy=b;$('#send').innerHTML=b?STOP_ICON:SEND_ICON;$('#send').setAttribute('aria-label',b?'Stop':'Send');$('#send').disabled=!b&&!$('#input').value.trim()}
+function renderNote(){
+  const st=S.settings;
+  $('#note').textContent=st.provider==='demo'?'Demo mode: replies are scripted. Add an OpenAI or Anthropic key in Settings for live answers.':'Replies come from '+st.model+'. Check important facts.';
+  $('#modelBadge').textContent=st.provider==='demo'?'demo':st.model;
+}
+function groupOf(ts){const d=(Date.now()-ts)/864e5;return d<1?'Today':d<7?'Previous 7 days':'Older'}
+function renderList(){
+  const q=$('#search').value.trim().toLowerCase(),list=$('#list');list.innerHTML='';
+  const items=[...S.chats].sort((a,b)=>b.updated-a.updated).filter(c=>!q||c.title.toLowerCase().includes(q)||c.messages.some(m=>m.content.toLowerCase().includes(q)));
+  if(!items.length){list.innerHTML='<div class="grp">No chats yet</div>';return}
+  let g='';
+  for(const c of items){
+    const gg=groupOf(c.updated);if(gg!==g){g=gg;const h=document.createElement('div');h.className='grp';h.textContent=g;list.appendChild(h)}
+    const row=document.createElement('div');row.className='item'+(c.id===S.cur?' on':'');
+    if(renameId===c.id){
+      const inp=document.createElement('input');inp.value=c.title;inp.setAttribute('aria-label','Chat name');row.appendChild(inp);
+      const done=ok=>{if(ok&&inp.value.trim())c.title=inp.value.trim();renameId=null;persist();renderList();renderHeader()};
+      inp.onkeydown=e=>{if(e.key==='Enter')done(true);if(e.key==='Escape')done(false)};inp.onblur=()=>done(true);
+      list.appendChild(row);setTimeout(()=>{inp.focus();inp.select()},0);continue;
+    }
+    const t=document.createElement('button');t.className='t';t.textContent=c.title;t.title='Double-click to rename';
+    t.onclick=()=>{S.cur=c.id;persist();document.body.classList.remove('nav');renderAll()};
+    t.ondblclick=()=>{renameId=c.id;renderList()};
+    const x=document.createElement('button');x.className='x';x.setAttribute('aria-label','Delete chat');
+    x.textContent=confirmId===c.id?'Sure?':'✕';
+    x.onclick=e=>{e.stopPropagation();if(confirmId===c.id){S.chats=S.chats.filter(k=>k.id!==c.id);if(S.cur===c.id)S.cur=null;confirmId=null;persist();renderAll()}else{confirmId=c.id;renderList();setTimeout(()=>{if(confirmId===c.id){confirmId=null;renderList()}},3000)}};
+    row.append(t,x);list.appendChild(row);
+  }
+}
+function renderHeader(){
+  const c=chat();$('#title').textContent=c?c.title:'New chat';
+  const n=c?c.messages.reduce((a,m)=>a+m.content.length,0):0;$('#tokens').textContent='~'+Math.ceil(n/4)+' tokens';
+}
+const SUGGEST=[['Explain the 7-phase pipeline','Which agents run in each phase'],['Write a FastAPI streaming endpoint','Server-sent events for LLM output'],['Clean a messy CSV with pandas','Dedupe, parse dates, fill gaps'],['Build a leak-free scikit-learn model','Pipeline plus cross-validation']];
+function msgEl(m,i,last){
+  const el=document.createElement('div');el.className='msg '+m.role;
+  if(m.role==='assistant'){const av=document.createElement('div');av.className='av';av.textContent='AI';el.appendChild(av)}
+  const body=document.createElement('div');body.className='body';
+  if(m.role==='user'){body.textContent=m.content}
+  else{
+    const md_=document.createElement('div');md_.className='md'+(m.error?' err':'');md_.innerHTML=md(m.content)+(m.streaming?'<span class="cursor"></span>':'');body.appendChild(md_);
+    if(!m.streaming){
+      const a=document.createElement('div');a.className='acts';
+      const mk=(label,fn,pressed)=>{const b=document.createElement('button');b.type='button';b.textContent=label;b.onclick=fn;if(pressed!==undefined)b.setAttribute('aria-pressed',pressed);a.appendChild(b);return b};
+      mk('Copy',e=>copy(m.content,e.currentTarget));
+      if(last)mk('Regenerate',()=>regenerate());
+      mk('Good',()=>{m.fb=m.fb==='up'?null:'up';persist();renderThread()},m.fb==='up');
+      mk('Bad',()=>{m.fb=m.fb==='down'?null:'down';persist();renderThread()},m.fb==='down');
+      body.appendChild(a);
+    }
+  }
+  el.appendChild(body);el.dataset.i=i;return el;
+}
+function renderThread(keepScroll){
+  const c=chat(),box=$('#msgs');box.innerHTML='';
+  if(!c||!c.messages.length){
+    const e=document.createElement('div');e.className='empty';
+    e.innerHTML='<h1>What are you building today?</h1><p>Ask about the AI engineering pipeline, code, data or prompts.</p>';
+    const ch=document.createElement('div');ch.className='chips';
+    SUGGEST.forEach(([a,b])=>{const btn=document.createElement('button');btn.type='button';btn.innerHTML=esc(a)+'<small>'+esc(b)+'</small>';btn.onclick=()=>send(a);ch.appendChild(btn)});
+    e.appendChild(ch);box.appendChild(e);return;
+  }
+  c.messages.forEach((m,i)=>box.appendChild(msgEl(m,i,i===c.messages.length-1&&m.role==='assistant')));
+  if(!keepScroll&&pinned)scrollEnd();
+}
+function scrollEnd(){const t=$('#thread');t.scrollTop=t.scrollHeight}
+function renderAll(){renderList();renderHeader();renderThread();renderNote();setBusy(busy)}
+
+async function copy(text,btn){
+  try{await navigator.clipboard.writeText(text);flash(btn,'Copied')}
+  catch(e){const r=document.createRange(),n=btn.closest('.body')?.querySelector('.md')||btn;r.selectNodeContents(n);const s=getSelection();s.removeAllRanges();s.addRange(r);flash(btn,'Selected - press Ctrl+C')}
+}
+function flash(btn,t){const o=btn.textContent;btn.textContent=t;setTimeout(()=>btn.textContent=o,1400)}
+
+/* ---------- chat flow ---------- */
+async function run(){
+  const c=chat();const hist=c.messages.filter(m=>!m.error);
+  const a={role:'assistant',content:'',ts:Date.now(),streaming:true};c.messages.push(a);
+  ctrl=new AbortController();setBusy(true);pinned=true;renderThread();
+  let raf=0;const upd=()=>{raf=0;const el=$('#msgs').lastElementChild?.querySelector('.md');if(el){el.innerHTML=md(a.content)+'<span class="cursor"></span>';if(pinned)scrollEnd()}};
+  const onTok=t=>{a.content+=t;if(!raf)raf=requestAnimationFrame(upd)};
+  const st=S.settings;
+  try{
+    if(st.provider!=='demo'&&!st.key)throw new Error('Add your API key in Settings first.');
+    const fn=st.provider==='openai'?streamOpenAI:st.provider==='anthropic'?streamAnthropic:streamDemo;
+    await fn(hist,onTok,ctrl.signal);
+  }catch(e){
+    if(e.name!=='AbortError'){
+      a.error=true;
+      let msg=e.message||String(e);
+      if(/Failed to fetch|NetworkError|Load failed/i.test(msg))msg='Could not reach the provider. If this page is open inside a sandboxed viewer, outside API calls are blocked: save the file and open it locally. Otherwise check your connection and key.';
+      a.content=(a.content?a.content+'\n\n':'')+'Error: '+msg;
+    }
+  }finally{
+    a.streaming=false;if(!a.content)a.content='(stopped)';
+    c.updated=Date.now();ctrl=null;persist();setBusy(false);renderAll();
+  }
+}
+function send(text){
+  text=text.trim();if(!text||busy)return;
+  let c=chat();
+  if(!c){c={id:uid(),title:'New chat',messages:[],updated:Date.now()};S.chats.push(c);S.cur=c.id}
+  c.messages.push({role:'user',content:text,ts:Date.now()});
+  if(c.title==='New chat')c.title=text.length>40?text.slice(0,40)+'...':text;
+  c.updated=Date.now();$('#input').value='';autosize();renderAll();run();
+}
+function regenerate(){
+  const c=chat();if(!c||busy)return;
+  while(c.messages.length&&c.messages[c.messages.length-1].role==='assistant')c.messages.pop();
+  if(c.messages.length){persist();run()}
+}
+function newChat(){
+  if(busy)return;
+  const empty=S.chats.find(c=>!c.messages.length);
+  if(empty){S.cur=empty.id}else{const c={id:uid(),title:'New chat',messages:[],updated:Date.now()};S.chats.push(c);S.cur=c.id}
+  persist();document.body.classList.remove('nav');renderAll();$('#input').focus();
+}
+function exportMd(){
+  const c=chat();if(!c||!c.messages.length)return;
+  const t='# '+c.title+'\n\n'+c.messages.map(m=>'**'+(m.role==='user'?'You':'Assistant')+'**\n\n'+m.content).join('\n\n---\n\n');
+  copy(t,$('#exportBtn'));
+}
+
+/* ---------- ui wiring ---------- */
+function autosize(){const i=$('#input');i.style.height='auto';i.style.height=Math.min(i.scrollHeight,200)+'px';if(!busy)$('#send').disabled=!i.value.trim()}
+$('#input').addEventListener('input',autosize);
+$('#input').addEventListener('keydown',e=>{if(e.key==='Enter'&&!e.shiftKey&&!e.isComposing){e.preventDefault();send($('#input').value)}});
+$('#composer').addEventListener('submit',e=>{e.preventDefault();if(busy){ctrl&&ctrl.abort()}else send($('#input').value)});
+$('#newChat').onclick=newChat;
+$('#search').oninput=renderList;
+$('#exportBtn').onclick=exportMd;
+$('#openSide').onclick=()=>document.body.classList.add('nav');
+$('#closeSide').onclick=$('#backdrop').onclick=()=>document.body.classList.remove('nav');
+$('#theme').onclick=()=>{
+  const r=document.documentElement,dark=r.dataset.theme?r.dataset.theme==='dark':matchMedia('(prefers-color-scheme: dark)').matches;
+  r.dataset.theme=dark?'light':'dark';lsSet('cs.theme',r.dataset.theme);
+};
+$('#msgs').addEventListener('click',e=>{const b=e.target.closest('[data-copy]');if(b)copy(b.closest('.code').querySelector('code').textContent,b)});
+$('#thread').addEventListener('scroll',()=>{const t=$('#thread');pinned=t.scrollHeight-t.scrollTop-t.clientHeight<80},{passive:true});
+addEventListener('keydown',e=>{
+  if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==='k'){e.preventDefault();newChat()}
+  if(e.key==='Escape'&&busy&&ctrl)ctrl.abort();
+});
+
+const dlg=$('#dlg');
+function openSettings(){
+  const st=S.settings;
+  $('#sProv').value=st.provider;$('#sKey').value=st.key;$('#sRem').checked=st.remember;$('#sModel').value=st.model;
+  $('#sTemp').value=st.temp;$('#sTv').textContent=st.temp;$('#sSys').value=st.system;toggleKey();
+  dlg.showModal?dlg.showModal():dlg.setAttribute('open','');
+}
+function toggleKey(){const demo=$('#sProv').value==='demo';$('#sKey').disabled=demo;$('#sModel').disabled=demo;$('#sRem').disabled=demo}
+$('#sProv').onchange=()=>{const p=$('#sProv').value;$('#sModel').value=MODELS[p];toggleKey()};
+$('#sTemp').oninput=()=>$('#sTv').textContent=$('#sTemp').value;
+$('#openSettings').onclick=openSettings;
+$('#sCancel').onclick=()=>dlg.close();
+$('#sform').addEventListener('submit',()=>{
+  const p=$('#sProv').value;
+  S.settings={provider:p,key:$('#sKey').value.trim(),remember:$('#sRem').checked,model:$('#sModel').value.trim()||MODELS[p],temp:parseFloat($('#sTemp').value),system:$('#sSys').value};
+  persist();renderNote();
+});
+
+load();
+if(!S.chats.length&&S.cur===null){/* start on the empty state */}
+$('#send').innerHTML=SEND_ICON;$('#send').disabled=true;
+renderAll();
+</script>
+</head><body></body></html>
