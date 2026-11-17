@@ -7,39 +7,16 @@
 
 | | Count |
 |---|---|
-| Skills | 61 |
+| Skills | 65 |
 | Agents | 13 |
-| Commands | 9 |
+| Commands | 10 |
 | Workflows | 4 |
 
 ---
 
-## Engineer Master Assistant
+## Install in Any AI Coding Tool
 
-`docs/engineer-master-assistant.html` is a single-file assistant for this skill system. Open it in a browser:
-recommends skills and agents for your project, plans it across the 7 phases (`/plan <idea>`), and browses
-the full catalog. It works offline from the skill files, or with an OpenAI / Anthropic key in Settings.
-
-Also in `docs/`: `pipeline-orbit.html` (interactive 3D view of the 7-phase pipeline) and `chat-studio.html`
-(a general ChatGPT-style chat UI with streaming for OpenAI or Anthropic).
-
-Everything in one download: [ai-engineer-master-complete.zip](https://github.com/amutaal122/ai-engineer-master/raw/main/dist/ai-engineer-master-complete.zip).
-
-Rebuild it after you change skills:
-```bash
-cd tools/assistant
-node gen-kb.js ../.. kb.json && node build-assistant.js
-```
-Copy the new `master-assistant-standalone.html` to `docs/engineer-master-assistant.html`.
-
----
-
-## Install (any project)
-
-Quickest: download [ai-engineer-master-skills.zip](https://github.com/amutaal122/ai-engineer-master/raw/main/dist/ai-engineer-master-skills.zip) and unzip it into your project root (it contains only the `.claude` folder).
-
-Or with git:
-
+### Claude Code
 ```bash
 git clone https://github.com/amutaal122/ai-engineer-master.git temp
 xcopy /E /I temp\.claude .claude
@@ -53,63 +30,139 @@ Copy-Item temp\.claude .claude -Recurse
 Remove-Item temp -Recurse -Force
 ```
 
+macOS / Linux:
+```bash
+git clone https://github.com/amutaal122/ai-engineer-master.git temp
+cp -r temp/.claude .claude
+rm -rf temp
+```
+
+### Cursor / Windsurf / Zed / any tool that reads `.claude/`
+Same steps above — the `.claude/` folder is the entire skill system.
+Drop it into your project root and restart your editor.
+
+### Quickest (zip download)
+1. Download [ai-engineer-master-skills.zip](https://github.com/amutaal122/ai-engineer-master/raw/main/dist/ai-engineer-master-skills.zip)
+2. Unzip into your project root — it extracts to `.claude/`
+
+Everything in one download (skills + docs + tools): [ai-engineer-master-complete.zip](https://github.com/amutaal122/ai-engineer-master/raw/main/dist/ai-engineer-master-complete.zip)
+
+---
+
+## Engineer Master Assistant
+
+`docs/engineer-master-assistant.html` — open in any browser. Recommends skills and agents for your project, plans it across the 7 phases (`/plan <idea>`), and browses the full catalog. Works offline or with an OpenAI / Anthropic key in Settings.
+
+Also in `docs/`: `pipeline-orbit.html` (interactive 3D view of the 7-phase pipeline) and `chat-studio.html` (ChatGPT-style chat UI with streaming).
+
+Rebuild after changing skills:
+```bash
+cd tools/assistant
+node gen-kb.js ../.. kb.json && node build-assistant.js
+```
+Copy `master-assistant-standalone.html` to `docs/engineer-master-assistant.html`.
+
 ---
 
 ## Skills
 
 ### LLM / AI Engineering
-- `anthropic-sdk` — Claude API, streaming, tool use, prompt caching
-- `openai-sdk` — GPT API, function calling, embeddings
-- `langchain` — LLM chains, RAG, agents, LangSmith
-- `huggingface` — transformers, fine-tuning, PEFT/LoRA, embeddings
-- `prompt-engineering` — write, optimize, evaluate prompts
-- `llm-evaluation` — eval strategy, golden sets, metrics
-- `ai-engineer` — production LLM apps, RAG, orchestration
+| Skill | What it covers |
+|---|---|
+| `anthropic-sdk` | Claude API, streaming, tool use, prompt caching |
+| `openai-sdk` | GPT API, function calling, embeddings |
+| `claude-api` | Claude API patterns, model selection, rate limits |
+| `langchain` | LLM chains, RAG, agents, LangSmith |
+| `huggingface` | Transformers, fine-tuning, PEFT/LoRA, embeddings |
+| `prompt-engineering` | Write, optimize, evaluate prompts |
+| `llm-evaluation` | Eval strategy, golden sets, metrics |
+| `ai-engineer` | Production LLM apps, RAG, orchestration |
+| `freellmapi` | Self-hosted free LLM router — 87+ providers, 1,300+ models, OpenAI-compatible |
+| `gpt-oss` | OpenAI open-weight MoE models (gpt-oss-120b / gpt-oss-20b, Apache-2.0) |
 
 ### ML / Data Science
-- `pandas` — data loading, cleaning, transformation, time series
-- `scikit-learn` — ML pipelines, cross-val, tuning, evaluation
-- `postgres` — SQL, indexes, window functions, analytics
-- `mongodb` — NoSQL, flexible schema, aggregation pipelines
-- `ab-testing` — experiment design, statistical testing
+| Skill | What it covers |
+|---|---|
+| `pandas` | Data loading, cleaning, transformation, time series |
+| `scikit-learn` | ML pipelines, cross-val, tuning, evaluation |
+| `postgres` | SQL, indexes, window functions, analytics |
+| `mongodb` | NoSQL, flexible schema, aggregation pipelines |
+| `ab-testing` | Experiment design, statistical testing |
 
 ### AI Agent Development
-- `ai-agent-development` — autonomous agents, CrewAI, LangGraph
-- `ai-agents-architect` — architecture, tool use, memory, planning
-- `ai-agent-tool-routing` — tool registry, MCP router
-- `ai-agent-security` — prompt injection defense, guardrails
-- `ai-code-generation-guardrails` — reviewing AI-generated code
-- `ai-coding-agent-guardrails` — secure Claude Code in teams
-- `ai-agent-evaluation-benchmarking` — agent benchmarks
-- `agent-memory-discipline` — long-term memory patterns
-- `agent-qa-authoring` — agent QA tests and suites
+| Skill | What it covers |
+|---|---|
+| `ai-agent-development` | Autonomous agents, CrewAI, LangGraph |
+| `ai-agents-architect` | Architecture, tool use, memory, planning |
+| `ai-agent-tool-routing` | Tool registry, MCP router |
+| `ai-agent-security` | Prompt injection defense, guardrails |
+| `ai-code-generation-guardrails` | Reviewing AI-generated code |
+| `ai-coding-agent-guardrails` | Secure Claude Code in teams |
+| `ai-agent-evaluation-benchmarking` | Agent benchmarks |
+| `agent-memory-discipline` | Long-term memory patterns |
+| `agent-qa-authoring` | Agent QA tests and suites |
+| `mcp-builder` | MCP servers for LLM tool integration |
+| `openbot` | Self-hostable AI coworker workspace — AG-UI, browser automation, CEL policy |
 
 ### Backend / API
-- `fastapi` — async REST APIs, Pydantic, OpenAPI
-- `sqlalchemy` — async ORM, Alembic migrations
-- `redis` — caching, rate limiting, pub/sub, LLM cache
-- `celery` — background tasks, beat scheduler
-- `graphql` — schema, resolvers, subscriptions
+| Skill | What it covers |
+|---|---|
+| `fastapi` | Async REST APIs, Pydantic, OpenAPI |
+| `sqlalchemy` | Async ORM, Alembic migrations |
+| `redis` | Caching, rate limiting, pub/sub, LLM cache |
+| `celery` | Background tasks, beat scheduler |
+| `graphql` | Schema, resolvers, subscriptions |
+| `nextjs` | Full-stack React, server components, API routes |
+| `typescript` | Types, generics, decorators, strict mode |
 
 ### Infrastructure / DevOps
-- `docker` — multi-stage builds, compose, production
-- `kubernetes` — deployments, HPA, ingress, AI workloads
-- `github-actions` — CI/CD, Docker publish, eval CI
-- `mcp-builder` — MCP servers for LLM tool integration
+| Skill | What it covers |
+|---|---|
+| `docker` | Multi-stage builds, compose, production |
+| `kubernetes` | Deployments, HPA, ingress, AI workloads |
+| `github-actions` | CI/CD, Docker publish, eval CI |
+| `git-advanced` | Rebase, stash, bisect, hooks |
+| `git-workflow` | Branching, PRs, release strategy |
 
 ### Testing / Security / Quality
-- `pytest` — fixtures, async tests, coverage
-- `security-audit` — web app + API security
-- `webapp-testing` — E2E, browser automation
-- `git-advanced` — rebase, stash, bisect, hooks
-- `git-workflow` — branching, PRs, release strategy
+| Skill | What it covers |
+|---|---|
+| `pytest` | Fixtures, async tests, coverage |
+| `security-audit` | Web app + API security |
+| `webapp-testing` | E2E, browser automation |
 
 ### UI / GPT Apps
-- `ui-design` — design tokens, typography, layout, dark mode, components, accessibility
-- `gpt-chat-ui` — ChatGPT-style chat app: SSE streaming, markdown, tool calls, history
+| Skill | What it covers |
+|---|---|
+| `ui-design` | Design tokens, typography, layout, dark mode, components, accessibility |
+| `gpt-chat-ui` | ChatGPT-style chat app: SSE streaming, markdown, tool calls, history |
 
-### ML Research (20 skills)
-Deep reference skills covering model architecture, tokenization, fine-tuning, interpretability, data processing, post-training, safety, distributed training, inference serving, MLOps, RAG, and emerging techniques.
+### ML Research (21 skills)
+Deep reference skills covering model architecture, tokenization, fine-tuning, mechanistic interpretability, data processing, post-training, safety/alignment, distributed training, infrastructure, optimization, evaluation, inference serving, MLOps, agents, RAG, prompt engineering, observability, multimodal, emerging techniques, ML paper writing, and extras (20+ sub-skills: LLaMA, GRPO, SwanLab, OpenPi, OpenVLA, etc.).
+
+| Skill | What it covers |
+|---|---|
+| `research-01-model-architecture` | Transformer internals, attention, MoE |
+| `research-02-tokenization` | BPE, SentencePiece, tokenizer training |
+| `research-03-fine-tuning` | SFT, LoRA, QLoRA, PEFT patterns |
+| `research-04-mechanistic-interpretability` | Circuits, probing, SAEs |
+| `research-05-data-processing` | Deduplication, filtering, quality pipelines |
+| `research-06-post-training` | RLHF, DPO, reward modeling |
+| `research-07-safety-alignment` | Constitutional AI, guardrails, red-teaming |
+| `research-08-distributed-training` | FSDP, DeepSpeed, Megatron |
+| `research-09-infrastructure` | GPU clusters, checkpointing, profiling |
+| `research-10-optimization` | Quantization, pruning, distillation |
+| `research-11-evaluation` | Benchmarks, eval harness, LLM-as-judge |
+| `research-12-inference-serving` | vLLM, TensorRT, speculative decoding |
+| `research-13-mlops` | MLflow, W&B, experiment tracking |
+| `research-14-agents` | Research agents, tool use, planning |
+| `research-15-rag` | Retrieval, chunking, hybrid search |
+| `research-16-prompt-engineering` | Chain-of-thought, few-shot, eval prompts |
+| `research-17-observability` | LLM monitoring, traces, SLOs |
+| `research-18-multimodal` | Vision-language, audio, video models |
+| `research-19-emerging-techniques` | Test-time compute, long context, new architectures |
+| `research-20-ml-paper-writing` | Writing, structuring, and presenting ML papers |
+| `research-21-extras` | 20+ sub-skills: LLaMA, GRPO, SwanLab, OpenPi, OpenVLA, Axolotl, and more |
 
 ---
 
