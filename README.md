@@ -7,7 +7,7 @@
 
 | | Count |
 |---|---|
-| Skills | 65 |
+| Skills | 70 |
 | Agents | 13 |
 | Commands | 10 |
 | Workflows | 4 |
@@ -78,6 +78,7 @@ Copy `master-assistant-standalone.html` to `docs/engineer-master-assistant.html`
 | `llm-evaluation` | Eval strategy, golden sets, metrics |
 | `ai-engineer` | Production LLM apps, RAG, orchestration |
 | `freellmapi` | Self-hosted free LLM router — 87+ providers, 1,300+ models, OpenAI-compatible |
+| `free-claude-code` | Local proxy routing Claude Code/Codex/Aider to 61+ providers; multi-key rotation |
 | `gpt-oss` | OpenAI open-weight MoE models (gpt-oss-120b / gpt-oss-20b, Apache-2.0) |
 
 ### ML / Data Science
@@ -103,6 +104,9 @@ Copy `master-assistant-standalone.html` to `docs/engineer-master-assistant.html`
 | `agent-qa-authoring` | Agent QA tests and suites |
 | `mcp-builder` | MCP servers for LLM tool integration |
 | `openbot` | Self-hostable AI coworker workspace — AG-UI, browser automation, CEL policy |
+| `agent-browser` | Accessibility-tree browser CLI for agents — @ref handles, daemon, MCP mode |
+| `skillspector` | NVIDIA security scanner for agent skills — YARA, CVE lookup, prompt-injection detection |
+| `claude-code-templates` | Registry + CLI for 1,980+ ready-made skills, agents, commands, MCP servers |
 
 ### Backend / API
 | Skill | What it covers |
@@ -130,6 +134,11 @@ Copy `master-assistant-standalone.html` to `docs/engineer-master-assistant.html`
 | `pytest` | Fixtures, async tests, coverage |
 | `security-audit` | Web app + API security |
 | `webapp-testing` | E2E, browser automation |
+
+### Browser & Dev Tools
+| Skill | What it covers |
+|---|---|
+| `chrome-devtools-mcp` | MCP server + CLI to control Chrome — navigation, screenshots, traces, console, network |
 
 ### UI / GPT Apps
 | Skill | What it covers |
