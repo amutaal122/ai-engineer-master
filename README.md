@@ -7,7 +7,7 @@
 
 | | Count |
 |---|---|
-| Skills | 71 |
+| Skills | 77 |
 | Agents | 13 |
 | Commands | 11 |
 | Workflows | 4 |
@@ -140,6 +140,7 @@ node gen-kb.js ../.. kb.json && node build-assistant.js
 | Skill | What it covers |
 |---|---|
 | `easy-install` | Install, update, verify, and wire the pack into any AI tool; offline install; troubleshooting |
+| `agent-skills` | Author Agent Skills: SKILL.md format, frontmatter, folder layout, Anthropic's marketplace |
 
 ### LLM / AI Engineering
 | Skill | What it covers |
@@ -164,6 +165,7 @@ node gen-kb.js ../.. kb.json && node build-assistant.js
 | `postgres` | SQL, indexes, window functions, analytics |
 | `mongodb` | NoSQL, flexible schema, aggregation pipelines |
 | `ab-testing` | Experiment design, statistical testing |
+| `scrapling` | Web scraping for agents — stealth fetchers, spiders, CLI, MCP server |
 
 ### AI Agent Development
 | Skill | What it covers |
@@ -182,6 +184,8 @@ node gen-kb.js ../.. kb.json && node build-assistant.js
 | `agent-browser` | Accessibility-tree browser CLI for agents — @ref handles, daemon, MCP mode |
 | `skillspector` | NVIDIA security scanner for agent skills — YARA, CVE lookup, prompt-injection |
 | `claude-code-templates` | Registry + CLI for 1,980+ ready-made skills, agents, commands, MCP servers |
+| `agent-desktop` | Computer use via the OS accessibility tree — no screenshots, element refs, MCP mode |
+| `ag-ui` | Agent-User Interaction Protocol — 31 event types, SSE/Protobuf, TS/Python/.NET SDKs |
 
 ### Backend / API
 | Skill | What it covers |
@@ -209,6 +213,8 @@ node gen-kb.js ../.. kb.json && node build-assistant.js
 | `pytest` | Fixtures, async tests, coverage |
 | `security-audit` | Web app + API security |
 | `webapp-testing` | E2E, browser automation |
+| `pyrit` | Microsoft's AI red teaming toolkit — jailbreak, injection, and harm testing |
+| `codex-security` | OpenAI's security CLI/SDK — repo and diff scans, SARIF export, CI action |
 
 ### Browser & Dev Tools
 | Skill | What it covers |

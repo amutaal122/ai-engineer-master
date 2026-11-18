@@ -2,7 +2,7 @@
   "generated": "2026-11-18",
   "source": "https://github.com/amutaal122/ai-engineer-master",
   "counts": {
-    "skills": 71,
+    "skills": 77,
     "agents": 13,
     "commands": 11,
     "workflows": 4
@@ -26,6 +26,27 @@
       "path": ".claude/skills/ab-testing/SKILL.md"
     },
     {
+      "id": "ag-ui",
+      "name": "AG-UI Protocol",
+      "domain": "Agents",
+      "description": "The Agent-User Interaction Protocol — an open event-based protocol that standardizes how AI agents stream to user-facing apps. Covers RunAgentInput, the 31 event types, SSE and Protobuf transports, the TypeScript/Python/.NET SDKs, and which agent frameworks speak it. Use when building a chat or agent UI that must rende",
+      "triggers": [
+        "ag-ui",
+        "agui",
+        "agent user interaction protocol",
+        "agent ui protocol",
+        "streaming agent events",
+        "copilotkit",
+        "agent frontend",
+        "run agent input",
+        "text_message_content",
+        "state_delta",
+        "generative ui",
+        "agent streaming protocol"
+      ],
+      "path": ".claude/skills/ag-ui/SKILL.md"
+    },
+    {
       "id": "agent-browser",
       "name": "Agent Browser",
       "domain": "Agents",
@@ -41,6 +62,27 @@
         "@ref browser"
       ],
       "path": ".claude/skills/agent-browser/SKILL.md"
+    },
+    {
+      "id": "agent-desktop",
+      "name": "Agent Desktop",
+      "domain": "Agents",
+      "description": "Computer-use CLI that lets an AI agent see and operate desktop apps on macOS, Windows, and Linux through the OS accessibility tree instead of screenshots and pixel matching. Covers snapshots, element refs, the 61 commands, MCP mode, per-OS permissions, and the retry rules that keep an automation from flailing.",
+      "triggers": [
+        "agent-desktop",
+        "computer use",
+        "desktop automation",
+        "control desktop app",
+        "accessibility tree",
+        "ax api",
+        "ui automation",
+        "at-spi",
+        "automate gui",
+        "operate an app",
+        "desktop agent",
+        "screenshot free automation"
+      ],
+      "path": ".claude/skills/agent-desktop/SKILL.md"
     },
     {
       "id": "agent-memory-discipline",
@@ -73,6 +115,27 @@
         "qa hooks"
       ],
       "path": ".claude/skills/agent-qa-authoring/SKILL.md"
+    },
+    {
+      "id": "agent-skills",
+      "name": "Agent Skills",
+      "domain": "Meta",
+      "description": "Author Agent Skills the way Anthropic's own repo does — SKILL.md folders with YAML frontmatter that Claude loads dynamically for specialized tasks. Covers the file format, folder layout, installing Anthropic's skill marketplace in Claude Code, using skills from claude.ai and the API, and the rules that keep a skill fro",
+      "triggers": [
+        "agent skills",
+        "write a skill",
+        "author a skill",
+        "skill.md",
+        "anthropic skills",
+        "skill frontmatter",
+        "skill format",
+        "create custom skill",
+        "skill marketplace",
+        "plugin marketplace",
+        "agentskills",
+        "skill template"
+      ],
+      "path": ".claude/skills/agent-skills/SKILL.md"
     },
     {
       "id": "ai-agent-development",
@@ -317,6 +380,27 @@
         "skill marketplace"
       ],
       "path": ".claude/skills/claude-code-templates/SKILL.md"
+    },
+    {
+      "id": "codex-security",
+      "name": "Codex Security",
+      "domain": "Quality & Security",
+      "description": "OpenAI's Codex Security CLI and TypeScript SDK for finding, validating, and fixing security vulnerabilities in a codebase — repo and diff scans, deep mode, SARIF/JSON/CSV export, threat models, SECURITY.md drafting, and a GitHub Action for CI. Use for security review of a repo or a pull request.",
+      "triggers": [
+        "codex security",
+        "codex-security",
+        "cs scan",
+        "security scan",
+        "vulnerability scan",
+        "find vulnerabilities",
+        "sast",
+        "threat model",
+        "security.md",
+        "sarif",
+        "security ci",
+        "scan pull request"
+      ],
+      "path": ".claude/skills/codex-security/SKILL.md"
     },
     {
       "id": "docker",
@@ -772,6 +856,27 @@
       "path": ".claude/skills/prompt-engineering/SKILL.md"
     },
     {
+      "id": "pyrit",
+      "name": "PyRIT",
+      "domain": "Quality & Security",
+      "description": "Microsoft's open-source AI red teaming toolkit for finding security and safety weaknesses in generative AI systems — automated scans, adaptive multi-turn attacks, a CLI scanner, a web GUI, and an extensible Python framework. Use when probing an LLM app for jailbreaks, prompt injection, harmful output, or before a model",
+      "triggers": [
+        "pyrit",
+        "ai red teaming",
+        "red team llm",
+        "jailbreak testing",
+        "prompt injection testing",
+        "adversarial testing",
+        "genai security",
+        "llm safety testing",
+        "harm testing",
+        "attack llm",
+        "pyrit_scan",
+        "copyrit"
+      ],
+      "path": ".claude/skills/pyrit/SKILL.md"
+    },
+    {
       "id": "pytest",
       "name": "pytest",
       "domain": "Quality & Security",
@@ -1205,6 +1310,27 @@
         "preprocessing"
       ],
       "path": ".claude/skills/scikit-learn/SKILL.md"
+    },
+    {
+      "id": "scrapling",
+      "name": "Scrapling",
+      "domain": "Data & ML",
+      "description": "Python web scraping framework built for AI agents — fast HTTP fetchers with TLS fingerprint impersonation, stealth browsers that solve Cloudflare, CSS/XPath/BeautifulSoup-style parsing, Scrapy-like spiders, a CLI, and an MCP server. Use for data acquisition, crawling, and letting an agent extract from live pages.",
+      "triggers": [
+        "scrapling",
+        "web scraping",
+        "scrape a website",
+        "crawler",
+        "spider",
+        "beautifulsoup alternative",
+        "scrapy alternative",
+        "cloudflare bypass",
+        "stealth browser",
+        "extract data from website",
+        "html parsing",
+        "mcp scraping"
+      ],
+      "path": ".claude/skills/scrapling/SKILL.md"
     },
     {
       "id": "security-audit",
