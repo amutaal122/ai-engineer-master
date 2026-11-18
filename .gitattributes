@@ -1,0 +1,11 @@
+* text=auto
+
+# Shell scripts ship inside the release zips; CRLF would break the shebang
+# on macOS and Linux, so keep them LF whatever the checkout platform does.
+*.sh text eol=lf
+.claude/doctor.sh text eol=lf
+install.sh text eol=lf
+
+*.ps1 text eol=crlf
+
+dist/*.zip binary

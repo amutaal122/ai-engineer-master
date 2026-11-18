@@ -7,14 +7,16 @@
 
 | | Count |
 |---|---|
-| Skills | 70 |
+| Skills | 71 |
 | Agents | 13 |
-| Commands | 10 |
+| Commands | 11 |
 | Workflows | 4 |
 
 ---
 
 ## Install — One Line
+
+Run from your **project root**.
 
 ### macOS / Linux
 ```bash
@@ -26,70 +28,79 @@ curl -fsSL https://github.com/amutaal122/ai-engineer-master/raw/main/install.sh 
 irm https://github.com/amutaal122/ai-engineer-master/raw/main/install.ps1 | iex
 ```
 
-Both scripts download and extract the `.claude/` folder into your current project directory, then print "Done."
+That drops `.claude/` into the current directory and prints what landed.
+
+### Then check it worked
+
+```bash
+bash .claude/doctor.sh        # macOS / Linux
+```
+```powershell
+./.claude/doctor.ps1          # Windows
+```
+
+Doctor reports the skill/agent/command counts, flags any broken frontmatter, and tells you which tools are wired.
+
+---
+
+## Install — Only What You Need
+
+70+ skills in a small repo is noise. Pick a subset:
+
+```bash
+curl -fsSL https://github.com/amutaal122/ai-engineer-master/raw/main/install.sh | bash -s -- \
+  --only fastapi,postgres,docker,pytest
+```
+
+```powershell
+irm https://github.com/amutaal122/ai-engineer-master/raw/main/install.ps1 -OutFile install.ps1
+./install.ps1 -Only fastapi,postgres,docker,pytest
+```
+
+See the list first with `--list` / `-List`.
+
+### All installer options
+
+| bash | PowerShell | Does |
+|---|---|---|
+| `--only a,b,c` | `-Only a,b,c` | install just these skills |
+| `--tool NAME` | `-Tool NAME` | write the rules file that tool reads |
+| `--update` | `-Update` | refresh skills, keep your `.claude/CLAUDE.md` |
+| `--list` | `-List` | list available skills and exit |
+| `--help` | `-Help` | usage |
 
 ---
 
 ## Install — By AI Tool
 
-### Claude Code
-The `.claude/` folder is natively supported — skills, agents, and commands load automatically.
+Claude Code reads `.claude/` natively — nothing else to do. Every other tool needs a rules file telling it the skills exist, and `--tool` writes that file for you:
 
 ```bash
-# macOS / Linux
-curl -fsSL https://github.com/amutaal122/ai-engineer-master/raw/main/install.sh | bash
-
-# Windows
-irm https://github.com/amutaal122/ai-engineer-master/raw/main/install.ps1 | iex
+curl -fsSL .../install.sh | bash -s -- --tool cursor
+```
+```powershell
+./install.ps1 -Tool cursor
 ```
 
-Or with git:
-```bash
-git clone https://github.com/amutaal122/ai-engineer-master.git temp
-cp -r temp/.claude .claude && rm -rf temp          # macOS/Linux
-# xcopy /E /I temp\.claude .claude && rmdir /S /Q temp  # Windows CMD
-```
+| `--tool` value | Writes | Read by |
+|---|---|---|
+| `claude` | nothing needed | Claude Code |
+| `cursor` | `.cursor/rules/skills.mdc` | Cursor |
+| `windsurf` | `.windsurf/rules/skills.md` | Windsurf |
+| `copilot` | `.github/copilot-instructions.md` | GitHub Copilot |
+| `cline` | `.clinerules` | Cline / Roo Code |
+| `continue` | `.continue/rules/skills.md` | Continue |
+| `zed` | `.rules` | Zed |
+| `codex` | `AGENTS.md` | Codex / Aider / OpenCode |
+| `all` | all of the above | a mixed-tool team |
 
-### Cursor
-1. Run the one-line installer above — this gives you `.claude/skills/`.
-2. Add to your `.cursor/rules/` (or `.cursorrules`) a reference line:
-   ```
-   Skills library: see .claude/skills/ for detailed patterns on each technology.
-   ```
-3. When asking Cursor for help, say: *"use the fastapi skill in .claude/skills/fastapi/"*
+`AGENTS.md` is the emerging cross-tool standard — `--tool codex` is the safest single pick if you are not sure what your teammates use.
 
-### Windsurf
-1. Run the one-line installer.
-2. In `.windsurf/rules/global_rules.md`, add:
-   ```
-   Detailed engineering patterns are in .claude/skills/<skill-name>/SKILL.md
-   ```
-
-### GitHub Copilot
-1. Run the one-line installer.
-2. Create or update `.github/copilot-instructions.md`:
-   ```markdown
-   This project uses AI Engineer Master skills in .claude/skills/.
-   When working on FastAPI, refer to .claude/skills/fastapi/SKILL.md, etc.
-   ```
-
-### Cline / OpenCode / Aider / Roo Code
-1. Run the one-line installer.
-2. Add to your `.clinerules` (or equivalent config):
-   ```
-   Engineering skill guides are in .claude/skills/. Reference the relevant SKILL.md file for each technology.
-   ```
-
-### Continue
-1. Run the one-line installer.
-2. In `.continue/config.json`, add the `.claude/skills/` path as a context provider or docs source.
-
-### Zed
-1. Run the one-line installer.
-2. Reference `.claude/skills/<name>/SKILL.md` in your assistant rules inside `.zed/settings.json`.
+**Restart your editor after installing.** Rules files are read at startup.
 
 ### Any other tool
-Run the one-line installer. Every skill is a plain Markdown file at `.claude/skills/<name>/SKILL.md` — paste the relevant file into any AI chat as context.
+
+Every skill is a plain Markdown file at `.claude/skills/<name>/SKILL.md` — paste one into any chat as context. `SKILLS.json` at the repo root is the machine-readable catalog (id, description, triggers, domain) if you want to build your own picker.
 
 ---
 
@@ -97,8 +108,10 @@ Run the one-line installer. Every skill is a plain Markdown file at `.claude/ski
 
 | File | Contents |
 |---|---|
-| [ai-engineer-master-skills.zip](https://github.com/amutaal122/ai-engineer-master/raw/main/dist/ai-engineer-master-skills.zip) | Only the `.claude/` folder — drop into any project |
-| [ai-engineer-master-complete.zip](https://github.com/amutaal122/ai-engineer-master/raw/main/dist/ai-engineer-master-complete.zip) | Skills + docs + tools |
+| [ai-engineer-master-skills.zip](https://github.com/amutaal122/ai-engineer-master/raw/main/dist/ai-engineer-master-skills.zip) | `.claude/` + `SKILLS.json` — drop into any project |
+| [ai-engineer-master-complete.zip](https://github.com/amutaal122/ai-engineer-master/raw/main/dist/ai-engineer-master-complete.zip) | Skills + docs + tools + installers |
+
+Extract at your project root, then run doctor.
 
 ---
 
@@ -114,9 +127,19 @@ cd tools/assistant
 node gen-kb.js ../.. kb.json && node build-assistant.js
 ```
 
+`gen-kb.js` also regenerates `SKILLS.json` at the repo root. Repackage the zips with:
+```powershell
+./tools/build-dist.ps1
+```
+
 ---
 
 ## Skills
+
+### Setup
+| Skill | What it covers |
+|---|---|
+| `easy-install` | Install, update, verify, and wire the pack into any AI tool; offline install; troubleshooting |
 
 ### LLM / AI Engineering
 | Skill | What it covers |
@@ -244,6 +267,26 @@ Deep reference skills covering model architecture, tokenization, fine-tuning, me
 | `test-engineer` | Test strategy and coverage |
 | `web-performance-auditor` | Core Web Vitals, rendering |
 | `ui-designer` | UI design, tokens, dark mode, chat and dashboard layouts |
+
+---
+
+## Commands
+
+Slash commands available in Claude Code once installed.
+
+| Command | Does |
+|---|---|
+| `/install` | Install, update, verify, or wire the pack for any AI tool |
+| `/spec` | Write a structured specification before writing code |
+| `/plan` | Break work into small verifiable tasks with acceptance criteria |
+| `/build` | Implement tasks incrementally — build, test, verify, commit |
+| `/test` | TDD loop — failing test, implement, verify |
+| `/review` | Five-axis review: correctness, readability, architecture, security, performance |
+| `/code-simplify` | Reduce complexity without changing behavior |
+| `/constraints` | Define and enforce the project's quality bar |
+| `/common-ground` | Surface hidden assumptions for confirmation |
+| `/webperf` | Web performance audit |
+| `/ship` | Pre-launch checklist, then a go/no-go call |
 
 ---
 

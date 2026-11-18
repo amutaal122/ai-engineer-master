@@ -1,0 +1,1465 @@
+{
+  "generated": "2026-11-18",
+  "source": "https://github.com/amutaal122/ai-engineer-master",
+  "counts": {
+    "skills": 71,
+    "agents": 13,
+    "commands": 11,
+    "workflows": 4
+  },
+  "skills": [
+    {
+      "id": "ab-testing",
+      "name": "ab-testing",
+      "domain": "Data & ML",
+      "description": "When the user wants to plan, design, or implement an A/B test or experiment, or build a growth experimentation program.",
+      "triggers": [
+        "ab testing",
+        "a/b test",
+        "experiment",
+        "statistical significance",
+        "hypothesis test",
+        "conversion rate",
+        "control group",
+        "treatment group"
+      ],
+      "path": ".claude/skills/ab-testing/SKILL.md"
+    },
+    {
+      "id": "agent-browser",
+      "name": "Agent Browser",
+      "domain": "Agents",
+      "description": "Browser automation CLI for AI agents. Takes an accessibility-tree snapshot of any page as @ref handles, then lets the agent click, type, and navigate using those refs. A background daemon keeps the browser session alive between commands.",
+      "triggers": [
+        "agent browser",
+        "agent-browser",
+        "vercel agent browser",
+        "browser automation cli",
+        "accessibility tree browser",
+        "browser agent cli",
+        "snapshot browser",
+        "@ref browser"
+      ],
+      "path": ".claude/skills/agent-browser/SKILL.md"
+    },
+    {
+      "id": "agent-memory-discipline",
+      "name": "agent-memory-discipline",
+      "domain": "Agents",
+      "description": "Rules for when an agent should recall from long-term memory before acting and when it should save decisions, corrections and failures afterwards. Works with any memory backend.",
+      "triggers": [
+        "agent memory",
+        "long-term memory",
+        "recall",
+        "memory store",
+        "episodic memory",
+        "memory retrieval",
+        "vector memory",
+        "agent state"
+      ],
+      "path": ".claude/skills/agent-memory-discipline/SKILL.md"
+    },
+    {
+      "id": "agent-qa-authoring",
+      "name": "agent-qa-authoring",
+      "domain": "Agents",
+      "description": "Create, edit, validate, and run Agent QA tests, suites, and hooks through MCP or CLI while preserving canonical IDs and schema contracts.",
+      "triggers": [
+        "agent qa",
+        "agent testing",
+        "qa authoring",
+        "agent test suite",
+        "agent evaluation tests",
+        "qa hooks"
+      ],
+      "path": ".claude/skills/agent-qa-authoring/SKILL.md"
+    },
+    {
+      "id": "ai-agent-development",
+      "name": "ai-agent-development",
+      "domain": "Agents",
+      "description": "AI agent development workflow for building autonomous agents, multi-agent systems, and agent orchestration with CrewAI, LangGraph, and custom agents.",
+      "triggers": [
+        "ai agent",
+        "autonomous agent",
+        "multi-agent",
+        "crewai",
+        "langgraph",
+        "agent orchestration",
+        "agentic",
+        "agent loop",
+        "agent tools"
+      ],
+      "path": ".claude/skills/ai-agent-development/SKILL.md"
+    },
+    {
+      "id": "ai-agent-evaluation-benchmarking",
+      "name": "ai-agent-evaluation-benchmarking",
+      "domain": "Agents",
+      "description": "Autonomous AI agent benchmark evaluation register: task completion rates, planning accuracy, tool invocation precision, and cost benchmarks.",
+      "triggers": [
+        "agent eval",
+        "agent benchmark",
+        "task completion rate",
+        "agent metrics",
+        "agent performance",
+        "eval harness agent"
+      ],
+      "path": ".claude/skills/ai-agent-evaluation-benchmarking/SKILL.md"
+    },
+    {
+      "id": "ai-agent-security",
+      "name": "ai-agent-security",
+      "domain": "Agents",
+      "description": "Secure AI agents against prompt injection, tool abuse, and data exfiltration",
+      "triggers": [
+        "agent security",
+        "prompt injection",
+        "tool abuse",
+        "data exfiltration",
+        "jailbreak",
+        "agent guardrails",
+        "llm security"
+      ],
+      "path": ".claude/skills/ai-agent-security/SKILL.md"
+    },
+    {
+      "id": "ai-agent-tool-routing",
+      "name": "ai-agent-tool-routing",
+      "domain": "Agents",
+      "description": "Use when designing or reviewing an AI agent tool registry or MCP router: document parameter schemas, caller authorization, execution limits, replay-safe retries and verification evidence.",
+      "triggers": [
+        "tool routing",
+        "tool registry",
+        "mcp router",
+        "function calling",
+        "tool selection",
+        "agent tools",
+        "parameter schema"
+      ],
+      "path": ".claude/skills/ai-agent-tool-routing/SKILL.md"
+    },
+    {
+      "id": "ai-agents-architect",
+      "name": "ai-agents-architect",
+      "domain": "Agents",
+      "description": "Expert in designing and building autonomous AI agents. Masters tool",
+      "triggers": [
+        "agent architecture",
+        "multi-agent design",
+        "agent planning",
+        "memory design",
+        "tool use patterns",
+        "agent system design"
+      ],
+      "path": ".claude/skills/ai-agents-architect/SKILL.md"
+    },
+    {
+      "id": "ai-code-generation-guardrails",
+      "name": "ai-code-generation-guardrails",
+      "domain": "Agents",
+      "description": "Use when reviewing AI-generated code before merge or execution: plan AST/security checks, isolated behavior tests and evidence, with language-specific coverage limits.",
+      "triggers": [
+        "ai code review",
+        "code generation review",
+        "copilot review",
+        "llm code quality",
+        "generated code",
+        "ai generated code"
+      ],
+      "path": ".claude/skills/ai-code-generation-guardrails/SKILL.md"
+    },
+    {
+      "id": "ai-coding-agent-guardrails",
+      "name": "ai-coding-agent-guardrails",
+      "domain": "Agents",
+      "description": "Secure AI coding agents (Claude Code, Cursor, Codex, Copilot) with permission",
+      "triggers": [
+        "claude code security",
+        "coding agent safety",
+        "copilot security",
+        "cursor security",
+        "ai coding guardrails",
+        "agent permissions"
+      ],
+      "path": ".claude/skills/ai-coding-agent-guardrails/SKILL.md"
+    },
+    {
+      "id": "ai-engineer",
+      "name": "ai-engineer",
+      "domain": "LLM & AI",
+      "description": "Build production-ready LLM applications, advanced RAG systems, and intelligent agents. Implements vector search, multimodal AI, agent orchestration, and enterprise AI integrations.",
+      "triggers": [
+        "ai engineer",
+        "production llm",
+        "rag application",
+        "llm product",
+        "llm ops",
+        "llm pipeline",
+        "ai product",
+        "language model app"
+      ],
+      "path": ".claude/skills/ai-engineer/SKILL.md"
+    },
+    {
+      "id": "ai-engineer-master",
+      "name": "ai-engineer-master",
+      "domain": "Meta",
+      "description": "Master skill system for AI/ML/Data Science engineers — 59 skills, 12 agents, 7-phase pipeline covering research through production operations.",
+      "triggers": [
+        "ai engineer",
+        "ml engineer",
+        "data scientist",
+        "llm product",
+        "ai project",
+        "machine learning project",
+        "ai system",
+        "full stack ai",
+        "production ai",
+        "ai pipeline",
+        "master pipeline"
+      ],
+      "path": ".claude/skills/ai-engineer-master/SKILL.md"
+    },
+    {
+      "id": "anthropic-sdk",
+      "name": "anthropic-sdk",
+      "domain": "LLM & AI",
+      "description": "Anthropic Claude API — messages, streaming, tool use, vision, prompt caching, token counting, batch API, and multi-turn conversations using the Python SDK.",
+      "triggers": [
+        "anthropic",
+        "claude api",
+        "claude sdk",
+        "anthropic sdk",
+        "claude messages",
+        "claude streaming",
+        "claude tools",
+        "claude vision",
+        "claude cache",
+        "prompt caching anthropic",
+        "claude batch",
+        "claude haiku",
+        "claude sonnet",
+        "claude opus"
+      ],
+      "path": ".claude/skills/anthropic-sdk/SKILL.md"
+    },
+    {
+      "id": "celery",
+      "name": "celery",
+      "domain": "Backend",
+      "description": "Celery — distributed task queues, beat scheduler, task routing, retries, chaining, monitoring with Flower, and patterns for AI/LLM background jobs.",
+      "triggers": [
+        "celery",
+        "celery task",
+        "celery beat",
+        "celery worker",
+        "task queue",
+        "background task python",
+        "celery redis",
+        "celery flower",
+        "celery chain",
+        "celery retry"
+      ],
+      "path": ".claude/skills/celery/SKILL.md"
+    },
+    {
+      "id": "chrome-devtools-mcp",
+      "name": "Chrome DevTools MCP",
+      "domain": "Tools & Infra",
+      "description": "MCP server and CLI that lets a coding agent control and inspect a live Chrome browser. Covers navigation, screenshots, performance traces, network/console inspection, and Puppeteer-based automation — no manual browser setup required.",
+      "triggers": [
+        "chrome devtools mcp",
+        "chrome mcp",
+        "browser devtools",
+        "puppeteer mcp",
+        "chrome automation",
+        "devtools mcp",
+        "browser inspector agent",
+        "chrome control agent",
+        "web automation mcp"
+      ],
+      "path": ".claude/skills/chrome-devtools-mcp/SKILL.md"
+    },
+    {
+      "id": "claude-api",
+      "name": "claude-api",
+      "domain": "LLM & AI",
+      "description": "Reference for the Claude API / Anthropic SDK — model ids, pricing, params, streaming, tool use, MCP, agents, caching, token counting, model migration. TRIGGER — read BEFORE opening the target file; don't skip because it \"looks like a one-liner\" — whenever: the prompt names Claude/Anthropic in any form (Claude, Anthropi",
+      "triggers": [
+        "claude api",
+        "anthropic api",
+        "claude messages",
+        "claude sdk",
+        "claude client",
+        "anthropic client",
+        "claude model",
+        "claude prompt"
+      ],
+      "path": ".claude/skills/claude-api/SKILL.md"
+    },
+    {
+      "id": "claude-code-templates",
+      "name": "Claude Code Templates",
+      "domain": "Agents",
+      "description": "CLI and registry for 1,980+ ready-made Claude Code components — skills, agents, commands, hooks, MCP servers, and settings. Every component is scanned with SkillSpector before publishing. Install any component into the current project with one command.",
+      "triggers": [
+        "claude code templates",
+        "claude-code-templates",
+        "cct",
+        "component registry",
+        "skill registry",
+        "agent registry",
+        "install skill",
+        "install agent",
+        "install command",
+        "install mcp",
+        "skill marketplace"
+      ],
+      "path": ".claude/skills/claude-code-templates/SKILL.md"
+    },
+    {
+      "id": "docker",
+      "name": "docker",
+      "domain": "Infra & DevOps",
+      "description": "Docker and Docker Compose — Dockerfile authoring, multi-stage builds, layer caching, compose services, networking, volumes, secrets, and production patterns.",
+      "triggers": [
+        "docker",
+        "dockerfile",
+        "docker compose",
+        "docker build",
+        "docker run",
+        "container",
+        "multi-stage",
+        "docker image",
+        "dockerize"
+      ],
+      "path": ".claude/skills/docker/SKILL.md"
+    },
+    {
+      "id": "easy-install",
+      "name": "Easy Install",
+      "domain": "Meta",
+      "description": "Install, update, verify, and wire the AI Engineer Master skill pack into any AI coding tool — Claude Code, Cursor, Windsurf, Copilot, Cline, Continue, Zed, Aider, or a plain chat window. Covers one-line installers, selective skill install, per-tool rule wiring, offline install, and troubleshooting a broken install.",
+      "triggers": [
+        "install skills",
+        "easy install",
+        "how do i install",
+        "setup skills",
+        "add skills to cursor",
+        "add skills to windsurf",
+        "add skills to copilot",
+        "install ai engineer master",
+        "update skills",
+        "uninstall skills",
+        "skill not loading",
+        "skills not working",
+        "wire skills",
+        "doctor"
+      ],
+      "path": ".claude/skills/easy-install/SKILL.md"
+    },
+    {
+      "id": "fastapi",
+      "name": "fastapi",
+      "domain": "Backend",
+      "description": "FastAPI — async REST APIs, Pydantic validation, dependency injection, background tasks, middleware, OpenAPI docs, and production patterns for AI/ML services.",
+      "triggers": [
+        "fastapi",
+        "fast api",
+        "rest api",
+        "api endpoint",
+        "pydantic",
+        "uvicorn",
+        "starlette",
+        "async api",
+        "http endpoint",
+        "openapi",
+        "swagger"
+      ],
+      "path": ".claude/skills/fastapi/SKILL.md"
+    },
+    {
+      "id": "free-claude-code",
+      "name": "Free Claude Code (fcc)",
+      "domain": "Tools & Infra",
+      "description": "Local proxy that routes Claude Code, Codex, OpenCode, Aider, and others to 61+ free-tier model providers (NVIDIA NIM, OpenRouter, Groq, Ollama, and more). Supports multi-key rotation, fallback chains, and exposes Anthropic, OpenAI, and Gemini endpoints on localhost.",
+      "triggers": [
+        "free claude code",
+        "fcc",
+        "fcc-server",
+        "free codex",
+        "local llm proxy",
+        "multi-provider proxy",
+        "claude code free",
+        "free coding agent",
+        "provider rotation",
+        "free ai proxy"
+      ],
+      "path": ".claude/skills/free-claude-code/SKILL.md"
+    },
+    {
+      "id": "freellmapi",
+      "name": "FreeLLMAPI",
+      "domain": "LLM & AI",
+      "description": "Self-hosted router that exposes one OpenAI-compatible endpoint backed by ~87 free-tier providers (~1,300 model endpoints). No cloud billing — provider keys are encrypted locally and the router handles failover, rate-limit tracking, and model selection automatically.",
+      "triggers": [
+        "freellmapi",
+        "free llm",
+        "free api",
+        "llm router",
+        "free models",
+        "openai compatible free",
+        "local llm router",
+        "llm proxy",
+        "free tier llm",
+        "aggregate llm"
+      ],
+      "path": ".claude/skills/freellmapi/SKILL.md"
+    },
+    {
+      "id": "git-advanced",
+      "name": "git-advanced",
+      "domain": "Infra & DevOps",
+      "description": "Advanced Git patterns — interactive rebase, cherry-pick, stash, reflog recovery, bisect, worktrees, hooks, conventional commits, and branch strategies.",
+      "triggers": [
+        "git rebase",
+        "git bisect",
+        "git stash",
+        "git cherry-pick",
+        "git reflog",
+        "git worktree",
+        "git hook",
+        "conventional commit",
+        "git strategy",
+        "git squash",
+        "undo git"
+      ],
+      "path": ".claude/skills/git-advanced/SKILL.md"
+    },
+    {
+      "id": "git-workflow",
+      "name": "git-workflow",
+      "domain": "Infra & DevOps",
+      "description": "Implement Git branching strategies, PR workflows, and release management",
+      "triggers": [
+        "git workflow",
+        "branching strategy",
+        "git flow",
+        "feature branch",
+        "pull request workflow",
+        "release branch",
+        "git strategy"
+      ],
+      "path": ".claude/skills/git-workflow/SKILL.md"
+    },
+    {
+      "id": "github-actions",
+      "name": "github-actions",
+      "domain": "Infra & DevOps",
+      "description": "GitHub Actions — CI/CD workflows, caching, matrix builds, secrets, Docker publishing, deploy pipelines, reusable workflows, and AI/ML pipeline patterns.",
+      "triggers": [
+        "github actions",
+        "gh actions",
+        "ci cd",
+        "github workflow",
+        "yml workflow",
+        "github pipeline",
+        "actions cache",
+        "docker push github",
+        "deploy github actions",
+        "matrix build"
+      ],
+      "path": ".claude/skills/github-actions/SKILL.md"
+    },
+    {
+      "id": "gpt-chat-ui",
+      "name": "gpt-chat-ui",
+      "domain": "UI & Apps",
+      "description": "Build a ChatGPT-style GPT chat application - streaming UI, message model, markdown and code rendering, tool calls, conversation history, FastAPI + OpenAI/Claude backend, and production polish.",
+      "triggers": [
+        "gpt",
+        "chatgpt",
+        "chat ui",
+        "chat interface",
+        "chatbot",
+        "chat app",
+        "gpt clone",
+        "streaming chat",
+        "conversation ui",
+        "openai chat",
+        "assistant ui",
+        "sse",
+        "message list",
+        "copilot ui"
+      ],
+      "path": ".claude/skills/gpt-chat-ui/SKILL.md"
+    },
+    {
+      "id": "gpt-oss",
+      "name": "GPT-OSS (gpt-oss-120b / gpt-oss-20b)",
+      "domain": "LLM & AI",
+      "description": "OpenAI's open-weight MoE reasoning models (Apache-2.0). gpt-oss-120b fits one 80GB GPU; gpt-oss-20b fits 16GB. Both support configurable reasoning effort, function calling, browsing, Python execution, and Structured Outputs. Must be used with the openai-harmony response format.",
+      "triggers": [
+        "gpt-oss",
+        "gpt-oss-120b",
+        "gpt-oss-20b",
+        "openai open model",
+        "open weight reasoning",
+        "openai open source",
+        "harmony format",
+        "gpt oss",
+        "openai gpt-oss"
+      ],
+      "path": ".claude/skills/gpt-oss/SKILL.md"
+    },
+    {
+      "id": "graphql",
+      "name": "graphql",
+      "domain": "Backend",
+      "description": "GraphQL gives clients exactly the data they need - no more, no",
+      "triggers": [
+        "graphql",
+        "gql",
+        "schema definition",
+        "resolver",
+        "subscription",
+        "graphql query",
+        "apollo",
+        "strawberry graphql",
+        "graphql mutation"
+      ],
+      "path": ".claude/skills/graphql/SKILL.md"
+    },
+    {
+      "id": "huggingface",
+      "name": "huggingface",
+      "domain": "LLM & AI",
+      "description": "HuggingFace — transformers, datasets, PEFT fine-tuning, model hub, inference, embeddings, and production deployment for ML engineers.",
+      "triggers": [
+        "huggingface",
+        "transformers",
+        "model hub",
+        "fine-tuning",
+        "peft",
+        "lora",
+        "datasets",
+        "pipeline",
+        "tokenizer",
+        "bert",
+        "llama",
+        "mistral",
+        "embedding model",
+        "hf"
+      ],
+      "path": ".claude/skills/huggingface/SKILL.md"
+    },
+    {
+      "id": "kubernetes",
+      "name": "kubernetes",
+      "domain": "Infra & DevOps",
+      "description": "Kubernetes — deployments, services, ingress, ConfigMaps, secrets, HPA, resource limits, health checks, namespaces, and production patterns for deploying AI/ML services.",
+      "triggers": [
+        "kubernetes",
+        "k8s",
+        "kubectl",
+        "deployment yaml",
+        "kubernetes pod",
+        "k8s ingress",
+        "hpa autoscaling",
+        "kubernetes secret",
+        "kubernetes configmap",
+        "helm",
+        "kubernetes service"
+      ],
+      "path": ".claude/skills/kubernetes/SKILL.md"
+    },
+    {
+      "id": "langchain",
+      "name": "langchain",
+      "domain": "LLM & AI",
+      "description": "LangChain — chains, RAG pipelines, agents, memory, vector stores, document loaders, and LangSmith observability for LLM applications.",
+      "triggers": [
+        "langchain",
+        "langchain rag",
+        "langchain agent",
+        "langchain chain",
+        "langchain memory",
+        "langchain vectorstore",
+        "lcel",
+        "langsmith",
+        "retrieval augmented generation",
+        "langchain tools"
+      ],
+      "path": ".claude/skills/langchain/SKILL.md"
+    },
+    {
+      "id": "llm-evaluation",
+      "name": "llm-evaluation",
+      "domain": "LLM & AI",
+      "description": "Master comprehensive evaluation strategies for LLM applications, from automated metrics to human evaluation and A/B testing.",
+      "triggers": [
+        "llm eval",
+        "model evaluation",
+        "golden set",
+        "eval metrics",
+        "llm benchmark",
+        "ragas",
+        "deepeval",
+        "judge model",
+        "eval strategy"
+      ],
+      "path": ".claude/skills/llm-evaluation/SKILL.md"
+    },
+    {
+      "id": "mcp-builder",
+      "name": "mcp-builder",
+      "domain": "Agents",
+      "description": "Guide for creating high-quality MCP (Model Context Protocol) servers that enable LLMs to interact with external services through well-designed tools. Use when building MCP servers to integrate external APIs or services, whether in Python (FastMCP) or Node/TypeScript (MCP SDK).",
+      "triggers": [
+        "mcp server",
+        "mcp tool",
+        "model context protocol",
+        "mcp builder",
+        "mcp integration",
+        "mcp resource",
+        "build mcp",
+        "mcp transport"
+      ],
+      "path": ".claude/skills/mcp-builder/SKILL.md"
+    },
+    {
+      "id": "mongodb",
+      "name": "mongodb",
+      "domain": "Data & ML",
+      "description": "Administer MongoDB databases. Configure replica sets, sharding, and backups.",
+      "triggers": [
+        "mongodb",
+        "mongo",
+        "nosql",
+        "document store",
+        "bson",
+        "aggregation pipeline",
+        "mongodb atlas",
+        "pymongo",
+        "motor",
+        "mongoose"
+      ],
+      "path": ".claude/skills/mongodb/SKILL.md"
+    },
+    {
+      "id": "nextjs",
+      "name": "nextjs",
+      "domain": "Backend",
+      "description": "Next.js App Router — Server Components, Client Components, data fetching, caching, Server Actions, routing, layouts, middleware, and performance patterns.",
+      "triggers": [
+        "nextjs",
+        "next.js",
+        "app router",
+        "server component",
+        "client component",
+        "server action",
+        "use client",
+        "use server",
+        "next config",
+        "next middleware",
+        "route handler",
+        "next cache",
+        "revalidate"
+      ],
+      "path": ".claude/skills/nextjs/SKILL.md"
+    },
+    {
+      "id": "openai-sdk",
+      "name": "openai-sdk",
+      "domain": "LLM & AI",
+      "description": "OpenAI API — chat completions, streaming, function calling, embeddings, assistants, vision, structured outputs, and async patterns using the Python SDK.",
+      "triggers": [
+        "openai",
+        "gpt",
+        "openai api",
+        "openai sdk",
+        "chatgpt api",
+        "gpt-4",
+        "gpt-4o",
+        "openai embeddings",
+        "openai function calling",
+        "openai assistants",
+        "openai structured output",
+        "tiktoken"
+      ],
+      "path": ".claude/skills/openai-sdk/SKILL.md"
+    },
+    {
+      "id": "openbot",
+      "name": "OpenBot",
+      "domain": "Agents",
+      "description": "Self-hostable workspace for AI coworkers (Bots). Each Bot gets a sandboxed Chromium container, shell access, and MCP tool integrations. Any AG-UI endpoint can be a Bot — LangGraph, Mastra, CrewAI, Pydantic AI, etc. Policy-gated (CEL) with full audit log.",
+      "triggers": [
+        "openbot",
+        "copilotkit openbot",
+        "ai coworker",
+        "ai workspace",
+        "ag-ui",
+        "browser automation agent",
+        "self-hosted ai agent",
+        "agentic workspace",
+        "openbot bot",
+        "copilotkit agent"
+      ],
+      "path": ".claude/skills/openbot/SKILL.md"
+    },
+    {
+      "id": "pandas",
+      "name": "pandas",
+      "domain": "Data & ML",
+      "description": "pandas & polars — data loading, cleaning, transformation, aggregation, merging, time series, and production data pipelines for data science and ML.",
+      "triggers": [
+        "pandas",
+        "polars",
+        "dataframe",
+        "csv",
+        "data cleaning",
+        "data wrangling",
+        "groupby",
+        "merge",
+        "pivot",
+        "time series",
+        "pd.read",
+        "iloc",
+        "loc",
+        "apply"
+      ],
+      "path": ".claude/skills/pandas/SKILL.md"
+    },
+    {
+      "id": "postgres",
+      "name": "postgres",
+      "domain": "Data & ML",
+      "description": "PostgreSQL — queries, indexes, EXPLAIN ANALYZE, window functions, CTEs, JSONB, full-text search, migrations, row-level security, and performance patterns.",
+      "triggers": [
+        "postgres",
+        "postgresql",
+        "psql",
+        "sql query",
+        "pg",
+        "explain analyze",
+        "cte",
+        "window function",
+        "jsonb",
+        "row level security",
+        "rls",
+        "pg index",
+        "sql performance"
+      ],
+      "path": ".claude/skills/postgres/SKILL.md"
+    },
+    {
+      "id": "prompt-engineering",
+      "name": "prompt-engineering",
+      "domain": "LLM & AI",
+      "description": "Expert guide on prompt engineering patterns, best practices, and optimization techniques. Use when user wants to improve prompts, learn prompting strategies, or debug agent behavior.",
+      "triggers": [
+        "prompt engineering",
+        "system prompt",
+        "few-shot",
+        "chain of thought",
+        "prompt optimization",
+        "prompt design",
+        "instruction tuning",
+        "prompt template"
+      ],
+      "path": ".claude/skills/prompt-engineering/SKILL.md"
+    },
+    {
+      "id": "pytest",
+      "name": "pytest",
+      "domain": "Quality & Security",
+      "description": "pytest — fixtures, parametrize, marks, conftest, monkeypatch, tmp_path, async tests, coverage, and common patterns for unit and integration testing.",
+      "triggers": [
+        "pytest",
+        "fixture",
+        "parametrize",
+        "conftest",
+        "monkeypatch",
+        "pytest mark",
+        "pytest async",
+        "test coverage",
+        "pytest plugin",
+        "hypothesis",
+        "factory boy"
+      ],
+      "path": ".claude/skills/pytest/SKILL.md"
+    },
+    {
+      "id": "redis",
+      "name": "redis",
+      "domain": "Backend",
+      "description": "Redis — caching, sessions, rate limiting, pub/sub, streams, distributed locks, leaderboards, and AI response caching patterns.",
+      "triggers": [
+        "redis",
+        "redis cache",
+        "redis stream",
+        "pub sub redis",
+        "redis rate limit",
+        "redis lock",
+        "redis session",
+        "cache layer",
+        "in-memory store"
+      ],
+      "path": ".claude/skills/redis/SKILL.md"
+    },
+    {
+      "id": "research-01-model-architecture",
+      "name": "research-01-model-architecture",
+      "domain": "Research",
+      "description": "Model architecture deep-dive — transformers, attention, LLM internals, and implementations (litgpt, nanogpt, mamba, rwkv, torchtitan).",
+      "triggers": [
+        "model architecture",
+        "transformer architecture",
+        "attention mechanism",
+        "llm internals",
+        "neural network architecture",
+        "litgpt",
+        "nanogpt",
+        "mamba",
+        "rwkv"
+      ],
+      "path": ".claude/skills/research-01-model-architecture/SKILL.md"
+    },
+    {
+      "id": "research-02-tokenization",
+      "name": "research-02-tokenization",
+      "domain": "Research",
+      "description": "Tokenization strategies — BPE, sentencepiece, wordpiece, vocabulary building, and tokenizer training.",
+      "triggers": [
+        "tokenization",
+        "bpe",
+        "byte pair encoding",
+        "tokenizer",
+        "sentencepiece",
+        "wordpiece",
+        "vocabulary",
+        "subword",
+        "tokenizer training"
+      ],
+      "path": ".claude/skills/research-02-tokenization/SKILL.md"
+    },
+    {
+      "id": "research-03-fine-tuning",
+      "name": "research-03-fine-tuning",
+      "domain": "Research",
+      "description": "Fine-tuning techniques — SFT, LoRA, PEFT, instruction tuning with axolotl, llama-factory, and unsloth.",
+      "triggers": [
+        "fine-tuning",
+        "sft",
+        "supervised fine-tuning",
+        "lora fine-tune",
+        "peft training",
+        "axolotl",
+        "llama-factory",
+        "unsloth",
+        "instruction tuning"
+      ],
+      "path": ".claude/skills/research-03-fine-tuning/SKILL.md"
+    },
+    {
+      "id": "research-04-mechanistic-interpretability",
+      "name": "research-04-mechanistic-interpretability",
+      "domain": "Research",
+      "description": "Mechanistic interpretability — SAE, circuits, activation patching, probing with nnsight, pyvene, saelens, transformer-lens.",
+      "triggers": [
+        "mechanistic interpretability",
+        "circuits",
+        "sae",
+        "sparse autoencoder",
+        "activation patching",
+        "probing",
+        "feature visualization",
+        "nnsight"
+      ],
+      "path": ".claude/skills/research-04-mechanistic-interpretability/SKILL.md"
+    },
+    {
+      "id": "research-05-data-processing",
+      "name": "research-05-data-processing",
+      "domain": "Research",
+      "description": "Training data processing — curation, cleaning, quality filters with nemo-curator and ray-data.",
+      "triggers": [
+        "data processing",
+        "data curation",
+        "data pipeline",
+        "nemo curator",
+        "ray data",
+        "dataset cleaning",
+        "training data",
+        "data quality"
+      ],
+      "path": ".claude/skills/research-05-data-processing/SKILL.md"
+    },
+    {
+      "id": "research-06-post-training",
+      "name": "research-06-post-training",
+      "domain": "Research",
+      "description": "Post-training alignment — RLHF, DPO, GRPO, reward models with openrlhf, TRL, verl, simpo.",
+      "triggers": [
+        "post training",
+        "rlhf",
+        "dpo",
+        "reward model",
+        "grpo",
+        "ppo",
+        "reinforcement learning llm",
+        "openrlhf",
+        "simpo",
+        "trl",
+        "verl"
+      ],
+      "path": ".claude/skills/research-06-post-training/SKILL.md"
+    },
+    {
+      "id": "research-07-safety-alignment",
+      "name": "research-07-safety-alignment",
+      "domain": "Research",
+      "description": "Safety and alignment — constitutional AI, guardrails, llamaguard, red teaming, prompt-guard.",
+      "triggers": [
+        "safety alignment",
+        "constitutional ai",
+        "guardrails",
+        "llamaguard",
+        "red teaming",
+        "harmlessness",
+        "ai safety",
+        "prompt guard"
+      ],
+      "path": ".claude/skills/research-07-safety-alignment/SKILL.md"
+    },
+    {
+      "id": "research-08-distributed-training",
+      "name": "research-08-distributed-training",
+      "domain": "Research",
+      "description": "Distributed training — FSDP, DeepSpeed, Megatron, multi-GPU, model parallelism with accelerate and ray-train.",
+      "triggers": [
+        "distributed training",
+        "fsdp",
+        "deepspeed",
+        "megatron",
+        "pytorch lightning",
+        "multi-gpu",
+        "model parallelism",
+        "data parallelism",
+        "ray train"
+      ],
+      "path": ".claude/skills/research-08-distributed-training/SKILL.md"
+    },
+    {
+      "id": "research-09-infrastructure",
+      "name": "research-09-infrastructure",
+      "domain": "Research",
+      "description": "ML infrastructure — GPU clusters, cloud GPU rental with lambda-labs, modal, and skypilot.",
+      "triggers": [
+        "gpu cluster",
+        "cloud gpu",
+        "lambda labs",
+        "modal",
+        "skypilot",
+        "training infrastructure",
+        "gpu rental",
+        "multi-cloud training"
+      ],
+      "path": ".claude/skills/research-09-infrastructure/SKILL.md"
+    },
+    {
+      "id": "research-10-optimization",
+      "name": "research-10-optimization",
+      "domain": "Research",
+      "description": "Model optimization — quantization (AWQ, GGUF, GPTQ, BitsAndBytes, HQQ), pruning, compression.",
+      "triggers": [
+        "quantization",
+        "model compression",
+        "awq",
+        "bitsandbytes",
+        "gguf",
+        "gptq",
+        "hqq",
+        "int4",
+        "int8",
+        "model optimization",
+        "pruning"
+      ],
+      "path": ".claude/skills/research-10-optimization/SKILL.md"
+    },
+    {
+      "id": "research-11-evaluation",
+      "name": "research-11-evaluation",
+      "domain": "Research",
+      "description": "LLM evaluation — benchmarks, eval harness, bigcode-eval, nemo-evaluator, standardized assessment.",
+      "triggers": [
+        "llm evaluation",
+        "eval harness",
+        "benchmark",
+        "lm-eval",
+        "bigcode eval",
+        "nemo evaluator",
+        "model assessment",
+        "evals"
+      ],
+      "path": ".claude/skills/research-11-evaluation/SKILL.md"
+    },
+    {
+      "id": "research-12-inference-serving",
+      "name": "research-12-inference-serving",
+      "domain": "Research",
+      "description": "Inference serving — vLLM, sglang, tensorrt-llm, llama.cpp for high-throughput production deployment.",
+      "triggers": [
+        "inference serving",
+        "vllm",
+        "sglang",
+        "tensorrt-llm",
+        "llama.cpp",
+        "model serving",
+        "llm deployment",
+        "inference optimization",
+        "tgi"
+      ],
+      "path": ".claude/skills/research-12-inference-serving/SKILL.md"
+    },
+    {
+      "id": "research-13-mlops",
+      "name": "research-13-mlops",
+      "domain": "Research",
+      "description": "MLOps — experiment tracking with mlflow, tensorboard, weights-and-biases, model registry.",
+      "triggers": [
+        "mlops",
+        "experiment tracking",
+        "mlflow",
+        "tensorboard",
+        "weights and biases",
+        "wandb",
+        "model registry",
+        "ml pipeline"
+      ],
+      "path": ".claude/skills/research-13-mlops/SKILL.md"
+    },
+    {
+      "id": "research-14-agents",
+      "name": "research-14-agents",
+      "domain": "Research",
+      "description": "Agent frameworks — crewai, langchain, llamaindex, autogpt for multi-agent orchestration.",
+      "triggers": [
+        "agent frameworks",
+        "crewai",
+        "langchain",
+        "llamaindex",
+        "autogpt",
+        "agentic workflows",
+        "multi-agent framework"
+      ],
+      "path": ".claude/skills/research-14-agents/SKILL.md"
+    },
+    {
+      "id": "research-15-rag",
+      "name": "research-15-rag",
+      "domain": "Research",
+      "description": "RAG pipelines — retrieval, vector databases (chroma, faiss, pinecone, qdrant), sentence-transformers.",
+      "triggers": [
+        "rag",
+        "retrieval augmented generation",
+        "vector database",
+        "chroma",
+        "faiss",
+        "pinecone",
+        "qdrant",
+        "sentence transformers",
+        "embeddings retrieval"
+      ],
+      "path": ".claude/skills/research-15-rag/SKILL.md"
+    },
+    {
+      "id": "research-16-prompt-engineering",
+      "name": "research-16-prompt-engineering",
+      "domain": "Research",
+      "description": "Advanced prompt engineering — dspy, guidance, instructor, outlines for structured LLM output.",
+      "triggers": [
+        "advanced prompting",
+        "dspy",
+        "guidance",
+        "instructor",
+        "outlines",
+        "structured output",
+        "prompt optimization",
+        "prompt programming"
+      ],
+      "path": ".claude/skills/research-16-prompt-engineering/SKILL.md"
+    },
+    {
+      "id": "research-17-observability",
+      "name": "research-17-observability",
+      "domain": "Research",
+      "description": "LLM observability — tracing, monitoring with langsmith and phoenix.",
+      "triggers": [
+        "llm observability",
+        "langsmith",
+        "phoenix",
+        "tracing llm",
+        "llm monitoring",
+        "prompt tracing",
+        "llm metrics"
+      ],
+      "path": ".claude/skills/research-17-observability/SKILL.md"
+    },
+    {
+      "id": "research-18-multimodal",
+      "name": "research-18-multimodal",
+      "domain": "Research",
+      "description": "Multimodal models — vision-language, audio, image generation (audiocraft, blip-2, clip, llava, SAM, stable-diffusion, whisper).",
+      "triggers": [
+        "multimodal",
+        "vision language",
+        "audiocraft",
+        "blip2",
+        "clip",
+        "llava",
+        "segment anything",
+        "stable diffusion",
+        "whisper",
+        "speech",
+        "image generation"
+      ],
+      "path": ".claude/skills/research-18-multimodal/SKILL.md"
+    },
+    {
+      "id": "research-19-emerging-techniques",
+      "name": "research-19-emerging-techniques",
+      "domain": "Research",
+      "description": "Emerging techniques — speculative decoding, knowledge distillation, model merging, MoE, long context.",
+      "triggers": [
+        "speculative decoding",
+        "knowledge distillation",
+        "model merging",
+        "pruning",
+        "moe",
+        "mixture of experts",
+        "long context",
+        "emerging techniques"
+      ],
+      "path": ".claude/skills/research-19-emerging-techniques/SKILL.md"
+    },
+    {
+      "id": "research-20-ml-paper-writing",
+      "name": "research-20-ml-paper-writing",
+      "domain": "Research",
+      "description": "ML paper writing — structure, related work, ablation, academic conventions for arxiv/NeurIPS/ICML.",
+      "triggers": [
+        "ml paper",
+        "research paper",
+        "paper writing",
+        "arxiv",
+        "paper structure",
+        "related work",
+        "ablation study",
+        "academic writing"
+      ],
+      "path": ".claude/skills/research-20-ml-paper-writing/SKILL.md"
+    },
+    {
+      "id": "research-21-extras",
+      "name": "research-21-extras",
+      "domain": "Research",
+      "description": "Research workflow extras - autoresearch, idea generation, ML training recipes, paper writing and talks, plotting, robotics policies (openpi, openvla-oft, cosmos-policy).",
+      "triggers": [
+        "autoresearch",
+        "research ideas",
+        "brainstorming research",
+        "training recipes",
+        "paper writing",
+        "conference talk",
+        "academic plotting",
+        "experiment tracking",
+        "swanlab",
+        "openvla",
+        "openpi",
+        "cosmos policy",
+        "agent evolution"
+      ],
+      "path": ".claude/skills/research-21-extras/SKILL.md"
+    },
+    {
+      "id": "scikit-learn",
+      "name": "scikit-learn",
+      "domain": "Data & ML",
+      "description": "scikit-learn — ML pipelines, preprocessing, classification, regression, clustering, model selection, evaluation, and production patterns for data scientists.",
+      "triggers": [
+        "scikit-learn",
+        "sklearn",
+        "machine learning",
+        "classifier",
+        "regressor",
+        "pipeline",
+        "cross_val",
+        "GridSearchCV",
+        "RandomForest",
+        "XGBoost",
+        "model training",
+        "feature engineering",
+        "preprocessing"
+      ],
+      "path": ".claude/skills/scikit-learn/SKILL.md"
+    },
+    {
+      "id": "security-audit",
+      "name": "security-audit",
+      "domain": "Quality & Security",
+      "description": "Comprehensive security auditing workflow covering web application testing, API security, penetration testing, vulnerability scanning, and security hardening.",
+      "triggers": [
+        "security audit",
+        "penetration testing",
+        "vulnerability",
+        "owasp",
+        "xss",
+        "sql injection",
+        "csrf",
+        "auth bypass",
+        "threat model"
+      ],
+      "path": ".claude/skills/security-audit/SKILL.md"
+    },
+    {
+      "id": "skillspector",
+      "name": "SkillSpector",
+      "domain": "Agents",
+      "description": "NVIDIA's security scanner for agent skills (Claude Code, Codex, MCP servers). Combines static analysis, YARA rules, OSV.dev CVE lookups, and optional LLM review to flag prompt injection, data exfiltration, and supply-chain risk — without executing the skill.",
+      "triggers": [
+        "skillspector",
+        "skill security",
+        "agent skill scanner",
+        "skill audit",
+        "mcp security scanner",
+        "prompt injection scan",
+        "skill inspector",
+        "agent security audit",
+        "nvidia skillspector"
+      ],
+      "path": ".claude/skills/skillspector/SKILL.md"
+    },
+    {
+      "id": "sqlalchemy",
+      "name": "sqlalchemy",
+      "domain": "Backend",
+      "description": "SQLAlchemy 2.x — async ORM, models, relationships, sessions, queries, migrations with Alembic, connection pooling, and production patterns.",
+      "triggers": [
+        "sqlalchemy",
+        "sqlalchemy orm",
+        "alembic",
+        "async sqlalchemy",
+        "sqlalchemy model",
+        "sqlalchemy query",
+        "sqlalchemy session",
+        "sqlalchemy relationship",
+        "database orm",
+        "python orm"
+      ],
+      "path": ".claude/skills/sqlalchemy/SKILL.md"
+    },
+    {
+      "id": "typescript",
+      "name": "typescript",
+      "domain": "Backend",
+      "description": "TypeScript — type patterns, generics, utility types, discriminated unions, type guards, declaration merging, satisfies, and strict-mode best practices.",
+      "triggers": [
+        "typescript",
+        "ts",
+        "generic type",
+        "utility type",
+        "discriminated union",
+        "type guard",
+        "satisfies",
+        "keyof",
+        "typeof",
+        "infer",
+        "mapped type",
+        "conditional type",
+        "tsconfig"
+      ],
+      "path": ".claude/skills/typescript/SKILL.md"
+    },
+    {
+      "id": "ui-design",
+      "name": "ui-design",
+      "domain": "UI & Apps",
+      "description": "Professional UI design system for AI/ML products - tokens, typography, layout, dark mode, components, states, accessibility, and review checklist for dashboards, chat apps and data tools.",
+      "triggers": [
+        "ui design",
+        "ux design",
+        "design system",
+        "frontend design",
+        "dashboard design",
+        "landing page",
+        "tailwind",
+        "css",
+        "dark mode",
+        "color palette",
+        "typography",
+        "layout",
+        "component library",
+        "accessibility"
+      ],
+      "path": ".claude/skills/ui-design/SKILL.md"
+    },
+    {
+      "id": "webapp-testing",
+      "name": "webapp-testing",
+      "domain": "Quality & Security",
+      "description": "Toolkit for interacting with and testing local web applications using Playwright. Supports verifying frontend functionality, debugging UI behavior, capturing browser screenshots, and viewing browser logs.",
+      "triggers": [
+        "webapp testing",
+        "e2e testing",
+        "browser automation",
+        "playwright",
+        "selenium",
+        "cypress",
+        "end to end",
+        "integration test",
+        "ui test"
+      ],
+      "path": ".claude/skills/webapp-testing/SKILL.md"
+    }
+  ],
+  "agents": [
+    {
+      "id": "api-integrator",
+      "name": "api-integrator",
+      "description": "Third-party API integration specialist. OAuth, webhooks, retry logic, rate limiting, SDK vs raw HTTP decisions, secret management, and idempotency patterns for external service integrations.",
+      "path": ".claude/agents/api-integrator.md"
+    },
+    {
+      "id": "code-reviewer",
+      "name": "code-reviewer",
+      "description": "Senior code reviewer that evaluates changes across five dimensions — correctness, readability, architecture, security, and performance. Use for thorough code review before merge.",
+      "path": ".claude/agents/code-reviewer.md"
+    },
+    {
+      "id": "data-analyst",
+      "name": "data-analyst",
+      "description": "Data analysis agent. SQL queries, pandas/polars data wrangling, statistical analysis, metric definition, cohort analysis, funnel analysis, and insight synthesis for AI product decisions.",
+      "path": ".claude/agents/data-analyst.md"
+    },
+    {
+      "id": "dependency-auditor",
+      "name": "dependency-auditor",
+      "description": "Dependency security and hygiene agent. CVE scanning, license compliance, transitive dependency analysis, supply chain risk, and upgrade path recommendations.",
+      "path": ".claude/agents/dependency-auditor.md"
+    },
+    {
+      "id": "observability-engineer",
+      "name": "observability-engineer",
+      "description": "Observability and monitoring specialist. Metrics, logs, traces (OpenTelemetry), alerting, SLO/SLI definition, dashboards, and AI-specific monitoring (token usage, latency, hallucination rate).",
+      "path": ".claude/agents/observability-engineer.md"
+    },
+    {
+      "id": "performance-engineer",
+      "name": "performance-engineer",
+      "description": "Performance profiling and optimization agent. CPU/memory profiling, database query tuning, async optimization, caching strategy, load testing, and latency budget analysis for backend and AI systems.",
+      "path": ".claude/agents/performance-engineer.md"
+    },
+    {
+      "id": "prompt-engineer",
+      "name": "prompt-engineer",
+      "description": "LLM prompt specialist. Write, optimize, and evaluate system prompts, few-shot templates, chain-of-thought, RAG query prompts, and LLM-as-judge eval prompts.",
+      "path": ".claude/agents/prompt-engineer.md"
+    },
+    {
+      "id": "researcher",
+      "name": "researcher",
+      "description": "Deep research agent. Web search, literature review, competitive analysis, technical spikes, feasibility studies. USE THIS FIRST before any architecture or implementation decision.",
+      "path": ".claude/agents/researcher.md"
+    },
+    {
+      "id": "security-auditor",
+      "name": "security-auditor",
+      "description": "Security engineer focused on vulnerability detection, threat modeling, and secure coding practices. Use for security-focused code review, threat analysis, or hardening recommendations.",
+      "path": ".claude/agents/security-auditor.md"
+    },
+    {
+      "id": "test-engineer",
+      "name": "test-engineer",
+      "description": "QA engineer specialized in test strategy, test writing, and coverage analysis. Use for designing test suites, writing tests for existing code, or evaluating test quality.",
+      "path": ".claude/agents/test-engineer.md"
+    },
+    {
+      "id": "ui-designer",
+      "name": "ui-designer",
+      "description": "UI/UX design agent for AI products. Designs and reviews interfaces - design tokens, layout, dark mode, chat and dashboard UIs, accessibility, responsive behavior. Use before building any frontend.",
+      "path": ".claude/agents/ui-designer.md"
+    },
+    {
+      "id": "ux-researcher",
+      "name": "ux-researcher",
+      "description": "UX research and synthesis agent. User interview analysis, usability testing, job-to-be-done mapping, persona creation, friction identification, and translating user insights into AI product requirements.",
+      "path": ".claude/agents/ux-researcher.md"
+    },
+    {
+      "id": "web-performance-auditor",
+      "name": "web-performance-auditor",
+      "description": "Web performance engineer focused on Core Web Vitals, loading, rendering, and network optimization. Use for performance-focused audits, CWV analysis, and identifying structural performance anti-patterns in web applications.",
+      "path": ".claude/agents/web-performance-auditor.md"
+    }
+  ],
+  "commands": [
+    {
+      "id": "build",
+      "description": "Implement tasks incrementally — build, test, verify, commit. Add \"auto\" to run the whole plan in one approved pass.",
+      "path": ".claude/commands/build.md"
+    },
+    {
+      "id": "code-simplify",
+      "description": "Simplify code for clarity and maintainability — reduce complexity without changing behavior",
+      "path": ".claude/commands/code-simplify.md"
+    },
+    {
+      "id": "common-ground",
+      "description": "Surface and validate Claude's hidden assumptions about the project for user confirmation",
+      "path": ".claude/commands/common-ground.md"
+    },
+    {
+      "id": "constraints",
+      "description": "Define and enforce this project's quality bar — interview, sane defaults, CONSTRAINTS.md",
+      "path": ".claude/commands/constraints.md"
+    },
+    {
+      "id": "install",
+      "description": "Install, update, verify, or wire the AI Engineer Master skill pack into this project for any AI coding tool.",
+      "path": ".claude/commands/install.md"
+    },
+    {
+      "id": "plan",
+      "description": "Break work into small verifiable tasks with acceptance criteria and dependency ordering",
+      "path": ".claude/commands/plan.md"
+    },
+    {
+      "id": "review",
+      "description": "Conduct a five-axis code review — correctness, readability, architecture, security, performance",
+      "path": ".claude/commands/review.md"
+    },
+    {
+      "id": "ship",
+      "description": "Run the pre-launch checklist via parallel fan-out to specialist personas, then synthesize a go/no-go decision",
+      "path": ".claude/commands/ship.md"
+    },
+    {
+      "id": "spec",
+      "description": "Start spec-driven development — write a structured specification before writing code",
+      "path": ".claude/commands/spec.md"
+    },
+    {
+      "id": "test",
+      "description": "Run TDD workflow — write failing tests, implement, verify. For bugs, use the Prove-It pattern.",
+      "path": ".claude/commands/test.md"
+    },
+    {
+      "id": "webperf",
+      "description": "Run a web performance audit via the web-performance-auditor persona",
+      "path": ".claude/commands/webperf.md"
+    }
+  ]
+}

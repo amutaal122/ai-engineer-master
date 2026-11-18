@@ -1,0 +1,8 @@
+# assistant build intermediates - docs/engineer-master-assistant.html is the shipped page
+tools/assistant/kb.json
+tools/assistant/master-assistant.html
+tools/assistant/master-assistant-standalone.html
+tools/assistant/_chk.js
+
+node_modules/
+.DS_Store

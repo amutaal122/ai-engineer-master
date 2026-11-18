@@ -316,7 +316,7 @@ function search(q,k=8,coreOnly=true){
   const out=[];
   for(const d of IDX){
     if(coreOnly&&!d.s.core)continue;
-    if(d.s.domain==='Meta'&&!ql.includes('ai-engineer-master'))continue;
+    if(d.s.id==='ai-engineer-master'&&!ql.includes('ai-engineer-master'))continue;
     let sc=0;
     for(const w of qt){let t=0;for(const f in W){const c=d.f[f][w];if(c)t+=W[f]*(1+Math.log(c))}sc+=idf(w)*t}
     if(ql.includes(' '+d.s.id+' ')||ql.includes('/'+d.s.id))sc+=14;
@@ -413,7 +413,7 @@ function phaseAnswer(n){
   return{md,src:[]};
 }
 function installAnswer(){
-  return{md:'Install it into any project, then Claude Code loads the skills automatically:\n\n'+FENCE+'bash\ngit clone https://github.com/amutaal122/ai-engineer-master.git temp\ncp -r temp/.claude .claude\nrm -rf temp\n'+FENCE+'\n\nOn Windows PowerShell:\n\n'+FENCE+'powershell\ngit clone https://github.com/amutaal122/ai-engineer-master.git temp\nCopy-Item temp\\.claude .claude -Recurse\nRemove-Item temp -Recurse -Force\n'+FENCE+'\n\nThen start with `/research-first` before you design or code.',src:[]};
+  return{md:'Run this from your project root:\n\n'+FENCE+'bash\ncurl -fsSL https://github.com/amutaal122/ai-engineer-master/raw/main/install.sh | bash\n'+FENCE+'\n\nOn Windows PowerShell:\n\n'+FENCE+'powershell\nirm https://github.com/amutaal122/ai-engineer-master/raw/main/install.ps1 | iex\n'+FENCE+'\n\nClaude Code reads `.claude/` natively. Every other tool needs a rules file, and `--tool` writes it for you:\n\n'+FENCE+'bash\ncurl -fsSL .../install.sh | bash -s -- --tool cursor\n'+FENCE+'\n\nValid values: `cursor`, `windsurf`, `copilot`, `cline`, `continue`, `zed`, `codex`, `all`. Add `--only fastapi,docker` to install just a few skills.\n\nCheck it worked with `bash .claude/doctor.sh`, then restart your editor. See `/easy-install` for offline install and troubleshooting.',src:['easy-install']};
 }
 function listAnswer(){
   const by={};core.forEach(s=>(by[s.domain]=by[s.domain]||[]).push(s.id));

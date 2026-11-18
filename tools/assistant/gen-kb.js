@@ -42,7 +42,7 @@ put('Backend', ['fastapi', 'sqlalchemy', 'redis', 'celery', 'graphql', 'nextjs',
 put('Infra & DevOps', ['docker', 'kubernetes', 'github-actions', 'git-advanced', 'git-workflow']);
 put('Quality & Security', ['pytest', 'security-audit', 'webapp-testing']);
 put('UI & Apps', ['ui-design', 'gpt-chat-ui']);
-put('Meta', ['ai-engineer-master']);
+put('Meta', ['ai-engineer-master', 'easy-install']);
 
 const skills = [], unmapped = [];
 for (const d of fs.readdirSync(SK, { withFileTypes: true })) {
@@ -85,6 +85,21 @@ if (fs.existsSync(wfDir)) for (const f of fs.readdirSync(wfDir)) if (f.endsWith(
 }
 const kb = { generated: new Date().toISOString().slice(0, 10), skills, agents, commands, workflows };
 fs.writeFileSync(OUT, JSON.stringify(kb));
+
+// Public catalog: machine-readable index any tool can load.
+const catalog = {
+  generated: kb.generated,
+  source: 'https://github.com/amutaal122/ai-engineer-master',
+  counts: { skills: skills.filter(s => s.core).length, agents: agents.length, commands: commands.length, workflows: workflows.length },
+  skills: skills.filter(s => s.core).map(s => ({
+    id: s.id, name: s.name, domain: s.domain, description: s.desc, triggers: s.triggers,
+    path: `.claude/skills/${s.id}/SKILL.md`,
+  })),
+  agents: agents.map(a => ({ id: a.id, name: a.name, description: a.desc, path: `.claude/agents/${a.id}.md` })),
+  commands: commands.map(c => ({ id: c.id, description: c.desc, path: `.claude/commands/${c.id}.md` })),
+};
+fs.writeFileSync(path.join(ROOT, 'SKILLS.json'), JSON.stringify(catalog, null, 2));
+console.log('SKILLS.json written:', catalog.skills.length, 'core skills');
 console.log('skills', skills.length, '(core', skills.filter(s => s.core).length + ')', 'agents', agents.length, 'commands', commands.length, 'workflows', workflows.length);
 console.log('unmapped:', unmapped.join(', ') || 'none');
 console.log('size KB', Math.round(fs.statSync(OUT).size / 1024));
