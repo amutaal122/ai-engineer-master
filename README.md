@@ -1,7 +1,7 @@
 # AI Engineer Master
 
-> Professional Claude Code skill system for **AI · ML · Data Science · Data Analytics** engineers.
-> Build any project at professional job level — right structure first, then enhance.
+> Professional skill system for **AI · ML · Data Science · Data Analytics** engineers.
+> Works with Claude Code, Cursor, Windsurf, Cline, Copilot, Continue, Zed, and any AI coding tool.
 
 ## At a Glance
 
@@ -14,53 +14,105 @@
 
 ---
 
-## Install in Any AI Coding Tool
+## Install — One Line
+
+### macOS / Linux
+```bash
+curl -fsSL https://github.com/amutaal122/ai-engineer-master/raw/main/install.sh | bash
+```
+
+### Windows (PowerShell)
+```powershell
+irm https://github.com/amutaal122/ai-engineer-master/raw/main/install.ps1 | iex
+```
+
+Both scripts download and extract the `.claude/` folder into your current project directory, then print "Done."
+
+---
+
+## Install — By AI Tool
 
 ### Claude Code
+The `.claude/` folder is natively supported — skills, agents, and commands load automatically.
+
+```bash
+# macOS / Linux
+curl -fsSL https://github.com/amutaal122/ai-engineer-master/raw/main/install.sh | bash
+
+# Windows
+irm https://github.com/amutaal122/ai-engineer-master/raw/main/install.ps1 | iex
+```
+
+Or with git:
 ```bash
 git clone https://github.com/amutaal122/ai-engineer-master.git temp
-xcopy /E /I temp\.claude .claude
-rmdir /S /Q temp
+cp -r temp/.claude .claude && rm -rf temp          # macOS/Linux
+# xcopy /E /I temp\.claude .claude && rmdir /S /Q temp  # Windows CMD
 ```
 
-PowerShell:
-```powershell
-git clone https://github.com/amutaal122/ai-engineer-master.git temp
-Copy-Item temp\.claude .claude -Recurse
-Remove-Item temp -Recurse -Force
-```
+### Cursor
+1. Run the one-line installer above — this gives you `.claude/skills/`.
+2. Add to your `.cursor/rules/` (or `.cursorrules`) a reference line:
+   ```
+   Skills library: see .claude/skills/ for detailed patterns on each technology.
+   ```
+3. When asking Cursor for help, say: *"use the fastapi skill in .claude/skills/fastapi/"*
 
-macOS / Linux:
-```bash
-git clone https://github.com/amutaal122/ai-engineer-master.git temp
-cp -r temp/.claude .claude
-rm -rf temp
-```
+### Windsurf
+1. Run the one-line installer.
+2. In `.windsurf/rules/global_rules.md`, add:
+   ```
+   Detailed engineering patterns are in .claude/skills/<skill-name>/SKILL.md
+   ```
 
-### Cursor / Windsurf / Zed / any tool that reads `.claude/`
-Same steps above — the `.claude/` folder is the entire skill system.
-Drop it into your project root and restart your editor.
+### GitHub Copilot
+1. Run the one-line installer.
+2. Create or update `.github/copilot-instructions.md`:
+   ```markdown
+   This project uses AI Engineer Master skills in .claude/skills/.
+   When working on FastAPI, refer to .claude/skills/fastapi/SKILL.md, etc.
+   ```
 
-### Quickest (zip download)
-1. Download [ai-engineer-master-skills.zip](https://github.com/amutaal122/ai-engineer-master/raw/main/dist/ai-engineer-master-skills.zip)
-2. Unzip into your project root — it extracts to `.claude/`
+### Cline / OpenCode / Aider / Roo Code
+1. Run the one-line installer.
+2. Add to your `.clinerules` (or equivalent config):
+   ```
+   Engineering skill guides are in .claude/skills/. Reference the relevant SKILL.md file for each technology.
+   ```
 
-Everything in one download (skills + docs + tools): [ai-engineer-master-complete.zip](https://github.com/amutaal122/ai-engineer-master/raw/main/dist/ai-engineer-master-complete.zip)
+### Continue
+1. Run the one-line installer.
+2. In `.continue/config.json`, add the `.claude/skills/` path as a context provider or docs source.
+
+### Zed
+1. Run the one-line installer.
+2. Reference `.claude/skills/<name>/SKILL.md` in your assistant rules inside `.zed/settings.json`.
+
+### Any other tool
+Run the one-line installer. Every skill is a plain Markdown file at `.claude/skills/<name>/SKILL.md` — paste the relevant file into any AI chat as context.
+
+---
+
+## Download (no terminal)
+
+| File | Contents |
+|---|---|
+| [ai-engineer-master-skills.zip](https://github.com/amutaal122/ai-engineer-master/raw/main/dist/ai-engineer-master-skills.zip) | Only the `.claude/` folder — drop into any project |
+| [ai-engineer-master-complete.zip](https://github.com/amutaal122/ai-engineer-master/raw/main/dist/ai-engineer-master-complete.zip) | Skills + docs + tools |
 
 ---
 
 ## Engineer Master Assistant
 
-`docs/engineer-master-assistant.html` — open in any browser. Recommends skills and agents for your project, plans it across the 7 phases (`/plan <idea>`), and browses the full catalog. Works offline or with an OpenAI / Anthropic key in Settings.
+`docs/engineer-master-assistant.html` — open in any browser. Recommends skills and agents, plans projects across 7 phases (`/plan <idea>`), and browses the full catalog. Works offline or with an OpenAI / Anthropic key in Settings.
 
-Also in `docs/`: `pipeline-orbit.html` (interactive 3D view of the 7-phase pipeline) and `chat-studio.html` (ChatGPT-style chat UI with streaming).
+Also in `docs/`: `pipeline-orbit.html` (3D pipeline view) and `chat-studio.html` (ChatGPT-style UI).
 
 Rebuild after changing skills:
 ```bash
 cd tools/assistant
 node gen-kb.js ../.. kb.json && node build-assistant.js
 ```
-Copy `master-assistant-standalone.html` to `docs/engineer-master-assistant.html`.
 
 ---
 
@@ -105,7 +157,7 @@ Copy `master-assistant-standalone.html` to `docs/engineer-master-assistant.html`
 | `mcp-builder` | MCP servers for LLM tool integration |
 | `openbot` | Self-hostable AI coworker workspace — AG-UI, browser automation, CEL policy |
 | `agent-browser` | Accessibility-tree browser CLI for agents — @ref handles, daemon, MCP mode |
-| `skillspector` | NVIDIA security scanner for agent skills — YARA, CVE lookup, prompt-injection detection |
+| `skillspector` | NVIDIA security scanner for agent skills — YARA, CVE lookup, prompt-injection |
 | `claude-code-templates` | Registry + CLI for 1,980+ ready-made skills, agents, commands, MCP servers |
 
 ### Backend / API
@@ -147,7 +199,7 @@ Copy `master-assistant-standalone.html` to `docs/engineer-master-assistant.html`
 | `gpt-chat-ui` | ChatGPT-style chat app: SSE streaming, markdown, tool calls, history |
 
 ### ML Research (21 skills)
-Deep reference skills covering model architecture, tokenization, fine-tuning, mechanistic interpretability, data processing, post-training, safety/alignment, distributed training, infrastructure, optimization, evaluation, inference serving, MLOps, agents, RAG, prompt engineering, observability, multimodal, emerging techniques, ML paper writing, and extras (20+ sub-skills: LLaMA, GRPO, SwanLab, OpenPi, OpenVLA, etc.).
+Deep reference skills covering model architecture, tokenization, fine-tuning, mechanistic interpretability, data processing, post-training, safety/alignment, distributed training, infrastructure, optimization, evaluation, inference serving, MLOps, agents, RAG, prompt engineering, observability, multimodal, emerging techniques, ML paper writing, and extras (20+ sub-skills).
 
 | Skill | What it covers |
 |---|---|
