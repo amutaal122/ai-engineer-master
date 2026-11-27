@@ -7,10 +7,10 @@
 
 | | Count |
 |---|---|
-| Skills | 78 |
-| Agents | 13 |
+| Skills | 86 |
+| Agents | 26 |
 | Commands | 11 |
-| Workflows | 4 |
+| Workflows | 5 |
 
 ---
 
@@ -142,6 +142,7 @@ node gen-kb.js ../.. kb.json && node build-assistant.js
 | `easy-install` | Install, update, verify, and wire the pack into any AI tool; offline install; troubleshooting |
 | `agent-skills` | Author Agent Skills: SKILL.md format, frontmatter, folder layout, Anthropic's marketplace |
 | `karpathy-guidelines` | CLAUDE.md ruleset against agent over-engineering and scope creep |
+| `technical-writing` | READMEs, runbooks, migration guides, changelogs, PR descriptions |
 
 ### LLM / AI Engineering
 | Skill | What it covers |
@@ -164,6 +165,7 @@ node gen-kb.js ../.. kb.json && node build-assistant.js
 | `postgres` | SQL, indexes, window functions, analytics |
 | `mongodb` | NoSQL, flexible schema, aggregation pipelines |
 | `ab-testing` | Experiment design, statistical testing |
+| `data-engineering` | Pipelines, Airflow/dbt, idempotent backfills, data quality gates |
 | `scrapling` | Web scraping for agents — stealth fetchers, spiders, CLI, MCP server |
 
 ### AI Agent Development
@@ -195,6 +197,8 @@ node gen-kb.js ../.. kb.json && node build-assistant.js
 | `graphql` | Schema, resolvers, subscriptions |
 | `nextjs` | Full-stack React, server components, API routes |
 | `typescript` | Types, generics, decorators, strict mode |
+| `system-design` | ADRs, capacity math, consistency, caching, queues, scaling order |
+| `api-design` | Resources, status codes, errors, pagination, idempotency, versioning |
 
 ### Infrastructure / DevOps
 | Skill | What it covers |
@@ -203,6 +207,9 @@ node gen-kb.js ../.. kb.json && node build-assistant.js
 | `kubernetes` | Deployments, HPA, ingress, AI workloads |
 | `github-actions` | CI/CD, Docker publish, eval CI |
 | `git-workflow` | Branching, PRs, release strategy |
+| `terraform` | IaC, state, modules, plan review, drift, secrets in CI |
+| `observability` | OpenTelemetry traces/metrics/logs, SLOs, burn-rate alerts |
+| `incident-response` | Severity, roles, mitigation order, blameless postmortems |
 
 ### Testing / Security / Quality
 | Skill | What it covers |
@@ -210,6 +217,7 @@ node gen-kb.js ../.. kb.json && node build-assistant.js
 | `pytest` | Fixtures, async tests, coverage |
 | `security-audit` | Web app + API security |
 | `webapp-testing` | E2E, browser automation |
+| `debugging` | Reproduce, bisect, falsifiable hypotheses, prove the fix |
 | `pyrit` | Microsoft's AI red teaming toolkit — jailbreak, injection, and harm testing |
 | `codex-security` | OpenAI's security CLI/SDK — repo and diff scans, SARIF export, CI action |
 | `cloudflare-security-audit` | Six-phase audit with independently verified, machine-readable findings |
@@ -259,21 +267,53 @@ Deep reference skills covering model architecture, tokenization, fine-tuning, me
 
 ## Agents
 
+Grouped by the lifecycle stage they serve.
+
+### Research & design
 | Agent | Role |
 |---|---|
 | `researcher` | Research before anything — stack, models, competitive |
 | `ux-researcher` | User interviews, JTBD mapping |
-| `prompt-engineer` | System prompts, few-shot, eval rubrics |
-| `data-analyst` | Metrics, SQL analysis, cohort, A/B |
-| `performance-engineer` | Profiling, latency budget |
-| `observability-engineer` | Metrics, logs, traces, SLOs |
-| `api-integrator` | OAuth, webhooks, retry logic |
-| `dependency-auditor` | CVE scan, license compliance |
-| `code-reviewer` | Code correctness, security, architecture |
-| `security-auditor` | Vulnerability detection, threat modeling |
-| `test-engineer` | Test strategy and coverage |
-| `web-performance-auditor` | Core Web Vitals, rendering |
+| `architect` | ADRs, component boundaries, failure modes, rejected options |
+| `schema-designer` | Data models, indexes, expand/contract migrations |
 | `ui-designer` | UI design, tokens, dark mode, chat and dashboard layouts |
+| `prompt-engineer` | System prompts, few-shot, eval rubrics |
+
+### Build
+| Agent | Role |
+|---|---|
+| `developer` | Implements the design one verified slice at a time |
+| `api-integrator` | OAuth, webhooks, retry logic |
+| `feature-flag-engineer` | Flag taxonomy, gradual ramp, kill switches, cleanup |
+
+### Quality
+| Agent | Role |
+|---|---|
+| `test-engineer` | Test strategy and coverage |
+| `qa-engineer` | Exploratory and regression testing, reproducible defects |
+| `contract-tester` | API contracts, breaking-change verdicts |
+| `ml-evaluator` | Golden sets, metrics vs baseline, ship/no-ship |
+| `performance-engineer` | Profiling, latency budget |
+| `web-performance-auditor` | Core Web Vitals, rendering |
+
+### Security & compliance
+| Agent | Role |
+|---|---|
+| `code-reviewer` | Code correctness, security, architecture |
+| `security-reviewer` | Pre-merge gate scoped to the diff |
+| `security-auditor` | Vulnerability detection, threat modeling |
+| `dependency-auditor` | CVE scan, license compliance |
+| `compliance-reviewer` | PII inventory, retention, consent, audit trail |
+
+### Ship & operate
+| Agent | Role |
+|---|---|
+| `tech-writer` | READMEs, runbooks, migration guides, changelogs |
+| `devops-engineer` | CI/CD, IaC, release strategy, tested rollback |
+| `sre-engineer` | SLOs, error budgets, burn-rate alerting, capacity |
+| `observability-engineer` | Metrics, logs, traces, SLOs |
+| `incident-commander` | Runs incidents, drives blameless postmortems |
+| `data-analyst` | Metrics, SQL analysis, cohort, A/B |
 
 ---
 
@@ -301,6 +341,7 @@ Slash commands available in Claude Code once installed.
 
 | Workflow | Agents | Use for |
 |---|---|---|
+| `developer-complete` | 14 agents · 9 stages | **Any feature, ticket to production and back** |
 | `master-pipeline` | 20 agents · 7 phases | Any serious AI product |
 | `greenfield-project` | 9 agents · 10 phases | New project from zero |
 | `prompt-dev` | 4 agents · 5 phases | LLM prompt iteration |

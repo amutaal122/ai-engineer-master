@@ -35,14 +35,14 @@ function excerpt(body, n) {
 const DOMAIN = {};
 const put = (d, arr) => arr.forEach(n => DOMAIN[n] = d);
 put('LLM & AI', ['openai-sdk', 'langchain', 'prompt-engineering', 'llm-evaluation', 'ai-engineer', 'claude-api', 'huggingface', 'freellmapi', 'gpt-oss']);
-put('Data & ML', ['pandas', 'scikit-learn', 'postgres', 'mongodb', 'ab-testing', 'scrapling']);
+put('Data & ML', ['pandas', 'scikit-learn', 'postgres', 'mongodb', 'ab-testing', 'scrapling', 'data-engineering']);
 put('Agents', ['ai-agents-architect', 'ai-agent-tool-routing', 'ai-agent-security', 'ai-agent-evaluation-benchmarking', 'agent-memory-discipline', 'agent-qa-authoring', 'ai-coding-agent-guardrails','mcp-builder', 'openbot', 'agent-browser', 'skillspector', 'claude-code-templates', 'agent-desktop', 'ag-ui', 'ruflo']);
 put('Tools & Infra', ['chrome-devtools-mcp']);
-put('Backend', ['fastapi', 'sqlalchemy', 'redis', 'celery', 'graphql', 'nextjs', 'typescript']);
-put('Infra & DevOps', ['docker', 'kubernetes', 'github-actions', 'git-workflow']);
-put('Quality & Security', ['pytest', 'security-audit', 'webapp-testing', 'pyrit', 'codex-security', 'cloudflare-security-audit']);
+put('Backend', ['fastapi', 'sqlalchemy', 'redis', 'celery', 'graphql', 'nextjs', 'typescript', 'api-design', 'system-design']);
+put('Infra & DevOps', ['docker', 'kubernetes', 'github-actions', 'git-workflow', 'terraform', 'observability', 'incident-response']);
+put('Quality & Security', ['pytest', 'security-audit', 'webapp-testing', 'pyrit', 'codex-security', 'cloudflare-security-audit', 'debugging']);
 put('UI & Apps', ['ui-design', 'gpt-chat-ui', 'ui-ux-pro-max', 'ui-skills', 'magic-mcp']);
-put('Meta', ['ai-engineer-master', 'easy-install', 'agent-skills', 'karpathy-guidelines']);
+put('Meta', ['ai-engineer-master', 'easy-install', 'agent-skills', 'karpathy-guidelines', 'technical-writing']);
 
 const skills = [], unmapped = [];
 for (const d of fs.readdirSync(SK, { withFileTypes: true })) {

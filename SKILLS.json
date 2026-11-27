@@ -2,10 +2,10 @@
   "generated": "2026-11-27",
   "source": "https://github.com/amutaal122/ai-engineer-master",
   "counts": {
-    "skills": 78,
-    "agents": 13,
+    "skills": 86,
+    "agents": 26,
     "commands": 11,
-    "workflows": 4
+    "workflows": 5
   },
   "skills": [
     {
@@ -252,6 +252,27 @@
       "path": ".claude/skills/ai-engineer-master/SKILL.md"
     },
     {
+      "id": "api-design",
+      "name": "API Design",
+      "domain": "Backend",
+      "description": "Design HTTP APIs that survive their consumers — resource modeling, status codes, error shapes, pagination, idempotency, versioning, and what counts as a breaking change. Use before implementing an endpoint and when reviewing an API change.",
+      "triggers": [
+        "api design",
+        "rest api",
+        "endpoint design",
+        "http status code",
+        "api versioning",
+        "breaking change",
+        "pagination",
+        "idempotency",
+        "error response",
+        "openapi",
+        "api contract",
+        "rate limiting"
+      ],
+      "path": ".claude/skills/api-design/SKILL.md"
+    },
+    {
       "id": "celery",
       "name": "celery",
       "domain": "Backend",
@@ -364,6 +385,51 @@
         "scan pull request"
       ],
       "path": ".claude/skills/codex-security/SKILL.md"
+    },
+    {
+      "id": "data-engineering",
+      "name": "Data Engineering",
+      "domain": "Data & ML",
+      "description": "Build reliable data pipelines — orchestration with Airflow/Dagster, dbt transformations, idempotent and backfillable jobs, incremental loads, data quality tests, and schema evolution. Use when moving or transforming data on a schedule.",
+      "triggers": [
+        "data pipeline",
+        "etl",
+        "elt",
+        "airflow",
+        "dagster",
+        "dbt",
+        "data warehouse",
+        "backfill",
+        "incremental load",
+        "data quality",
+        "orchestration",
+        "batch job",
+        "medallion",
+        "data modeling"
+      ],
+      "path": ".claude/skills/data-engineering/SKILL.md"
+    },
+    {
+      "id": "debugging",
+      "name": "Debugging",
+      "domain": "Quality & Security",
+      "description": "Systematic debugging — reproduce, bisect, form falsifiable hypotheses, read the whole error, and prove the fix. Covers heisenbugs, production-only failures, performance mysteries, and debugging LLM behaviour. Use when something is broken and the cause is not obvious.",
+      "triggers": [
+        "debug",
+        "debugging",
+        "not working",
+        "why is this failing",
+        "cannot reproduce",
+        "intermittent bug",
+        "heisenbug",
+        "works locally",
+        "production only",
+        "bisect",
+        "root cause",
+        "stack trace",
+        "race condition"
+      ],
+      "path": ".claude/skills/debugging/SKILL.md"
     },
     {
       "id": "docker",
@@ -563,6 +629,28 @@
       "path": ".claude/skills/huggingface/SKILL.md"
     },
     {
+      "id": "incident-response",
+      "name": "Incident Response",
+      "domain": "Infra & DevOps",
+      "description": "Handle production incidents — severity, roles, mitigation order, comms cadence, evidence preservation, and the blameless postmortem. Use when something is broken in production, or when setting up the on-call process before it is.",
+      "triggers": [
+        "incident",
+        "outage",
+        "production down",
+        "sev1",
+        "postmortem",
+        "on-call",
+        "oncall",
+        "pager",
+        "rollback",
+        "escalation",
+        "site down",
+        "runbook",
+        "blameless"
+      ],
+      "path": ".claude/skills/incident-response/SKILL.md"
+    },
+    {
       "id": "karpathy-guidelines",
       "name": "Karpathy Guidelines",
       "domain": "Meta",
@@ -714,6 +802,29 @@
         "revalidate"
       ],
       "path": ".claude/skills/nextjs/SKILL.md"
+    },
+    {
+      "id": "observability",
+      "name": "Observability",
+      "domain": "Infra & DevOps",
+      "description": "Instrument services with OpenTelemetry — traces, metrics, structured logs, correlation IDs, sampling, SLO measurement, and alerting that pages on symptoms. Covers AI-specific signals like token spend and model latency. Use when building or operating anything that runs in production.",
+      "triggers": [
+        "observability",
+        "opentelemetry",
+        "otel",
+        "tracing",
+        "distributed tracing",
+        "structured logging",
+        "metrics",
+        "prometheus",
+        "grafana",
+        "slo",
+        "sli",
+        "alerting",
+        "correlation id",
+        "instrumentation"
+      ],
+      "path": ".claude/skills/observability/SKILL.md"
     },
     {
       "id": "openai-sdk",
@@ -1369,6 +1480,70 @@
       "path": ".claude/skills/sqlalchemy/SKILL.md"
     },
     {
+      "id": "system-design",
+      "name": "System Design",
+      "domain": "Backend",
+      "description": "Design systems and record the decisions — ADRs, capacity math, consistency choices, failure modes, caching layers, queues, and the scaling patterns that matter before you need them. Use before building anything non-trivial, or when reviewing an existing architecture.",
+      "triggers": [
+        "system design",
+        "architecture",
+        "adr",
+        "architecture decision record",
+        "scalability",
+        "how should i structure",
+        "design review",
+        "capacity planning",
+        "consistency",
+        "cap theorem",
+        "microservices",
+        "monolith",
+        "queue",
+        "caching strategy"
+      ],
+      "path": ".claude/skills/system-design/SKILL.md"
+    },
+    {
+      "id": "technical-writing",
+      "name": "Technical Writing",
+      "domain": "Meta",
+      "description": "Write documentation developers actually use — READMEs, API references, runbooks, ADRs, migration guides, changelogs, and PR descriptions. Covers the four documentation types and why mixing them fails. Use when writing or reviewing any developer-facing document.",
+      "triggers": [
+        "documentation",
+        "write docs",
+        "readme",
+        "runbook",
+        "migration guide",
+        "changelog",
+        "adr",
+        "release notes",
+        "pr description",
+        "api docs",
+        "technical writing",
+        "how to document"
+      ],
+      "path": ".claude/skills/technical-writing/SKILL.md"
+    },
+    {
+      "id": "terraform",
+      "name": "Terraform",
+      "domain": "Infra & DevOps",
+      "description": "Infrastructure as code with Terraform/OpenTofu — state management, modules, workspaces, plan review, drift, secret handling, and CI pipelines. Use when provisioning or changing cloud infrastructure instead of clicking in a console.",
+      "triggers": [
+        "terraform",
+        "opentofu",
+        "infrastructure as code",
+        "iac",
+        "terraform state",
+        "terraform plan",
+        "terraform module",
+        "provision infrastructure",
+        "remote state",
+        "drift",
+        "tfstate"
+      ],
+      "path": ".claude/skills/terraform/SKILL.md"
+    },
+    {
       "id": "typescript",
       "name": "typescript",
       "domain": "Backend",
@@ -1480,10 +1655,28 @@
       "path": ".claude/agents/api-integrator.md"
     },
     {
+      "id": "architect",
+      "name": "architect",
+      "description": "System architect. Turns research findings into an Architecture Decision Record and a concrete design — component boundaries, data flow, failure modes, and the trade-offs that were rejected. Use before implementation on anything non-trivial.",
+      "path": ".claude/agents/architect.md"
+    },
+    {
       "id": "code-reviewer",
       "name": "code-reviewer",
       "description": "Senior code reviewer that evaluates changes across five dimensions — correctness, readability, architecture, security, and performance. Use for thorough code review before merge.",
       "path": ".claude/agents/code-reviewer.md"
+    },
+    {
+      "id": "compliance-reviewer",
+      "name": "compliance-reviewer",
+      "description": "Checks a change against data-protection and regulatory obligations — PII handling, retention, consent, audit trails, data residency, and AI-specific disclosure rules. Use in the security phase whenever personal data or automated decisions are involved.",
+      "path": ".claude/agents/compliance-reviewer.md"
+    },
+    {
+      "id": "contract-tester",
+      "name": "contract-tester",
+      "description": "API contract and integration-boundary specialist. Writes consumer-driven contract tests, validates schemas against the spec, and catches breaking changes before they reach a consumer. Use whenever a service boundary or public API changes.",
+      "path": ".claude/agents/contract-tester.md"
     },
     {
       "id": "data-analyst",
@@ -1496,6 +1689,36 @@
       "name": "dependency-auditor",
       "description": "Dependency security and hygiene agent. CVE scanning, license compliance, transitive dependency analysis, supply chain risk, and upgrade path recommendations.",
       "path": ".claude/agents/dependency-auditor.md"
+    },
+    {
+      "id": "developer",
+      "name": "developer",
+      "description": "Implementation agent. Turns an approved design into working, tested code one slice at a time. Use for the build phase, after architecture and schema are settled.",
+      "path": ".claude/agents/developer.md"
+    },
+    {
+      "id": "devops-engineer",
+      "name": "devops-engineer",
+      "description": "Owns build, deploy, and infrastructure-as-code. CI/CD pipelines, container builds, environment config, secret management, and release strategy with a working rollback. Use in the ship phase.",
+      "path": ".claude/agents/devops-engineer.md"
+    },
+    {
+      "id": "feature-flag-engineer",
+      "name": "feature-flag-engineer",
+      "description": "Designs flag-gated rollouts — flag taxonomy, targeting rules, gradual ramp, kill switches, and the cleanup that stops flags becoming permanent debt. Use in the build phase for any risky or incrementally shipped change.",
+      "path": ".claude/agents/feature-flag-engineer.md"
+    },
+    {
+      "id": "incident-commander",
+      "name": "incident-commander",
+      "description": "Runs an active incident — triage, severity, coordination, comms, and a blameless postmortem afterwards. Use when production is broken. Coordinates; does not debug personally.",
+      "path": ".claude/agents/incident-commander.md"
+    },
+    {
+      "id": "ml-evaluator",
+      "name": "ml-evaluator",
+      "description": "Evaluates ML and LLM systems before release. Builds golden sets, picks metrics that match the decision, runs offline evals and LLM-as-judge, and gives a quantitative ship / no-ship verdict. Use in the quality phase for any model-backed feature.",
+      "path": ".claude/agents/ml-evaluator.md"
     },
     {
       "id": "observability-engineer",
@@ -1516,16 +1739,46 @@
       "path": ".claude/agents/prompt-engineer.md"
     },
     {
+      "id": "qa-engineer",
+      "name": "qa-engineer",
+      "description": "Quality gate before release. Runs exploratory and regression testing against acceptance criteria, hunts edge cases the unit tests missed, and files reproducible defects. Use in the quality phase, distinct from test-engineer who writes the automated suite.",
+      "path": ".claude/agents/qa-engineer.md"
+    },
+    {
       "id": "researcher",
       "name": "researcher",
       "description": "Deep research agent. Web search, literature review, competitive analysis, technical spikes, feasibility studies. USE THIS FIRST before any architecture or implementation decision.",
       "path": ".claude/agents/researcher.md"
     },
     {
+      "id": "schema-designer",
+      "name": "schema-designer",
+      "description": "Data modeling specialist. Designs relational and document schemas, indexes, migration strategy, and API contract shapes. Use after architecture and before implementation, whenever data is persisted or exchanged.",
+      "path": ".claude/agents/schema-designer.md"
+    },
+    {
       "id": "security-auditor",
       "name": "security-auditor",
       "description": "Security engineer focused on vulnerability detection, threat modeling, and secure coding practices. Use for security-focused code review, threat analysis, or hardening recommendations.",
       "path": ".claude/agents/security-auditor.md"
+    },
+    {
+      "id": "security-reviewer",
+      "name": "security-reviewer",
+      "description": "Pre-merge security gate. Reviews a specific change for introduced vulnerabilities against the architect's trust boundaries, and gives a merge verdict. Narrower and faster than security-auditor, which audits a whole system.",
+      "path": ".claude/agents/security-reviewer.md"
+    },
+    {
+      "id": "sre-engineer",
+      "name": "sre-engineer",
+      "description": "Reliability engineering. Defines SLOs and error budgets, sets up meaningful alerting, runs capacity and load analysis, and drives toil reduction. Use in the operate phase and whenever a service's reliability target needs to be made explicit.",
+      "path": ".claude/agents/sre-engineer.md"
+    },
+    {
+      "id": "tech-writer",
+      "name": "tech-writer",
+      "description": "Writes and reviews developer-facing documentation — READMEs, API references, runbooks, changelogs, migration guides. Use in the ship phase, and whenever a change alters how someone else uses or operates the system.",
+      "path": ".claude/agents/tech-writer.md"
     },
     {
       "id": "test-engineer",
