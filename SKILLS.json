@@ -1,8 +1,8 @@
 {
-  "generated": "2026-11-18",
+  "generated": "2026-11-27",
   "source": "https://github.com/amutaal122/ai-engineer-master",
   "counts": {
-    "skills": 77,
+    "skills": 83,
     "agents": 13,
     "commands": 11,
     "workflows": 4
@@ -382,6 +382,25 @@
       "path": ".claude/skills/claude-code-templates/SKILL.md"
     },
     {
+      "id": "cloudflare-security-audit",
+      "name": "Cloudflare Security Audit",
+      "domain": "Quality & Security",
+      "description": "Cloudflare's multi-phase security audit skill — six isolated-agent phases (recon, coverage-led hunting, validation, structured findings, independent verification, reporting) producing machine-readable findings.json plus REPORT.md. Use for a rigorous codebase audit or pen-test pass where every finding must be independen",
+      "triggers": [
+        "cloudflare security audit",
+        "security audit this codebase",
+        "find security vulnerabilities",
+        "pen test",
+        "penetration test",
+        "vulnerability hunting",
+        "security review",
+        "findings.json",
+        "coverage ledger",
+        "attack classes"
+      ],
+      "path": ".claude/skills/cloudflare-security-audit/SKILL.md"
+    },
+    {
       "id": "codex-security",
       "name": "Codex Security",
       "domain": "Quality & Security",
@@ -639,6 +658,25 @@
       "path": ".claude/skills/huggingface/SKILL.md"
     },
     {
+      "id": "karpathy-guidelines",
+      "name": "Karpathy Guidelines",
+      "domain": "Meta",
+      "description": "A CLAUDE.md ruleset derived from Andrej Karpathy's observations on LLM coding pitfalls — think before coding, simplicity first, surgical changes, goal-driven execution. Use when an AI coding agent is over-engineering, touching unrelated files, inventing abstractions, or declaring success without verifying.",
+      "triggers": [
+        "karpathy",
+        "karpathy guidelines",
+        "claude.md rules",
+        "agent over-engineering",
+        "llm coding pitfalls",
+        "simplicity first",
+        "surgical changes",
+        "stop over engineering",
+        "coding guidelines",
+        "agent discipline"
+      ],
+      "path": ".claude/skills/karpathy-guidelines/SKILL.md"
+    },
+    {
       "id": "kubernetes",
       "name": "kubernetes",
       "domain": "Infra & DevOps",
@@ -694,6 +732,25 @@
         "eval strategy"
       ],
       "path": ".claude/skills/llm-evaluation/SKILL.md"
+    },
+    {
+      "id": "magic-mcp",
+      "name": "Magic MCP",
+      "domain": "UI & Apps",
+      "description": "21st.dev's MCP server for UI — search 10,000+ React/Tailwind components, generate new ones with AI, fetch logos, and publish your own, from Cursor, Claude Code, Windsurf or Codex. Covers the legacy @21st-dev/magic proxy, the current 21st MCP endpoint, tool renames, and the AI-access gate.",
+      "triggers": [
+        "magic mcp",
+        "21st dev",
+        "21st mcp",
+        "generate ui component",
+        "react tailwind components",
+        "component search",
+        "logo search",
+        "v0 alternative",
+        "ui generation mcp",
+        "21st_magic_component_builder"
+      ],
+      "path": ".claude/skills/magic-mcp/SKILL.md"
     },
     {
       "id": "mcp-builder",
@@ -1290,6 +1347,25 @@
       "path": ".claude/skills/research-21-extras/SKILL.md"
     },
     {
+      "id": "ruflo",
+      "name": "Ruflo",
+      "domain": "Agents",
+      "description": "An agent meta-harness for Claude Code and Codex — 100+ agents, swarm coordination, self-learning memory, vector RAG, federation across machines, a TUI, and 48 Claude Code plugins. Use when orchestrating many agents, sharing memory between them, or running coordinated work across more than one machine.",
+      "triggers": [
+        "ruflo",
+        "claude-flow",
+        "agent swarm",
+        "multi agent orchestration",
+        "agent harness",
+        "agent federation",
+        "swarm coordination",
+        "agent memory",
+        "100 agents",
+        "npx ruflo"
+      ],
+      "path": ".claude/skills/ruflo/SKILL.md"
+    },
+    {
       "id": "scikit-learn",
       "name": "scikit-learn",
       "domain": "Data & ML",
@@ -1431,6 +1507,46 @@
         "accessibility"
       ],
       "path": ".claude/skills/ui-design/SKILL.md"
+    },
+    {
+      "id": "ui-skills",
+      "name": "UI Skills",
+      "domain": "UI & Apps",
+      "description": "A registry of design-engineering skills from ibelick, reachable through an npx CLI or a hosted MCP endpoint, plus a playbook of distilled UI craft lessons. Use to pull a focused skill such as baseline-ui or a motion skill into a project without installing a whole pack.",
+      "triggers": [
+        "ui-skills",
+        "design engineer",
+        "baseline ui",
+        "motion skill",
+        "ui playbook",
+        "ui craft",
+        "design engineering",
+        "npx ui-skills",
+        "ui skills mcp",
+        "fetch a ui skill"
+      ],
+      "path": ".claude/skills/ui-skills/SKILL.md"
+    },
+    {
+      "id": "ui-ux-pro-max",
+      "name": "UI UX Pro Max",
+      "domain": "UI & Apps",
+      "description": "Offline design-intelligence search over 80 UI styles, 194 product palettes, 74 font pairings, 25 chart types, 22 tech stacks and 141 UX guidelines, with a design-system generator that returns pattern, colors, typography, anti-patterns and a pre-delivery checklist. Use before building any UI to pick a style and palette ",
+      "triggers": [
+        "ui ux pro max",
+        "uipro",
+        "design system",
+        "color palette",
+        "font pairing",
+        "ui style",
+        "design intelligence",
+        "what colors should i use",
+        "landing page design",
+        "choose a ui style",
+        "design anti-patterns",
+        "chart type"
+      ],
+      "path": ".claude/skills/ui-ux-pro-max/SKILL.md"
     },
     {
       "id": "webapp-testing",

@@ -7,7 +7,7 @@
 
 | | Count |
 |---|---|
-| Skills | 77 |
+| Skills | 83 |
 | Agents | 13 |
 | Commands | 11 |
 | Workflows | 4 |
@@ -141,6 +141,7 @@ node gen-kb.js ../.. kb.json && node build-assistant.js
 |---|---|
 | `easy-install` | Install, update, verify, and wire the pack into any AI tool; offline install; troubleshooting |
 | `agent-skills` | Author Agent Skills: SKILL.md format, frontmatter, folder layout, Anthropic's marketplace |
+| `karpathy-guidelines` | CLAUDE.md ruleset against agent over-engineering and scope creep |
 
 ### LLM / AI Engineering
 | Skill | What it covers |
@@ -186,6 +187,7 @@ node gen-kb.js ../.. kb.json && node build-assistant.js
 | `claude-code-templates` | Registry + CLI for 1,980+ ready-made skills, agents, commands, MCP servers |
 | `agent-desktop` | Computer use via the OS accessibility tree — no screenshots, element refs, MCP mode |
 | `ag-ui` | Agent-User Interaction Protocol — 31 event types, SSE/Protobuf, TS/Python/.NET SDKs |
+| `ruflo` | Agent meta-harness — swarms, shared memory, federation, 48 Claude Code plugins |
 
 ### Backend / API
 | Skill | What it covers |
@@ -215,6 +217,7 @@ node gen-kb.js ../.. kb.json && node build-assistant.js
 | `webapp-testing` | E2E, browser automation |
 | `pyrit` | Microsoft's AI red teaming toolkit — jailbreak, injection, and harm testing |
 | `codex-security` | OpenAI's security CLI/SDK — repo and diff scans, SARIF export, CI action |
+| `cloudflare-security-audit` | Six-phase audit with independently verified, machine-readable findings |
 
 ### Browser & Dev Tools
 | Skill | What it covers |
@@ -226,6 +229,9 @@ node gen-kb.js ../.. kb.json && node build-assistant.js
 |---|---|
 | `ui-design` | Design tokens, typography, layout, dark mode, components, accessibility |
 | `gpt-chat-ui` | ChatGPT-style chat app: SSE streaming, markdown, tool calls, history |
+| `ui-ux-pro-max` | Offline design intelligence — 80 styles, 194 palettes, 74 font pairings, anti-patterns |
+| `ui-skills` | Design-engineering skill registry via npx CLI or hosted MCP |
+| `magic-mcp` | 21st.dev MCP — search 10,000+ React/Tailwind components, generate UI, logos |
 
 ### ML Research (21 skills)
 Deep reference skills covering model architecture, tokenization, fine-tuning, mechanistic interpretability, data processing, post-training, safety/alignment, distributed training, infrastructure, optimization, evaluation, inference serving, MLOps, agents, RAG, prompt engineering, observability, multimodal, emerging techniques, ML paper writing, and extras (20+ sub-skills).
