@@ -71,7 +71,6 @@ This is meant to sit alongside your project's own CLAUDE.md, not stand in for it
 | Skill | Governs |
 |---|---|
 | `karpathy-guidelines` | agent behaviour and discipline |
-| `ai-code-generation-guardrails` | reviewing what an AI produced |
 | `ai-coding-agent-guardrails` | securing agents in a team |
 | `code-simplify` (command) | fixing complexity after the fact |
 

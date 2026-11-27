@@ -7,7 +7,7 @@
 
 | | Count |
 |---|---|
-| Skills | 83 |
+| Skills | 78 |
 | Agents | 13 |
 | Commands | 11 |
 | Workflows | 4 |
@@ -146,16 +146,14 @@ node gen-kb.js ../.. kb.json && node build-assistant.js
 ### LLM / AI Engineering
 | Skill | What it covers |
 |---|---|
-| `anthropic-sdk` | Claude API, streaming, tool use, prompt caching |
 | `openai-sdk` | GPT API, function calling, embeddings |
-| `claude-api` | Claude API patterns, model selection, rate limits |
+| `claude-api` | Claude API across 8 languages — messages, streaming, tool use, caching, model migration |
 | `langchain` | LLM chains, RAG, agents, LangSmith |
 | `huggingface` | Transformers, fine-tuning, PEFT/LoRA, embeddings |
 | `prompt-engineering` | Write, optimize, evaluate prompts |
 | `llm-evaluation` | Eval strategy, golden sets, metrics |
 | `ai-engineer` | Production LLM apps, RAG, orchestration |
 | `freellmapi` | Self-hosted free LLM router — 87+ providers, 1,300+ models, OpenAI-compatible |
-| `free-claude-code` | Local proxy routing Claude Code/Codex/Aider to 61+ providers; multi-key rotation |
 | `gpt-oss` | OpenAI open-weight MoE models (gpt-oss-120b / gpt-oss-20b, Apache-2.0) |
 
 ### ML / Data Science
@@ -171,11 +169,9 @@ node gen-kb.js ../.. kb.json && node build-assistant.js
 ### AI Agent Development
 | Skill | What it covers |
 |---|---|
-| `ai-agent-development` | Autonomous agents, CrewAI, LangGraph |
 | `ai-agents-architect` | Architecture, tool use, memory, planning |
 | `ai-agent-tool-routing` | Tool registry, MCP router |
 | `ai-agent-security` | Prompt injection defense, guardrails |
-| `ai-code-generation-guardrails` | Reviewing AI-generated code |
 | `ai-coding-agent-guardrails` | Secure Claude Code in teams |
 | `ai-agent-evaluation-benchmarking` | Agent benchmarks |
 | `agent-memory-discipline` | Long-term memory patterns |
@@ -206,7 +202,6 @@ node gen-kb.js ../.. kb.json && node build-assistant.js
 | `docker` | Multi-stage builds, compose, production |
 | `kubernetes` | Deployments, HPA, ingress, AI workloads |
 | `github-actions` | CI/CD, Docker publish, eval CI |
-| `git-advanced` | Rebase, stash, bisect, hooks |
 | `git-workflow` | Branching, PRs, release strategy |
 
 ### Testing / Security / Quality

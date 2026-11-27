@@ -96,7 +96,6 @@ A meta-harness earns its complexity only at scale. For a single agent doing a si
 
 | Skill | Scale |
 |---|---|
-| `ai-agent-development` | building one agent |
 | `ai-agents-architect` | designing the architecture |
 | `ruflo` | running many, with shared memory |
 | `openbot` | a hosted agent workspace |

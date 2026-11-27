@@ -120,7 +120,6 @@ How do I configure and track AI Agent Capability Evaluation & Benchmarking for o
 
 - @ai-agent-tool-routing - covers tool schema registration and retry policy.
 - @ai-prompt-regression-testing - covers prompt regression baselines and drift.
-- @ai-code-generation-guardrails - covers static guardrails for generated code.
 
 ## Reusable Prompt
 

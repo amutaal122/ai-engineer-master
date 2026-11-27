@@ -2,7 +2,7 @@
   "generated": "2026-11-27",
   "source": "https://github.com/amutaal122/ai-engineer-master",
   "counts": {
-    "skills": 83,
+    "skills": 78,
     "agents": 13,
     "commands": 11,
     "workflows": 4
@@ -138,24 +138,6 @@
       "path": ".claude/skills/agent-skills/SKILL.md"
     },
     {
-      "id": "ai-agent-development",
-      "name": "ai-agent-development",
-      "domain": "Agents",
-      "description": "AI agent development workflow for building autonomous agents, multi-agent systems, and agent orchestration with CrewAI, LangGraph, and custom agents.",
-      "triggers": [
-        "ai agent",
-        "autonomous agent",
-        "multi-agent",
-        "crewai",
-        "langgraph",
-        "agent orchestration",
-        "agentic",
-        "agent loop",
-        "agent tools"
-      ],
-      "path": ".claude/skills/ai-agent-development/SKILL.md"
-    },
-    {
       "id": "ai-agent-evaluation-benchmarking",
       "name": "ai-agent-evaluation-benchmarking",
       "domain": "Agents",
@@ -218,21 +200,6 @@
       "path": ".claude/skills/ai-agents-architect/SKILL.md"
     },
     {
-      "id": "ai-code-generation-guardrails",
-      "name": "ai-code-generation-guardrails",
-      "domain": "Agents",
-      "description": "Use when reviewing AI-generated code before merge or execution: plan AST/security checks, isolated behavior tests and evidence, with language-specific coverage limits.",
-      "triggers": [
-        "ai code review",
-        "code generation review",
-        "copilot review",
-        "llm code quality",
-        "generated code",
-        "ai generated code"
-      ],
-      "path": ".claude/skills/ai-code-generation-guardrails/SKILL.md"
-    },
-    {
       "id": "ai-coding-agent-guardrails",
       "name": "ai-coding-agent-guardrails",
       "domain": "Agents",
@@ -283,29 +250,6 @@
         "master pipeline"
       ],
       "path": ".claude/skills/ai-engineer-master/SKILL.md"
-    },
-    {
-      "id": "anthropic-sdk",
-      "name": "anthropic-sdk",
-      "domain": "LLM & AI",
-      "description": "Anthropic Claude API — messages, streaming, tool use, vision, prompt caching, token counting, batch API, and multi-turn conversations using the Python SDK.",
-      "triggers": [
-        "anthropic",
-        "claude api",
-        "claude sdk",
-        "anthropic sdk",
-        "claude messages",
-        "claude streaming",
-        "claude tools",
-        "claude vision",
-        "claude cache",
-        "prompt caching anthropic",
-        "claude batch",
-        "claude haiku",
-        "claude sonnet",
-        "claude opus"
-      ],
-      "path": ".claude/skills/anthropic-sdk/SKILL.md"
     },
     {
       "id": "celery",
@@ -483,25 +427,6 @@
       "path": ".claude/skills/fastapi/SKILL.md"
     },
     {
-      "id": "free-claude-code",
-      "name": "Free Claude Code (fcc)",
-      "domain": "Tools & Infra",
-      "description": "Local proxy that routes Claude Code, Codex, OpenCode, Aider, and others to 61+ free-tier model providers (NVIDIA NIM, OpenRouter, Groq, Ollama, and more). Supports multi-key rotation, fallback chains, and exposes Anthropic, OpenAI, and Gemini endpoints on localhost.",
-      "triggers": [
-        "free claude code",
-        "fcc",
-        "fcc-server",
-        "free codex",
-        "local llm proxy",
-        "multi-provider proxy",
-        "claude code free",
-        "free coding agent",
-        "provider rotation",
-        "free ai proxy"
-      ],
-      "path": ".claude/skills/free-claude-code/SKILL.md"
-    },
-    {
       "id": "freellmapi",
       "name": "FreeLLMAPI",
       "domain": "LLM & AI",
@@ -519,26 +444,6 @@
         "aggregate llm"
       ],
       "path": ".claude/skills/freellmapi/SKILL.md"
-    },
-    {
-      "id": "git-advanced",
-      "name": "git-advanced",
-      "domain": "Infra & DevOps",
-      "description": "Advanced Git patterns — interactive rebase, cherry-pick, stash, reflog recovery, bisect, worktrees, hooks, conventional commits, and branch strategies.",
-      "triggers": [
-        "git rebase",
-        "git bisect",
-        "git stash",
-        "git cherry-pick",
-        "git reflog",
-        "git worktree",
-        "git hook",
-        "conventional commit",
-        "git strategy",
-        "git squash",
-        "undo git"
-      ],
-      "path": ".claude/skills/git-advanced/SKILL.md"
     },
     {
       "id": "git-workflow",

@@ -18,9 +18,9 @@ Professional skill system for AI · ML · Data Science · Data Analytics enginee
 - `/research-first` — always research before building
 
 ## Domains
-- LLM/AI Engineering: anthropic-sdk, openai-sdk, langchain, huggingface, prompt-engineering, llm-evaluation, ai-engineer
+- LLM/AI Engineering: claude-api, openai-sdk, langchain, huggingface, prompt-engineering, llm-evaluation, ai-engineer
 - ML/Data Science: pandas, scikit-learn, postgres, mongodb, ab-testing
-- AI Agents: ai-agent-development, ai-agents-architect, ai-agent-tool-routing, ai-agent-security
+- AI Agents: ai-agents-architect, ai-agent-tool-routing, ai-agent-security
 - Backend: fastapi, sqlalchemy, redis, celery, graphql
 - Infrastructure: docker, kubernetes, github-actions, mcp-builder
 - Research (20 skills): model architecture, fine-tuning, alignment, inference, MLOps, RAG, and more

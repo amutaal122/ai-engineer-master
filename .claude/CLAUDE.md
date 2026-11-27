@@ -28,7 +28,6 @@ Professional skill system for AI / ML / Data Science / Data Analytics engineers.
 ### LLM / AI Engineering
 | Skill | Use when |
 |---|---|
-| `/anthropic-sdk` | Claude API — messages, streaming, tool use, caching |
 | `/openai-sdk` | OpenAI API — completions, function calling, embeddings |
 | `/langchain` | LLM chains, RAG, agents, memory |
 | `/huggingface` | Local models, fine-tuning, embeddings, datasets |
@@ -49,11 +48,9 @@ Professional skill system for AI / ML / Data Science / Data Analytics engineers.
 ### AI Agent Development
 | Skill | Use when |
 |---|---|
-| `/ai-agent-development` | Build autonomous agents, multi-agent systems |
 | `/ai-agents-architect` | Agent architecture, tool use, memory, planning |
 | `/ai-agent-tool-routing` | Tool registry, MCP router, parameter schemas |
 | `/ai-agent-security` | Prompt injection, tool abuse, data exfiltration defense |
-| `/ai-code-generation-guardrails` | Review AI-generated code before merge |
 | `/ai-coding-agent-guardrails` | Secure Claude Code, Cursor, Copilot in teams |
 | `/agent-memory-discipline` | When to recall/save from long-term memory |
 
